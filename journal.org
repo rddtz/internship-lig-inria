@@ -10,17 +10,17 @@
 * Journal
 
 #+BEGIN: clocktable :scope file :maxlevel 5
-#+CAPTION: Clock summary at [2026-01-19 Mon 13:25]
+#+CAPTION: Clock summary at [2026-01-19 Mon 15:33]
 | Headline                                    | Time  |      |      |
 |---------------------------------------------+-------+------+------|
-| *Total time*                                  | *14:55* |      |      |
+| *Total time*                                  | *17:35* |      |      |
 |---------------------------------------------+-------+------+------|
-| Journal                                     | 14:55 |      |      |
+| Journal                                     | 17:35 |      |      |
 | \_  2026-01-13 Getting used to dask and ray |       | 3:18 |      |
 | \_    Ray                                   |       |      | 0:52 |
 | \_  2026-01-14 Side quests                  |       | 4:48 |      |
 | \_  2026-01-15 First steps into doreisa     |       | 4:29 |      |
-| \_  2026-01-19 Getting Started in Grid5000  |       | 2:20 |      |
+| \_  2026-01-19 Getting Started in Grid5000  |       | 5:00 |      |
 #+END:
 
 ** 2026-01-13 Getting used to dask and ray
@@ -161,7 +161,7 @@ Problem at line 395.
 
 ** 2026-01-19 Getting Started in Grid5000
 :LOGBOOK:
-CLOCK: [2026-01-19 Mon 12:52]
+CLOCK: [2026-01-19 Mon 12:52]--[2026-01-19 Mon 15:32] =>  2:40
 CLOCK: [2026-01-15 Thu 9:20]--[2026-01-15 Thu 11:40] =>  2:20
 :END:
 
@@ -173,12 +173,15 @@ Next steps are:
 [ ] Get used with Parallel HDF5.
 [ ] Make an example of deisa with parallel writing.
 
-** Grid5000
+
+*** Grid5000
 Access your data from your laptop using SSHFS:
 https://www.grid5000.fr/w/SSH#Mounting_remote_filesystem_.28sshfs.29
 
 SSH Talk:
 https://github.com/lnussbaum/slides-lectures/blob/master/ssh/ssh.pdf
 
-SSH via emacs com =C-x C-f /ssh:{login@host,
-config_alias}/path/to/file
+SSH via emacs com =C-x C-f /ssh:{login@host,config_alias}/path/to/file
+
+[15:14:23; 19.01.2026]: I will take some time to fully get familiar
+with it since it is different from what I have used before (slurm)
