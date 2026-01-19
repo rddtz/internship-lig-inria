@@ -1,0 +1,184 @@
+#+STARTUP: content
+#+STARTUP: overview
+#+STARTUP: indent
+#+TITLE: Lab notes
+#+AUTHOR: Rayan Raddatz de Matos
+#+PROPERTY: HEADER-ARGS:python+ :python ./venv/bin/python
+#+auto_tangle: t
+
+
+* Journal
+
+#+BEGIN: clocktable :scope file :maxlevel 5
+#+CAPTION: Clock summary at [2026-01-19 Mon 13:25]
+| Headline                                    | Time  |      |      |
+|---------------------------------------------+-------+------+------|
+| *Total time*                                  | *14:55* |      |      |
+|---------------------------------------------+-------+------+------|
+| Journal                                     | 14:55 |      |      |
+| \_  2026-01-13 Getting used to dask and ray |       | 3:18 |      |
+| \_    Ray                                   |       |      | 0:52 |
+| \_  2026-01-14 Side quests                  |       | 4:48 |      |
+| \_  2026-01-15 First steps into doreisa     |       | 4:29 |      |
+| \_  2026-01-19 Getting Started in Grid5000  |       | 2:20 |      |
+#+END:
+
+** 2026-01-13 Getting used to dask and ray
+:LOGBOOK:
+CLOCK: [2026-01-13 Tue 09:26]--[2026-01-13 Tue 11:52] =>  2:26
+:END:
+*** Bruno Slides
+I will read the slides from Bruno and at the same time will trying
+some examples.
+
+Examples from Bruno slides, Fibonacci in Ray:
+
+#+begin_src python :tangle examples/rayfib.py :session *P* :results output :exports both
+import ray
+
+@ray.remote
+def fib(n):
+    if n < 2:
+        return n
+    x = fib.remote(n-1)
+    y = fib.remote(n-2)
+    return ray.get(x) + ray.get(y)
+
+print(ray.get(fib.remote(0)))
+#+end_src
+
+#+RESULTS:
+: 2026-01-13 09:44:27,077	INFO worker.py:2007 -- Started a local Ray instance.
+: /home/rayan/graduation/fr/venv/lib/python3.11/site-packages/ray/_private/worker.py:2046: FutureWarning: Tip: In future versions of Ray, Ray will no longer override accelerator visible devices env var if num_gpus=0 or num_gpus=None (default). To enable this behavior and turn off this error message, set RAY_ACCEL_ENV_VAR_OVERRIDE_ON_ZERO=0
+:   warnings.warn(
+: 0
+
+*** Dask Array
+
+https://docs.dask.org/en/stable/array.html
+https://examples.dask.org/array.html
+
+"Community contributions are encouraged"
+
+"Dask will often have as many chunks in memory as twice the number of
+active threads."
+
+#+begin_src python :tangle examples/daskarray1.py :session *P* :results output :exports both
+import dask.array as da
+x = da.random.random((10000, 10000), chunks=(1000, 1000))
+print(x)
+
+y = x + x.T
+z = y[::2, 5000:].mean(axis=1)
+print(z)
+
+print(z.compute())
+#+end_src
+
+*** Ray
+:LOGBOOK:
+CLOCK: [2026-01-13 Tue 14:19]--[2026-01-13 Tue 14:55] =>  0:36
+CLOCK: [2026-01-13 Tue 13:31]--[2026-01-13 Tue 13:47] =>  0:16
+:END:
+
+Example 1: Square from numbers using ray
+#+begin_src python :tangle examples/rayexample1.py :session *P* :results output :exports both
+import ray
+
+# Unless you explicitly call ray.init(), the first use of a Ray remote API call will implicitly call ray.init() with no arguments.
+ray.init()
+
+# Define the square task.
+@ray.remote
+def square(x):
+    return x * x
+
+# Launch four parallel square tasks.
+futures = [square.remote(i) for i in range(4)]
+
+# Retrieve results.
+print(ray.get(futures))
+# -> [0, 1, 4, 9]
+#+end_src
+
+*Actor example:*
+#+begin_src python :tangle examples/rayactors.py :session *P* :results output :exports both
+# Define the Counter actor.
+import ray
+
+@ray.remote
+class Counter:
+    def __init__(self):
+        self.i = 0
+
+    def get(self):
+        return self.i
+
+    def incr(self, value):
+        self.i += value
+
+# Create a Counter actor.
+c = Counter.remote()
+
+# Submit calls to the actor. These calls run asynchronously but in
+# submission order on the remote actor process.
+for _ in range(10):
+    c.incr.remote(1)
+
+# Retrieve final actor state.
+print(ray.get(c.get.remote()))
+# -> 10
+#+end_src
+
+** 2026-01-14 Side quests
+:LOGBOOK:
+CLOCK: [2026-01-14 Wed 12:11]--[2026-01-14 Wed 14:30] =>  2:19
+CLOCK: [2026-01-14 Wed 09:13]--[2026-01-14 Wed 11:11] =>  1:58
+CLOCK: [2026-01-14 Wed 08:00]--[2026-01-14 Wed 08:31] =>  0:31
+:END:
+
+Get in the lab and leave my computer to the tech guys. After I head
+back home to get my on.
+
+[09:58:36; 14.01.2026]: I am now waiting Andres to ask about something
+I can do with dask and ray.
+
+[14:53:51; 14.01.2026]: He didn't came today, so I worked with pajeng.
+
+** 2026-01-15 First steps into doreisa
+:LOGBOOK:
+CLOCK: [2026-01-15 Thu 12:30]--[2026-01-15 Thu 15:35] =>  3:05
+CLOCK: [2026-01-15 Thu 09:49]--[2026-01-15 Thu 11:13] =>  1:24
+:END:
+
+[12:47:43; 15.01.2026]: I asked Hugo about more info and he tell me
+about a [[https://github.com/deisa-project/workflow-example][Workflow Example]] that i could take a look.
+
+[15:31:09; 15.01.2026]: I managed to make it almost work, but there
+are some errors in the example, I will focus in make it work tomorrow.
+
+Problem at line 395.
+
+** 2026-01-19 Getting Started in Grid5000
+:LOGBOOK:
+CLOCK: [2026-01-19 Mon 12:52]
+CLOCK: [2026-01-15 Thu 9:20]--[2026-01-15 Thu 11:40] =>  2:20
+:END:
+
+Next steps are:
+
+[ ] Get comfortable with grid5000.
+   - Read starting tutorial
+   - Make some examples in experiments in multinode configuration
+[ ] Get used with Parallel HDF5.
+[ ] Make an example of deisa with parallel writing.
+
+** Grid5000
+Access your data from your laptop using SSHFS:
+https://www.grid5000.fr/w/SSH#Mounting_remote_filesystem_.28sshfs.29
+
+SSH Talk:
+https://github.com/lnussbaum/slides-lectures/blob/master/ssh/ssh.pdf
+
+SSH via emacs com =C-x C-f /ssh:{login@host,
+config_alias}/path/to/file
