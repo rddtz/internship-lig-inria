@@ -7,20 +7,38 @@
 #+auto_tangle: t
 
 
+* TODOS
+
+** IN-PROGRESS Try to play with dask and create some analytics based on the Bruno class examples
+- State "IN-PROGRESS" from "TODO"       [2026-01-22 Thu 10:23]
+
+[10:22:49; 22.01.2026]: Yesterday I asked Bruno if he has some
+examples to me to play around or if I use the one from his slides.
+
+
+** TODO Read about HDF5
+See the integration with dask, how to use in parallel.
+
+See about zarr also.
+
 * Journal
 
 #+BEGIN: clocktable :scope file :maxlevel 5
-#+CAPTION: Clock summary at [2026-01-19 Mon 15:33]
-| Headline                                    | Time  |      |      |
-|---------------------------------------------+-------+------+------|
-| *Total time*                                  | *17:35* |      |      |
-|---------------------------------------------+-------+------+------|
-| Journal                                     | 17:35 |      |      |
-| \_  2026-01-13 Getting used to dask and ray |       | 3:18 |      |
-| \_    Ray                                   |       |      | 0:52 |
-| \_  2026-01-14 Side quests                  |       | 4:48 |      |
-| \_  2026-01-15 First steps into doreisa     |       | 4:29 |      |
-| \_  2026-01-19 Getting Started in Grid5000  |       | 5:00 |      |
+#+CAPTION: Clock summary at [2026-01-23 Fri 16:33]
+| Headline                                     | Time     |      |      |
+|----------------------------------------------+----------+------+------|
+| *Total time*                                   | *1d 14:20* |      |      |
+|----------------------------------------------+----------+------+------|
+| Journal                                      | 1d 14:20 |      |      |
+| \_  2026-01-13 Getting used to dask and ray  |          | 3:18 |      |
+| \_    Ray                                    |          |      | 0:52 |
+| \_  2026-01-14 Side quests                   |          | 4:48 |      |
+| \_  2026-01-15 First steps into doreisa      |          | 4:29 |      |
+| \_  2026-01-19 Getting Started in Grid5000   |          | 5:00 |      |
+| \_  2026-01-20 Continuing with Grid5000      |          | 6:03 |      |
+| \_  2026-01-21 Starting with HDF5 and Dask   |          | 3:48 |      |
+| \_  2026-01-22 Continuing with HDF5 and Dask |          | 5:33 |      |
+| \_  2026-01-23                               |          | 5:21 |      |
 #+END:
 
 ** 2026-01-13 Getting used to dask and ray
@@ -162,7 +180,7 @@ Problem at line 395.
 ** 2026-01-19 Getting Started in Grid5000
 :LOGBOOK:
 CLOCK: [2026-01-19 Mon 12:52]--[2026-01-19 Mon 15:32] =>  2:40
-CLOCK: [2026-01-15 Thu 9:20]--[2026-01-15 Thu 11:40] =>  2:20
+CLOCK: [2026-01-19 Mon 09:20]--[2026-01-19 Mon 11:40] =>  2:20
 :END:
 
 Next steps are:
@@ -181,7 +199,106 @@ https://www.grid5000.fr/w/SSH#Mounting_remote_filesystem_.28sshfs.29
 SSH Talk:
 https://github.com/lnussbaum/slides-lectures/blob/master/ssh/ssh.pdf
 
-SSH via emacs com =C-x C-f /ssh:{login@host,config_alias}/path/to/file
+SSH via emacs with =C-x C-f /ssh:{login@host,config_alias}/path/to/file=
 
 [15:14:23; 19.01.2026]: I will take some time to fully get familiar
 with it since it is different from what I have used before (slurm)
+
+[09:31:56; 20.01.2026]: I will follow some simple tutorials of how to
+use it today in the morning.
+
+[09:51:54; 20.01.2026]: Grid5000 experiments can be fully scripted
+from the scheduling by using an API
+
+** 2026-01-20 Continuing with Grid5000
+:LOGBOOK:
+CLOCK: [2026-01-20 Tue 12:55]--[2026-01-20 Tue 16:45] =>  3:50
+CLOCK: [2026-01-20 Tue 09:26]--[2026-01-20 Tue 11:39] =>  2:13
+:END:
+
+** 2026-01-21 Starting with HDF5 and Dask
+:LOGBOOK:
+CLOCK: [2026-01-21 Wed 14:32]--[2026-01-21 Wed 16:40] =>  2:08
+CLOCK: [2026-01-21 Wed 09:30]--[2026-01-21 Wed 11:10] =>  1:40
+:END:
+
+[10:13:06; 21.01.2026]: Today I will focus on understanding HDF5 and
+its parallel version.
+
+[10:54:53; 21.01.2026]: HDF5 parallel seems to be working, but I am
+not sure, I want to create some dask examples to see how things goes.
+
+[10:55:39; 21.01.2026]: I am currently following this tutorial to get
+used with hdf5 in python:
+https://docs.h5py.org/en/latest/mpi.html#how-does-parallel-hdf5-work
+
+I had to install some libraries to make it work, something that I
+intend to use nix to work after.
+
+[14:34:20; 21.01.2026]: I stopped by a hour, look like there is board
+games in the Wednesdays.
+
+[14:35:28; 21.01.2026] Instruction on how to install the h5py:
+https://stackoverflow.com/questions/77207467/how-to-build-h5py-with-mpi-support-against-parallel-hdf5-on-linux-2023
+
+** 2026-01-22 Continuing with HDF5 and Dask
+:LOGBOOK:
+CLOCK: [2026-01-22 Thu 12:31]--[2026-01-22 Thu 16:31] =>  4:00
+CLOCK: [2026-01-22 Thu 10:17]--[2026-01-22 Thu 11:50] =>  1:33
+:END:
+
+
+[10:18:48; 22.01.2026]: I forgot to turn on the safety alarms and I
+get late today.
+
+[11:36:01; 22.01.2026]: I am trying a Dask example, i need to run the
+scheduler before, but the computation don't see to be done, maybe I
+need to run other thing also?
+
+[11:41:33; 22.01.2026]: Of course it wouldn't run, I needed to start
+workers as well.
+
+[12:32:14; 22.01.2026]: Going back to the examples.
+
+[14:52:18; 22.01.2026]: The same problem with the dead of the head
+node was happening in the g5k, but using a ray list command fixed it
+and I don't know way.
+
+[14:55:36; 22.01.2026]: Moving the
+#+begin_src shell :results output :exports both
+ray start --address 127.0.0.1:6379                         > .logs/ray-worker.log 2>&1
+#+end_src
+line to after the
+#+begin_src shell :results output :exports both
+# Start analytics (uses venv python)
+"$PY" -m analytics.avg 2>.logs/analytics.e&
+ANALYTICS_PID=$!
+#+end_src
+also make it works...
+
+Maybe the cluster die by being idle...
+
+[15:42:59; 22.01.2026]: I understand that the problem is that deisa
+had some delay to create the simulation_head, so a delay after it
+starts (or a lazy computer) is enough to make it works. I just put a
+sleep 0.5 there and everything is perfect.
+
+[15:47:12; 22.01.2026]: I will know write the same example of the hdf5
+writing with deisa and then after I will run a experiment to see the times.
+
+[16:31:17; 22.01.2026]: See about zarr and also how to use the hdf5.
+** 2026-01-23
+:LOGBOOK:
+CLOCK: [2026-01-23 Fri 12:11]--[2026-01-23 Fri 16:32] =>  4:21
+CLOCK: [2026-01-23 Fri 10:11]--[2026-01-23 Fri 11:11] =>  1:00
+:END:
+
+[10:12:05; 23.01.2026]: Here we are, I will now try to play with dask
+and hdf5 to save an analytics from deisa.
+
+[15:49:01; 23.01.2026]: Looks to me that it isn't possible to just
+keeping writing in the same dataset after it was created...
+
+[16:10:42; 23.01.2026]: Looks that deisa didn't support the writing of
+HDF5 files... I will try to see with the newer versions to see if
+everything changed.
