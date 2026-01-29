@@ -9,43 +9,74 @@
 
 * TODOS
 
-** IN-PROGRESS Try to play with dask and create some analytics based on the Bruno class examples
+
+** TODO Read about the task internals of dask.
+
+** TODO Create manually a dask graph that saves to a hdf5 file.
+
+* DONES
+** DONE Read and understand how the deisa tests are structured, then creating a dask.to_zarr test
+CLOSED: [2026-01-28 Wed 16:20]
+
+- State "DONE"       from "TODO"       [2026-01-28 Wed 16:20]
+[15:14:36; 27.01.2026]: See the analytics tests.
+
+[16:20:25; 28.01.2026]: I made a test to it that is working, I need
+after to talk with andres or hugo about this.
+
+** DONE Try to play with dask and create some analytics based on the Bruno class examples
+CLOSED: [2026-01-27 Tue 15:12]
+- State "DONE"       from "IN-PROGRESS" [2026-01-27 Tue 15:12]
 - State "IN-PROGRESS" from "TODO"       [2026-01-22 Thu 10:23]
 
 [10:22:49; 22.01.2026]: Yesterday I asked Bruno if he has some
 examples to me to play around or if I use the one from his slides.
 
-
-** TODO Read about HDF5
+** DONE Read about HDF5
+CLOSED: [2026-01-27 Tue 15:12]
+- State "DONE"       from "TODO"       [2026-01-27 Tue 15:12]
 See the integration with dask, how to use in parallel.
 
 See about zarr also.
 
+[15:13:02; 27.01.2026]: Looks like hdf5 don't have a good support by
+dask, but zarr does. I will try to create a deisa test with zarr tomorrow.
+
+
 * Journal
 
 #+BEGIN: clocktable :scope file :maxlevel 5
-#+CAPTION: Clock summary at [2026-01-23 Fri 16:33]
-| Headline                                     | Time     |      |      |
-|----------------------------------------------+----------+------+------|
-| *Total time*                                   | *1d 14:20* |      |      |
-|----------------------------------------------+----------+------+------|
-| Journal                                      | 1d 14:20 |      |      |
-| \_  2026-01-13 Getting used to dask and ray  |          | 3:18 |      |
-| \_    Ray                                    |          |      | 0:52 |
-| \_  2026-01-14 Side quests                   |          | 4:48 |      |
-| \_  2026-01-15 First steps into doreisa      |          | 4:29 |      |
-| \_  2026-01-19 Getting Started in Grid5000   |          | 5:00 |      |
-| \_  2026-01-20 Continuing with Grid5000      |          | 6:03 |      |
-| \_  2026-01-21 Starting with HDF5 and Dask   |          | 3:48 |      |
-| \_  2026-01-22 Continuing with HDF5 and Dask |          | 5:33 |      |
-| \_  2026-01-23                               |          | 5:21 |      |
+#+CAPTION: Clock summary at [2026-01-29 Thu 15:31]
+| Headline                                       | Time     |         |      |      |
+|------------------------------------------------+----------+---------+------+------|
+| *Total time*                                     | *2d 11:13* |         |      |      |
+|------------------------------------------------+----------+---------+------+------|
+| Journal                                        | 2d 11:13 |         |      |      |
+| \_  2026 W03 [Jan]                             |          |   12:35 |      |      |
+| \_    2026-01-13 Getting used to dask and ray  |          |         | 3:18 |      |
+| \_      Ray                                    |          |         |      | 0:52 |
+| \_    2026-01-14 Side quests                   |          |         | 4:48 |      |
+| \_    2026-01-15 First steps into doreisa      |          |         | 4:29 |      |
+| \_  2026 W04 [Jan]                             |          | 1d 1:45 |      |      |
+| \_    2026-01-19 Getting Started in Grid5000   |          |         | 5:00 |      |
+| \_    2026-01-20 Continuing with Grid5000      |          |         | 6:03 |      |
+| \_    2026-01-21 Starting with HDF5 and Dask   |          |         | 3:48 |      |
+| \_    2026-01-22 Continuing with HDF5 and Dask |          |         | 5:33 |      |
+| \_    2026-01-23 Problems with Deisa and...    |          |         | 5:21 |      |
+| \_  2026 W05 [Jan]                             |          |   20:53 |      |      |
+| \_    2026-01-26 Figuring out problems in...   |          |         | 5:50 |      |
+| \_    2026-01-27 First reunion and zarr tests  |          |         | 4:49 |      |
+| \_    2026-01-28 Tests and Zarr                |          |         | 5:53 |      |
+| \_    2026-01-29                               |          |         | 4:21 |      |
 #+END:
 
-** 2026-01-13 Getting used to dask and ray
+** 2026 W03 [Jan]
+
+*** 2026-01-13 Getting used to dask and ray
 :LOGBOOK:
 CLOCK: [2026-01-13 Tue 09:26]--[2026-01-13 Tue 11:52] =>  2:26
 :END:
-*** Bruno Slides
+**** Bruno Slides
 I will read the slides from Bruno and at the same time will trying
 some examples.
 
@@ -71,7 +102,7 @@ print(ray.get(fib.remote(0)))
 :   warnings.warn(
 : 0
 
-*** Dask Array
+**** Dask Array
 
 https://docs.dask.org/en/stable/array.html
 https://examples.dask.org/array.html
@@ -93,7 +124,7 @@ print(z)
 print(z.compute())
 #+end_src
 
-*** Ray
+**** Ray
 :LOGBOOK:
 CLOCK: [2026-01-13 Tue 14:19]--[2026-01-13 Tue 14:55] =>  0:36
 CLOCK: [2026-01-13 Tue 13:31]--[2026-01-13 Tue 13:47] =>  0:16
@@ -148,7 +179,7 @@ print(ray.get(c.get.remote()))
 # -> 10
 #+end_src
 
-** 2026-01-14 Side quests
+*** 2026-01-14 Side quests
 :LOGBOOK:
 CLOCK: [2026-01-14 Wed 12:11]--[2026-01-14 Wed 14:30] =>  2:19
 CLOCK: [2026-01-14 Wed 09:13]--[2026-01-14 Wed 11:11] =>  1:58
@@ -163,7 +194,7 @@ I can do with dask and ray.
 
 [14:53:51; 14.01.2026]: He didn't came today, so I worked with pajeng.
 
-** 2026-01-15 First steps into doreisa
+*** 2026-01-15 First steps into doreisa
 :LOGBOOK:
 CLOCK: [2026-01-15 Thu 12:30]--[2026-01-15 Thu 15:35] =>  3:05
 CLOCK: [2026-01-15 Thu 09:49]--[2026-01-15 Thu 11:13] =>  1:24
@@ -177,7 +208,9 @@ are some errors in the example, I will focus in make it work tomorrow.
 
 Problem at line 395.
 
-** 2026-01-19 Getting Started in Grid5000
+** 2026 W04 [Jan]
+
+*** 2026-01-19 Getting Started in Grid5000
 :LOGBOOK:
 CLOCK: [2026-01-19 Mon 12:52]--[2026-01-19 Mon 15:32] =>  2:40
 CLOCK: [2026-01-19 Mon 09:20]--[2026-01-19 Mon 11:40] =>  2:20
@@ -192,7 +225,7 @@ Next steps are:
 [ ] Make an example of deisa with parallel writing.
 
 
-*** Grid5000
+**** Grid5000
 Access your data from your laptop using SSHFS:
 https://www.grid5000.fr/w/SSH#Mounting_remote_filesystem_.28sshfs.29
 
@@ -210,13 +243,14 @@ use it today in the morning.
 [09:51:54; 20.01.2026]: Grid5000 experiments can be fully scripted
 from the scheduling by using an API
 
-** 2026-01-20 Continuing with Grid5000
+*** 2026-01-20 Continuing with Grid5000
 :LOGBOOK:
 CLOCK: [2026-01-20 Tue 12:55]--[2026-01-20 Tue 16:45] =>  3:50
 CLOCK: [2026-01-20 Tue 09:26]--[2026-01-20 Tue 11:39] =>  2:13
 :END:
 
-** 2026-01-21 Starting with HDF5 and Dask
+*** 2026-01-21 Starting with HDF5 and Dask
+
 :LOGBOOK:
 CLOCK: [2026-01-21 Wed 14:32]--[2026-01-21 Wed 16:40] =>  2:08
 CLOCK: [2026-01-21 Wed 09:30]--[2026-01-21 Wed 11:10] =>  1:40
@@ -241,7 +275,7 @@ games in the Wednesdays.
 [14:35:28; 21.01.2026] Instruction on how to install the h5py:
 https://stackoverflow.com/questions/77207467/how-to-build-h5py-with-mpi-support-against-parallel-hdf5-on-linux-2023
 
-** 2026-01-22 Continuing with HDF5 and Dask
+*** 2026-01-22 Continuing with HDF5 and Dask
 :LOGBOOK:
 CLOCK: [2026-01-22 Thu 12:31]--[2026-01-22 Thu 16:31] =>  4:00
 CLOCK: [2026-01-22 Thu 10:17]--[2026-01-22 Thu 11:50] =>  1:33
@@ -287,7 +321,7 @@ sleep 0.5 there and everything is perfect.
 writing with deisa and then after I will run a experiment to see the times.
 
 [16:31:17; 22.01.2026]: See about zarr and also how to use the hdf5.
-** 2026-01-23
+*** 2026-01-23 Problems with Deisa and dask.array.*to*
 :LOGBOOK:
 CLOCK: [2026-01-23 Fri 12:11]--[2026-01-23 Fri 16:32] =>  4:21
 CLOCK: [2026-01-23 Fri 10:11]--[2026-01-23 Fri 11:11] =>  1:00
@@ -302,3 +336,231 @@ keeping writing in the same dataset after it was created...
 [16:10:42; 23.01.2026]: Looks that deisa didn't support the writing of
 HDF5 files... I will try to see with the newer versions to see if
 everything changed.
+
+** 2026 W05 [Jan]
+I will start logging by weeks here also
+*** 2026-01-26 Figuring out problems in dask.array.*to*
+:LOGBOOK:
+CLOCK: [2026-01-26 Mon 11:46]--[2026-01-26 Mon 16:43] =>  4:57
+CLOCK: [2026-01-26 Mon 10:08]--[2026-01-26 Mon 11:01] =>  0:53
+:END:
+
+The da.to_hdf5 is just a wrapper to the da.store that also creates the
+datasets:
+#+begin_src python :results output :exports both
+    if len(args) == 1 and isinstance(args[0], dict):
+        data = args[0]
+    elif len(args) == 2 and isinstance(args[0], str) and isinstance(args[1], Array):
+        data = {args[0]: args[1]}
+    else:
+        raise ValueError("Please provide {'/data/path': array} dictionary")
+
+    import h5py
+
+    with h5py.File(filename, mode="a") as f:
+        dsets = [
+            f.require_dataset(
+                dp,
+                shape=x.shape,
+                dtype=x.dtype,
+                chunks=tuple(c[0] for c in x.chunks) if chunks is True else chunks,
+                ,**kwargs,
+            )
+            for dp, x in data.items()
+        ]
+    store(list(data.values()), dsets)
+#+end_src
+This functions then didn't return anything.
+
+
+[14:45:12; 26.01.2026]: The previous version of "deisa" does not
+handle returning multiple keys. I will try to build it from source.
+
+[16:37:30; 26.01.2026]: I tried to use the newer version but I am not
+already used to the API, tomorrow I will ask some help to how to use
+it. Looks like there is a issue when create the bridge:
+
+#+begin_src shell :results output :exports both
+tail -n 50 deisa-ray/sim/.logs/run.log deisa-ray/sim/.logs/analytics.e
+#+end_src
+
+#+RESULTS:
+#+begin_example
+==> deisa-ray/sim/.logs/run.log <==
+    )
+    ^
+  File "/home/rraddatz/deisa-ray/src/deisa/ray/bridge.py", line 310, in send
+    ray.get(future)
+    ~~~~~~~^^^^^^^^
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/_private/auto_init_hook.py", line 22, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/_private/client_mode_hook.py", line 104, in wrapper
+    return func(*args, **kwargs)
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/_private/worker.py", line 2858, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+                                  ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/_private/worker.py", line 958, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(AssertionError): [36mray::SchedulingActor.add_chunk()[39m (pid=126970, ip=172.16.20.30, actor_id=a5265f92bb04cdd4f1f8ee6103000000, repr=<deisa.ray.scheduling_actor.SchedulingActor object at 0x7f2c45bc5400>)
+  File "/home/rraddatz/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/rraddatz/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rraddatz/deisa-ray/src/deisa/ray/scheduling_actor.py", line 388, in add_chunk
+    assert isinstance(ref, ray.ObjectRef)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError
+[ANALYTICS] Average at timestep 0: V=0.009530757187787613, U=0.9898391580263406
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[5239,1],0]
+  Exit code:    1
+--------------------------------------------------------------------------
++ 2026-01-26 16:38:55 launch-insitu-python-local.sh:1: cleanup
++ 2026-01-26 16:38:55 launch-insitu-python-local.sh:36: set +e
++ 2026-01-26 16:38:55 launch-insitu-python-local.sh:37: ray stop
+[33m(raylet)[0m The autoscaler failed with the following error:
+Terminated with signal 15
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/autoscaler/_private/monitor.py", line 747, in <module>
+    monitor.run()
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/autoscaler/_private/monitor.py", line 604, in run
+    self._run()
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/autoscaler/_private/monitor.py", line 459, in _run
+    time.sleep(AUTOSCALER_UPDATE_INTERVAL_S)
+
+1/2 stopped.2/2 stopped.1/5 stopped.2/5 stopped.3/5 stopped.4/5 stopped.5/5 stopped.1/1 stopped.[32mStopped all 8 Ray processes.[39m
+
+==> deisa-ray/sim/.logs/analytics.e <==
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/rraddatz/deisa-ray/sim/analytics/avg.py", line 55, in <module>
+    deisa.execute_callbacks()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/rraddatz/deisa-ray/src/deisa/ray/window_handler.py", line 262, in execute_callbacks
+    name, timestep, array = ray.get(self.head.get_next_array.remote())
+                            ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/_private/auto_init_hook.py", line 22, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/_private/client_mode_hook.py", line 104, in wrapper
+    return func(*args, **kwargs)
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/_private/worker.py", line 2858, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+                                  ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/rraddatz/deisa-ray/.venv/lib/python3.13/site-packages/ray/_private/worker.py", line 960, in get_objects
+    raise value
+ray.exceptions.ActorDiedError: The actor died unexpectedly before finishing this task.
+	class_name: HeadNodeActor
+	actor_id: 16915f0e5c9e30da24d1aa8701000000
+	pid: 130845
+	name: simulation_head
+	namespace: deisa_ray
+	ip: 172.16.20.30
+The actor died because its node has died. Node Id: 36183977ca717857ceaabb46c00a26a2a247d0b128401fc220f76eb3
+	the actor's node was terminated expectedly: received SIGTERM
+#+end_example
+
+*** 2026-01-27 First reunion and zarr tests
+:LOGBOOK:
+CLOCK: [2026-01-27 Tue 12:30]--[2026-01-27 Tue 15:11] =>  2:41
+CLOCK: [2026-01-27 Tue 09:35]--[2026-01-27 Tue 11:43] =>  2:08
+:END:
+
+[10:17:50; 27.01.2026]: I loaded the hdf5 module from g5k which has
+the parallel options enabled, after I run this commands to install
+h5py with the mpi support:
+
+#+begin_src shell :results output :exports both
+export HDF5_MPI="ON"
+export HDF5_DIR=/path/to/hdf5/
+
+CC=mpicc pip install --no-binary=h5py h5py mpi4py
+#+end_src
+
+[10:21:22; 27.01.2026]: Even with the hdf5 parallel the problem
+remains the same:
+=!!! FAIL serialization: h5py objects cannot be pickled=
+
+
+[10:34:47; 27.01.2026]: Passing this info to here:
+Dask has no support to parallel writing of hdf5 files when using distributed:
+https://github.com/dask/dask/issues/3074
+https://github.com/dask/dask/pull/3179
+
+[12:41:20; 27.01.2026]: I will try to test the zarr saving
+*** 2026-01-28 Tests and Zarr
+:LOGBOOK:
+CLOCK: [2026-01-28 Wed 12:00]--[2026-01-28 Wed 16:21] =>  4:21
+CLOCK: [2026-01-28 Wed 09:48]--[2026-01-28 Wed 11:20] =>  1:32
+:END:
+
+[09:51:58; 28.01.2026]: I will take some time to analyse the tests and
+try to create one test using zarr.
+
+[11:20:28; 28.01.2026]: I am going to eat, the test
+=test_multiple_callbacks.py::test_multiple_callbacks[False]= is taking a
+long time to run.
+
+[15:31:44; 28.01.2026]: Deisa callbacks are not working and I don't
+know why...
+
+[16:08:21; 28.01.2026]: This merges the whole groups in one big 3d array
+#+begin_src python :results output :exports both
+z_group = zarr.open_group(ZARR_PATH, mode='r')
+assert len(z_group.keys()) == NB_ITERATIONS
+
+# reading data from timestep 5
+keys = sorted([int(k) for k in z_group.keys()])
+
+lazy_arrays = [da.from_zarr(ZARR_PATH, component=str(k)) for k in keys]
+
+combined_array = da.stack(lazy_arrays, axis=0)
+
+assert combined_array.shape[0] == NB_ITERATIONS
+
+# Check T=4
+data_t4 = combined_array[4].compute()
+data_t5 = combined_array[5].compute()
+# print("Data:", data_t4)
+assert data_t4.max() > 0
+assert data_t4.sum() == 4 * 10
+assert 16 in data_t4
+#+end_src
+
+*** 2026-01-29 Getting missions
+:LOGBOOK:
+CLOCK: [2026-01-29 Thu 12:27]--[2026-01-29 Thu 15:31] =>  3:04
+CLOCK: [2026-01-29 Thu 09:56]--[2026-01-29 Thu 11:13] =>  1:17
+:END:
+
+[10:11:51; 29.01.2026]: I am thinking on what to do today?
+
+
+[10:52:01; 29.01.2026]: Bruno send me information about scotch, a
+parallel graph partitioning library, I will probably work on this, so
+I have to see how can I test if exists differences in the time and
+structure when partitioning.
+
+[12:32:21; 29.01.2026]: Back to read about the =scoth=
+
+#+begin_quote
+It can map any weighted source graph onto any weighted target
+graph. The source and target graphs may have any topology, and their
+vertices and edges may be weighted. Moreover, both source and target
+graphs may be disconnected. This feature allows for the mapping of
+programs onto disconnected subparts of a parallel architecture made up
+of heterogeneous processors and communication links.
+#+end_quote
+
+[12:39:15; 29.01.2026]: Some questions
+
+[14:46:40; 29.01.2026]: I talk with Andres and I will try to manually
+create a dask task graph to run the hdf5 in parallel.
