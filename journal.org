@@ -3,9 +3,8 @@
 #+STARTUP: indent
 #+TITLE: Lab notes
 #+AUTHOR: Rayan Raddatz de Matos
-#+PROPERTY: HEADER-ARGS:python+ :python ./venv/bin/python
+#+PROPERTY: HEADER-ARGS+ :eval no-export
 #+auto_tangle: t
-
 
 * TODOS
 
@@ -46,13 +45,13 @@ dask, but zarr does. I will try to create a deisa test with zarr tomorrow.
 * Journal
 
 #+BEGIN: clocktable :scope file :maxlevel 5
-#+CAPTION: Clock summary at [2026-01-29 Thu 15:31]
+#+CAPTION: Clock summary at [2026-01-30 Fri 16:39]
 | Headline                                       | Time     |         |      |      |
 |------------------------------------------------+----------+---------+------+------|
-| *Total time*                                     | *2d 11:13* |         |      |      |
+| *Total time*                                     | *2d 16:59* |         |      |      |
 |------------------------------------------------+----------+---------+------+------|
-| Journal                                        | 2d 11:13 |         |      |      |
-| \_  2026 W03 [Jan]                             |          |   12:35 |      |      |
+| Journal                                        | 2d 16:59 |         |      |      |
+| \_  2026 W03 [Jan]                             |          | 12:35   |      |      |
 | \_    2026-01-13 Getting used to dask and ray  |          |         | 3:18 |      |
 | \_      Ray                                    |          |         |      | 0:52 |
 | \_    2026-01-14 Side quests                   |          |         | 4:48 |      |
@@ -63,11 +62,12 @@ dask, but zarr does. I will try to create a deisa test with zarr tomorrow.
 | \_    2026-01-21 Starting with HDF5 and Dask   |          |         | 3:48 |      |
 | \_    2026-01-22 Continuing with HDF5 and Dask |          |         | 5:33 |      |
 | \_    2026-01-23 Problems with Deisa and...    |          |         | 5:21 |      |
-| \_  2026 W05 [Jan]                             |          |   20:53 |      |      |
+| \_  2026 W05 [Jan]                             |          | 1d 2:39 |      |      |
 | \_    2026-01-26 Figuring out problems in...   |          |         | 5:50 |      |
 | \_    2026-01-27 First reunion and zarr tests  |          |         | 4:49 |      |
 | \_    2026-01-28 Tests and Zarr                |          |         | 5:53 |      |
-| \_    2026-01-29                               |          |         | 4:21 |      |
+| \_    2026-01-29 Getting missions              |          |         | 4:21 |      |
+| \_    2026-01-30 Starting to see about...      |          |         | 5:46 |      |
 #+END:
 
 ** 2026 W03 [Jan]
@@ -564,3 +564,19 @@ of heterogeneous processors and communication links.
 
 [14:46:40; 29.01.2026]: I talk with Andres and I will try to manually
 create a dask task graph to run the hdf5 in parallel.
+
+*** 2026-01-30 Starting to see about manually created dask arrays
+:LOGBOOK:
+CLOCK: [2026-01-30 Fri 12:10]--[2026-01-30 Fri 16:39] =>  4:29
+CLOCK: [2026-01-30 Fri 09:57]--[2026-01-30 Fri 11:14] =>  1:17
+:END:
+
+[14:58:10; 30.01.2026]: Creating a manual dask task graph to save I
+can overcome the pickling issues, but I can write to the same file, I
+will try working with HDF5 Virtual datasets
+https://support.hdfgroup.org/documentation/hdf5-docs/advanced_topics/intro_VDS.html
+
+[16:35:54; 30.01.2026]: It is working! (I think so...) Next week I
+will introduce it in deisa.
+
+[[file:imgs/final_graph.png]]
