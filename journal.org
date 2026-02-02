@@ -580,3 +580,30 @@ https://support.hdfgroup.org/documentation/hdf5-docs/advanced_topics/intro_VDS.h
 will introduce it in deisa.
 
 [[file:imgs/final_graph.png]]
+
+** 2026 Week 06 [Feb]
+*** 2026-02-02
+:LOGBOOK:
+CLOCK: [2026-02-02 Mon 12:22]--[2026-02-02 Mon 16:38] =>  4:16
+CLOCK: [2026-02-02 Mon 09:41]--[2026-02-02 Mon 11:22] =>  1:41
+:END:
+
+[13:07:50; 02.02.2026]: Looks like the map array try to infer the
+shape of the  input to create the graph:
+
+https://github.com/dask/dask/issues/1949#issuecomment-276452198
+
+This is the origin of that ghost calls...
+
+https://docs.dask.org/en/latest/generated/dask.array.Array.map_blocks.html#dask.array.Array.map_blocks
+
+"Note that map_blocks will attempt to automatically determine the
+output array type by calling func on 0-d versions of the
+inputs. Please refer to the meta keyword argument below if you expect
+that the function will not succeed when operating on 0-d arrays."
+
+
+[16:32:15; 02.02.2026]: I created this pull request :)
+https://github.com/deisa-project/deisa-ray/pull/67
+
+Now I will wait for the response.
