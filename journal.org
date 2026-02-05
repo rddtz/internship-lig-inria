@@ -8,12 +8,19 @@
 
 * TODOS
 
+** TODO See how the writing is performing in a parallel environment
 
-** TODO Read about the task internals of dask.
-
-** TODO Create manually a dask graph that saves to a hdf5 file.
 
 * DONES
+** DONE Create manually a dask graph that saves to a hdf5 file.
+CLOSED: [2026-02-04 Wed 15:12]
+
+
+- State "DONE"       from "TODO"       [2026-02-04 Wed 15:12]
+** DONE Read about the task internals of dask.
+CLOSED: [2026-02-04 Wed 15:12]
+
+- State "DONE"       from "TODO"       [2026-02-04 Wed 15:12]
 ** DONE Read and understand how the deisa tests are structured, then creating a dask.to_zarr test
 CLOSED: [2026-01-28 Wed 16:20]
 
@@ -44,30 +51,34 @@ dask, but zarr does. I will try to create a deisa test with zarr tomorrow.
 
 * Journal
 
-#+BEGIN: clocktable :scope file :maxlevel 5
-#+CAPTION: Clock summary at [2026-01-30 Fri 16:39]
-| Headline                                       | Time     |         |      |      |
-|------------------------------------------------+----------+---------+------+------|
-| *Total time*                                     | *2d 16:59* |         |      |      |
-|------------------------------------------------+----------+---------+------+------|
-| Journal                                        | 2d 16:59 |         |      |      |
-| \_  2026 W03 [Jan]                             |          | 12:35   |      |      |
-| \_    2026-01-13 Getting used to dask and ray  |          |         | 3:18 |      |
-| \_      Ray                                    |          |         |      | 0:52 |
-| \_    2026-01-14 Side quests                   |          |         | 4:48 |      |
-| \_    2026-01-15 First steps into doreisa      |          |         | 4:29 |      |
-| \_  2026 W04 [Jan]                             |          | 1d 1:45 |      |      |
-| \_    2026-01-19 Getting Started in Grid5000   |          |         | 5:00 |      |
-| \_    2026-01-20 Continuing with Grid5000      |          |         | 6:03 |      |
-| \_    2026-01-21 Starting with HDF5 and Dask   |          |         | 3:48 |      |
-| \_    2026-01-22 Continuing with HDF5 and Dask |          |         | 5:33 |      |
-| \_    2026-01-23 Problems with Deisa and...    |          |         | 5:21 |      |
-| \_  2026 W05 [Jan]                             |          | 1d 2:39 |      |      |
-| \_    2026-01-26 Figuring out problems in...   |          |         | 5:50 |      |
-| \_    2026-01-27 First reunion and zarr tests  |          |         | 4:49 |      |
-| \_    2026-01-28 Tests and Zarr                |          |         | 5:53 |      |
-| \_    2026-01-29 Getting missions              |          |         | 4:21 |      |
-| \_    2026-01-30 Starting to see about...      |          |         | 5:46 |      |
+#+BEGIN: clocktable :scope file :maxlevel 3
+#+CAPTION: Clock summary at [2026-02-05 Thu 17:06]
+| Headline                                       | Time     |         |      |
+|------------------------------------------------+----------+---------+------|
+| *Total time*                                     | *3d 13:00* |         |      |
+|------------------------------------------------+----------+---------+------|
+| Journal                                        | 3d 13:00 |         |      |
+| \_  2026 W03 [Jan]                             |          |   12:35 |      |
+| \_    2026-01-13 Getting used to dask and ray  |          |         | 3:18 |
+| \_    2026-01-14 Side quests                   |          |         | 4:48 |
+| \_    2026-01-15 First steps into doreisa      |          |         | 4:29 |
+| \_  2026 W04 [Jan]                             |          | 1d 1:45 |      |
+| \_    2026-01-19 Getting Started in Grid5000   |          |         | 5:00 |
+| \_    2026-01-20 Continuing with Grid5000      |          |         | 6:03 |
+| \_    2026-01-21 Starting with HDF5 and Dask   |          |         | 3:48 |
+| \_    2026-01-22 Continuing with HDF5 and Dask |          |         | 5:33 |
+| \_    2026-01-23 Problems with Deisa and...    |          |         | 5:21 |
+| \_  2026 W05 [Jan]                             |          | 1d 2:39 |      |
+| \_    2026-01-26 Figuring out problems in...   |          |         | 5:50 |
+| \_    2026-01-27 First reunion and zarr tests  |          |         | 4:49 |
+| \_    2026-01-28 Tests and Zarr                |          |         | 5:53 |
+| \_    2026-01-29 Getting missions              |          |         | 4:21 |
+| \_    2026-01-30 Starting to see about...      |          |         | 5:46 |
+| \_  2026 Week 06 [Feb]                         |          |   20:01 |      |
+| \_    2026-02-02                               |          |         | 5:57 |
+| \_    2026-02-03                               |          |         | 6:27 |
+| \_    2026-02-04                               |          |         | 1:29 |
+| \_    2026-02-05                               |          |         | 6:08 |
 #+END:
 
 ** 2026 W03 [Jan]
@@ -607,3 +618,54 @@ that the function will not succeed when operating on 0-d arrays."
 https://github.com/deisa-project/deisa-ray/pull/67
 
 Now I will wait for the response.
+
+*** 2026-02-03
+:LOGBOOK:
+CLOCK: [2026-02-03 Tue 12:19]--[2026-02-03 Tue 17:07] =>  4:48
+CLOCK: [2026-02-03 Tue 09:31]--[2026-02-03 Tue 11:10] =>  1:39
+:END:
+
+[13:05:26; 03.02.2026]: I am getting a error when running the
+=test_analytics= before the saving tests, but I can't understand why
+this is a problem...
+
+[14:34:47; 03.02.2026]: Looks like the problem was the scheduler
+definition outside the head_script for the tests. Everything is okay
+now after setting the scheduler to none after the end of the tests.
+
+[15:09:53; 03.02.2026]: I am getting the problem with the distributed
+scheduler to save with zarr again, because the array is completely
+empty when I read it, the previous way to stop this from happening was
+to use persist.
+
+[17:07:20; 03.02.2026]: I added some more tests with different file
+names, everything looks ok.
+*** 2026-02-04
+:LOGBOOK:
+CLOCK: [2026-02-04 Wed 15:11]--[2026-02-04 Wed 16:40] =>  1:29
+:END:
+
+[15:11:58; 04.02.2026]: The idea now is to see how the parallel
+writing is doing, and also implement netCDF
+
+[16:38:39; 04.02.2026]: I have a meeting after so I just configured
+the workflow example to work with the current api. Tomorrow I will run
+some tests with the saving methods.
+
+*** 2026-02-05
+
+:LOGBOOK:
+CLOCK: [2026-02-05 Thu 12:07]--[2026-02-05 Thu 17:06] =>  4:59
+CLOCK: [2026-02-05 Thu 09:44]--[2026-02-05 Thu 10:53] =>  1:09
+:END:
+
+[10:01:12; 05.02.2026]: I will start the day by creating the different
+analytics and seem how they perform in one node. After I will need to
+see how they perform in more then one node.
+
+[10:51:41; 05.02.2026]: Going to eat, I need to see how to run this
+simulation with more process...
+
+
+[16:56:43; 05.02.2026]: Today I just talked and brainstormed about
+some deisa architecture choices...
