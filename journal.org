@@ -52,13 +52,13 @@ dask, but zarr does. I will try to create a deisa test with zarr tomorrow.
 * Journal
 
 #+BEGIN: clocktable :scope file :maxlevel 3
-#+CAPTION: Clock summary at [2026-02-05 Thu 17:06]
+#+CAPTION: Clock summary at [2026-02-06 Fri 15:31]
 | Headline                                       | Time     |         |      |
 |------------------------------------------------+----------+---------+------|
-| *Total time*                                     | *3d 13:00* |         |      |
+| *Total time*                                     | *3d 17:41* |         |      |
 |------------------------------------------------+----------+---------+------|
-| Journal                                        | 3d 13:00 |         |      |
-| \_  2026 W03 [Jan]                             |          |   12:35 |      |
+| Journal                                        | 3d 17:41 |         |      |
+| \_  2026 W03 [Jan]                             |          | 12:35   |      |
 | \_    2026-01-13 Getting used to dask and ray  |          |         | 3:18 |
 | \_    2026-01-14 Side quests                   |          |         | 4:48 |
 | \_    2026-01-15 First steps into doreisa      |          |         | 4:29 |
@@ -74,11 +74,12 @@ dask, but zarr does. I will try to create a deisa test with zarr tomorrow.
 | \_    2026-01-28 Tests and Zarr                |          |         | 5:53 |
 | \_    2026-01-29 Getting missions              |          |         | 4:21 |
 | \_    2026-01-30 Starting to see about...      |          |         | 5:46 |
-| \_  2026 Week 06 [Feb]                         |          |   20:01 |      |
+| \_  2026 Week 06 [Feb]                         |          | 1d 0:42 |      |
 | \_    2026-02-02                               |          |         | 5:57 |
 | \_    2026-02-03                               |          |         | 6:27 |
 | \_    2026-02-04                               |          |         | 1:29 |
 | \_    2026-02-05                               |          |         | 6:08 |
+| \_    2026-02-06                               |          |         | 4:41 |
 #+END:
 
 ** 2026 W03 [Jan]
@@ -669,3 +670,19 @@ simulation with more process...
 
 [16:56:43; 05.02.2026]: Today I just talked and brainstormed about
 some deisa architecture choices...
+
+*** 2026-02-06
+:LOGBOOK:
+CLOCK: [2026-02-06 Fri 12:00]--[2026-02-06 Fri 15:30] =>  3:30
+CLOCK: [2026-02-06 Fri 09:43]--[2026-02-06 Fri 10:54] =>  1:11
+:END:
+
+[09:43:19; 06.02.2026]: I will try to make the analytics runs with
+more than two nodes.
+
+[13:43:50; 06.02.2026]: I talked with Andres and get the issue (I was
+being very dumb...), I will know proceed to a multinode execution to
+see how it works... I will need to learn some OAR.
+
+[15:29:55; 06.02.2026]: I will be gone for know because there is a lot
+of things to do at home today.
