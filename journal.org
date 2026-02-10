@@ -686,3 +686,373 @@ see how it works... I will need to learn some OAR.
 
 [15:29:55; 06.02.2026]: I will be gone for know because there is a lot
 of things to do at home today.
+** 2026 Week 07 [Feb]
+
+*** 2026-02-09
+:LOGBOOK:
+CLOCK: [2026-02-09 Mon 11:34]--[2026-02-09 Mon 16:50] =>  5:16
+CLOCK: [2026-02-09 Mon 10:19]--[2026-02-09 Mon 10:54] =>  0:35
+:END:
+
+
+[10:41:03; 09.02.2026]: Plans for today are simple: Benchmarking and
+if everything is okay Graphs...
+
+[16:47:17; 09.02.2026]: I am waiting for the grid to start so I can go
+home, But i think i will go anyway.
+
+*** 2026-02-10
+:LOGBOOK:
+CLOCK: [2026-02-10 Tue 11:53]
+CLOCK: [2026-02-10 Tue 10:04]--[2026-02-10 Tue 10:50] =>  0:46
+:END:
+
+[10:24:01; 10.02.2026]: I get a warning for bad use of resources in
+the Grid5000, it is important to read about how to use here:
+https://www.grid5000.fr/w/Grid5000:UsagePolicy
+
+[10:24:39; 10.02.2026]: I will now look the results.
+
+Getting results
+#+begin_src shell :results output :exports both
+for i in `ls -d logs*`; do RID=`echo $i | cut -d- -f 2,3,4,5 | sed "s/-/,/g"`; echo "type,run,cores,id,type2,timestep,time" > results.csv; for l in `cat $i/run.log | grep "\[ANALYTICS\]" | cut -d: -f2`; do echo "$RID,`echo $l`"; done; done
+#+end_src
+
+[12:06:06; 10.02.2026]: I don't know why but there is some cases where
+the name of the folder is different then the name in the results... I
+will ignore this cases
+
+#+begin_src shell :results output :exports both
+for l in `cat results.csv`; do if [[ `echo $l | cut -d, -f2` != `echo $l | cut -d, -f5` ]]; then echo $l; fi; done > mismatch-results.csv
+#+end_src
+
+
+[12:13:20; 10.02.2026]: Loooking for the results:
+
+[13:04:51; 10.02.2026]: I will use the mismatched results but only
+trusting in the id inside the file (id2)
+*Loading data
+#+begin_src R :results output :session *R* :exports both
+options(crayon.enabled=FALSE)
+suppressMessages(library(fs))
+suppressMessages(library(tidyverse))
+
+BASE <- "./BENCHMARKS/results"
+tibble(CSV = dir_ls(BASE, regexp = "s\\/results.csv", recurse=TRUE)) |>
+    mutate(DATA = map(CSV, read_csv, show_col_types=FALSE, progress=FALSE)) |>
+    unnest(DATA) |>  select(-CSV, -type, -timestep) |>
+  select(type=type2, everything()) -> df
+
+# [15:14:28; 10.02.2026]: THIS WAS POLUTED
+
+names(df)
+
+df
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results.csv
+New names:
+• `1` -> `1...2`
+• `1` -> `1...3`
+Error in `select()`:
+! Can't select columns that don't exist.
+✖ Columns `avg_zarr` and `avg_hdf5` don't exist.
+Run `rlang::last_trace()` to see where the error occurred.
+Warning message:
+There was 1 warning in `mutate()`.
+ℹ In argument: `DATA = map(CSV, read_csv, show_col_types = FALSE, progress = FALSE)`.
+Caused by warning:
+! One or more parsing issues, call `problems()` on your data frame for details, e.g.:
+  dat <- vroom(...)
+  problems(dat)
+[1] "type"       "run"        "cores"      "id"         "time"       "avg"        "1...2"
+ [8] "1...3"      "1770731118" "44"
+# A tibble: 11,977 × 10
+   type    run cores         id   time avg   `1...2` `1...3` `1770731118` `44`
+   <chr> <dbl> <dbl>      <dbl>  <dbl> <chr>   <dbl>   <dbl>        <dbl> <chr>
+ 1 zarr      1    10 1770653134 0.944  <NA>       NA      NA           NA <NA>
+ 2 zarr      1    10 1770653134 0.0554 <NA>       NA      NA           NA <NA>
+ 3 zarr      1    10 1770653134 0.0633 <NA>       NA      NA           NA <NA>
+ 4 zarr      1    10 1770653134 0.0520 <NA>       NA      NA           NA <NA>
+ 5 zarr      1    10 1770653134 0.0596 <NA>       NA      NA           NA <NA>
+ 6 zarr      1    10 1770653134 0.0795 <NA>       NA      NA           NA <NA>
+ 7 zarr      1    10 1770653134 0.0568 <NA>       NA      NA           NA <NA>
+ 8 zarr      1    10 1770653134 0.0648 <NA>       NA      NA           NA <NA>
+ 9 zarr      1    10 1770653134 0.0740 <NA>       NA      NA           NA <NA>
+10 zarr      1    10 1770653134 0.0739 <NA>       NA      NA           NA <NA>
+# ℹ 11,967 more rows
+# ℹ Use `print(n = ...)` to see more rows
+#+end_example
+
+*Stats*
+#+begin_src R :results table :colnames yes :session *R* :exports both
+df |> group_by(type, cores) |>
+  summarise(N=n(),
+            mean_time = mean(time),
+            sd_t = sd(time),
+            se = 3*sd_t / sqrt(mean_time)
+            ) |>
+  arrange(cores) |>
+  print(n=100) -> df.simple ## |> select(type, cores, mean_time) |> pivot_wider(names_from=type, values_from=mean_time) -> df.simple
+
+
+df.simple
+#+end_src
+
+#+RESULTS:
+| type    | cores |   N |          mean_time |               sd_t |                se |
+|---------+-------+-----+--------------------+--------------------+-------------------|
+| h5py    |     5 | 740 | 0.0563477417337914 | 0.0559598850444674 | 0.707228592956479 |
+| to_hdf5 |     5 | 875 | 0.0703310194708395 |   0.13691086715704 |  1.54876569161457 |
+| zarr    |     5 | 537 | 0.0898834398361106 |  0.103188416666772 |  1.03255301968237 |
+| h5py    |    10 | 497 | 0.0722319923561473 | 0.0536478537048655 | 0.598837252984774 |
+| to_hdf5 |    10 | 830 |  0.114893210728915 |  0.241503470940505 |  2.13745730486469 |
+| zarr    |    10 | 677 |  0.157945107267298 |  0.215323578297632 |  1.62539812551428 |
+| h5py    |    15 | 580 |                    |                    |                   |
+| to_hdf5 |    15 | 664 |  0.162273575668703 |  0.378554627474086 |  2.81920015870464 |
+| zarr    |    15 | 493 |  0.235105003967548 |  0.301571704211606 |  1.86586796592694 |
+| h5py    |    20 | 579 |  0.100971139162405 | 0.0679191396163509 | 0.641231431864194 |
+| to_hdf5 |    20 | 658 |  0.204312841232542 |   0.49533331509378 |  3.28753936523211 |
+| zarr    |    20 | 396 |  0.316509667267622 |  0.379785489039003 |  2.02519166866786 |
+| h5py    |    25 | 822 |  0.120670084388091 | 0.0729555574671328 |   0.6300569794612 |
+| to_hdf5 |    25 | 747 |  0.251216136864787 |  0.626425100759999 |  3.74944199915684 |
+| zarr    |    25 | 539 |  0.412886412799656 |  0.533939861188927 |   2.4928623776366 |
+| h5py    |    30 | 543 |  0.118068319456742 | 0.0788723026950226 | 0.688619131389092 |
+| to_hdf5 |    30 | 664 |  0.263234976743969 |  0.718368167523826 |  4.20045693933075 |
+| zarr    |    30 | 487 |  0.527390307129375 |  0.689210389778243 |  2.84712804092851 |
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+suppressMessages(library(ggplot2))
+
+df.simple |> ggplot(aes(color=type,x=cores, y=mean_time)) +
+  geom_point(size=5) +
+  geom_line(size=3, alpha=0.2) +
+  theme_bw()
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureeFj0yR.png]]
+
+[13:15:58; 10.02.2026]: Faster then zarr, slower then pure h5py. This
+is for a run with 2 nodes. I think I should also run for more nodes
+and also for 1 node.
+
+[13:16:52; 10.02.2026]: I don't trust enough this results...
+
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+suppressMessages(library(ggplot2))
+
+df.simple |> ggplot(aes(color=type,x=cores, y=mean_time,
+                        ymin = mean_time - se,
+                        ymax = mean_time + se
+                        )
+                    ) +
+  geom_errorbar(width=.8, alpha=.7, position="dodge") +
+  geom_point(size=5) +
+  geom_line(size=3, alpha=0.2) +
+  theme_bw()
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureVUT8ZD.png]]
+
+[13:28:45; 10.02.2026]: Look at the error for the to_hdf5... the zarr
+also.
+Well, they are being runned in parallel (distributed), so it can
+explain the variability, but anyway it is very high
+
+[13:30:13; 10.02.2026]: Statistically the are basically the same. I
+need MORE runs :)
+
+[13:30:32; 10.02.2026]: I will create a good experimental project this
+time and run the things properly.
+
+#+begin_src R :results output :session *R* :exports both
+options(crayon.enabled=FALSE)
+#install.packages('DoE.base', dependencies = TRUE, repos='http://cran.rstudio.com/')
+library(DoE.base)
+library(tidyverse)
+
+factor_cores = c(1, 5, 15, 20, 25, 30)
+type = c("avg", "avg_zarr", "avg_hdf5")
+
+fac.design(nfactors=2,
+           replications=30,
+           repeat.only= FALSE ,
+           randomize=TRUE,
+           seed=15,
+           nlevels=c(length(type),
+                     length(factor_cores)),
+           factor.names=list(
+             experiment = type,
+             cores = factor_cores
+           )) |>
+  as_tibble() |>
+  ## mutate_at(vars(size:threads), as.character) |>
+  ## mutate_at(vars(size:threads), as.numeric) |>
+  #filter(threads == 16) |>
+  print() |> ## |>
+  write_csv("proj.csv", progress=FALSE)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+creating full factorial with 18 runs ...
+
+# A tibble: 540 × 3
+   experiment cores Blocks
+   <fct>      <fct> <fct>
+ 1 avg_zarr   5     .1
+ 2 avg_hdf5   25    .1
+ 3 avg        20    .1
+ 4 avg_zarr   1     .1
+ 5 avg_hdf5   15    .1
+ 6 avg_hdf5   5     .1
+ 7 avg        1     .1
+ 8 avg_hdf5   30    .1
+ 9 avg_zarr   25    .1
+10 avg        5     .1
+# ℹ 530 more rows
+# ℹ Use `print(n = ...)` to see more rows
+#+end_example
+
+[13:43:15; 10.02.2026]: I think the project is ok, 10 runs to have a
+idea of how everything goes.
+
+[13:44:07; 10.02.2026]: I now need to read about the grid politics to
+not be banned from it...
+
+[14:07:48; 10.02.2026]: Important to notice that all this tests are
+being made with the deisa version from this PR:
+https://github.com/deisa-project/deisa-ray/pull/67
+(commit 5fe9b753977a6052cc87f9f92916beac9f184e56)
+
+[15:06:41; 10.02.2026]: I will tomorrow test with more then 2 nodes,
+maybe 4 or more
+
+*Loading data
+#+begin_src R :results output :session *R* :exports both
+options(crayon.enabled=FALSE)
+suppressMessages(library(fs))
+suppressMessages(library(tidyverse))
+
+BASE <- "./BENCHMARKS/results"
+tibble(CSV = dir_ls(BASE, regexp = "s\\/results.csv", recurse=TRUE)) |> print() |>
+    mutate(DATA = map(CSV, read_csv, show_col_types=FALSE, progress=FALSE)) |>
+    unnest(DATA) |>  select(-CSV, -type, -timestep) |>
+  select(type=type2, everything()) -> df
+
+names(df)
+
+df
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results.csv
+[1] "type"  "run"   "cores" "id"    "time"
+# A tibble: 600 × 5
+   type    run cores         id   time
+   <chr> <dbl> <dbl>      <dbl>  <dbl>
+ 1 h5py      1     1 1770731118 0.660
+ 2 h5py      1     1 1770731118 0.0231
+ 3 h5py      1     1 1770731118 0.0205
+ 4 h5py      1     1 1770731118 0.0185
+ 5 h5py      1     1 1770731118 0.0225
+ 6 h5py      1     1 1770731118 0.0197
+ 7 h5py      1     1 1770731118 0.0205
+ 8 h5py      1     1 1770731118 0.0171
+ 9 h5py      1     1 1770731118 0.0192
+10 h5py      1     1 1770731118 0.0205
+# ℹ 590 more rows
+# ℹ Use `print(n = ...)` to see more rows
+#+end_example
+
+*Stats*
+#+begin_src R :results table :colnames yes :session *R* :exports both
+df |> group_by(type, cores) |>
+  summarise(N=n(),
+            mean_time = mean(time),
+            sd_t = sd(time),
+            se = 3*sd_t / sqrt(mean_time)
+            ) |>
+  arrange(cores) |>
+  print(n=100) -> df.simple
+
+
+df.simple ## |> select(type, cores, mean_time) |> pivot_wider(names_from=type, values_from=mean_time)
+#+end_src
+
+#+RESULTS:
+| type    | cores |  N |          mean_time |               sd_t |               se |
+|---------+-------+----+--------------------+--------------------+------------------|
+| h5py    |     1 | 48 | 0.0440368425416698 |  0.123065553612227 | 1.75933960068821 |
+| to_hdf5 |     1 | 48 | 0.0608970955208316 |  0.179313535747441 | 2.17989732839559 |
+| zarr    |     1 | 72 | 0.0486494533055506 | 0.0970448080905043 | 1.31994117928851 |
+| h5py    |     5 | 48 | 0.0595206578541602 | 0.0863761485181182 | 1.06213868892053 |
+| to_hdf5 |     5 | 48 | 0.0916598188750157 |  0.221473673577236 | 2.19459237888914 |
+| zarr    |     5 | 48 |  0.108814984020833 |  0.175542531972643 | 1.59646448483465 |
+| h5py    |    15 | 48 |  0.107166851270833 |  0.112067578297001 | 1.02700133142384 |
+| to_hdf5 |    15 | 48 |  0.239173700083331 |  0.605393286115538 | 3.71366003414949 |
+| zarr    |    15 | 48 |  0.289796444145836 |  0.453413985853588 | 2.52679285788887 |
+| h5py    |    30 | 48 |  0.150105019770812 |  0.135534325149063 | 1.04947704643611 |
+| to_hdf5 |    30 | 48 |  0.498219433020831 |   1.40766330931132 | 5.98287203526541 |
+| zarr    |    30 | 48 |  0.548432147708347 |  0.841246938113639 | 3.40787219569797 |
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+suppressMessages(library(ggplot2))
+
+df.simple |> ggplot(aes(color=type,x=cores, y=mean_time)) +
+  geom_point(size=5) +
+  geom_line(size=3, alpha=0.2) +
+  theme_bw()
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figurebzwtrf.png]]
+
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+suppressMessages(library(ggplot2))
+
+df.simple |> ggplot(aes(color=type,x=cores, y=mean_time,
+                        ymin = mean_time - se,
+                        ymax = mean_time + se
+                        )
+                    ) +
+  geom_errorbar(width=.8, alpha=.7, position="dodge") +
+  geom_point(size=5) +
+  geom_line(size=3, alpha=0.2) +
+  theme_bw()
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureO1JTUs.png]]
+
+[15:18:22; 10.02.2026]: The results are consistent with what was seems
+before, to_hdf5 has a really high variance and it seems to be
+heterosedastic (bad?). For two nodes, it is better to just use
+sequentially, I will see with more nodes, maybe 5?
+
+[15:22:31; 10.02.2026]: Also maybe i am tracing the wrong thing. I
+don't know...
+
+[15:24:41; 10.02.2026]: Also the problem can be that I am running in
+the top of the HOME and not SCRATCH...
