@@ -8,15 +8,32 @@
 
 * TODOS
 
-** TODO See how the writing is performing in a parallel environment
+** TODO See about scotch and how it can be used
 
+** IN-PROGRESS Keep track of PR in dask
+- State "IN-PROGRESS" from              [2026-02-27 Fri 16:16]
+
+** TODO Create a report about what was done with hdf5
+
+* DONES
+** DONE Rewrite to a manner similar to dask, saving multiple arrays at a time
+CLOSED: [2026-02-27 Fri 16:15]
+- State "DONE"       from "TODO"       [2026-02-27 Fri 16:15]
+Also see about multiple timesteps for a analytics...
+
+[16:15:26; 27.02.2026]: This can be done by creating diferent datasets
+
+** DONE See how the writing is performing in a parallel environment
+CLOSED: [2026-02-27 Fri 16:14]
+
+- State "IN-PROGRESS" from "DONE"       [2026-02-27 Fri 16:14]
+- State "DONE"       from "TODO"       [2026-02-27 Fri 16:14]
 [15:43:31; 11.02.2026]: The results that I get at the moment are not
 very good...
 
-** TODO Rewrite to a manner similar to dask, saving multiple arrays at a time
-Also see about multiple timesteps for a analytics...
+[11:59:24; 23.02.2026]: it is good to be honest! I run with up to 50
+nodes and everything was ok!
 
-* DONES
 ** DONE Create manually a dask graph that saves to a hdf5 file.
 CLOSED: [2026-02-04 Wed 15:12]
 
@@ -61,6 +78,21 @@ dask, but zarr does. I will try to create a deisa test with zarr tomorrow.
 
 #+begin_src R :results output :session *R* :exports both
 
+meu_estilo <- function() {
+    list(
+        theme_bw(base_size = 22),
+        theme(
+            legend.title = element_blank(),
+            plot.margin = unit(c(0, 0, 0, 0), "cm"),
+            legend.spacing = unit(1, "mm"),
+            legend.position = "right",
+            legend.justification = "left",
+            legend.box.spacing = unit(0, "pt"),
+            legend.box.margin = margin(0, 0, 0, 0),
+            axis.text.x = element_text(angle=45, vjust=1, hjust=1)
+        ))
+}
+
 load <- function(dir="./BENCHMARKS/results", regex="s\\/results.csv") {
 
   options(crayon.enabled=FALSE)
@@ -94,9 +126,63 @@ suppressMessages(library(ggplot2))
   df |> ggplot(aes(color=type,x=cores, y=mean_time)) +
     geom_point(size=5) +
     geom_line(size=3, alpha=0.2) +
-    theme_bw()
+    meu_estilo()
 
 }
+
+line_g_err <- function(df) {
+
+suppressMessages(library(ggplot2))
+
+  df |> ggplot(aes(color=type,x=cores, y=mean_time,
+                   ymin = mean_time - se,
+                   ymax = mean_time + se # [10:53:57; 12.02.2026]:  uncomment for variance
+                   )) +
+    geom_point(size=5) +
+    geom_line(size=3, alpha=0.2) +
+    geom_errorbar(width=.8, alpha=.7, position="dodge") +
+    meu_estilo()
+
+}
+
+
+
+col_g_sd <- function(df) {
+  suppressMessages(library(ggplot2))
+
+  df |> ggplot(aes(fill=type, x=type, y=mean_time,
+                          ymin = mean_time - sd_t,
+                          ymax = mean_time + sd_t # [10:53:57; 12.02.2026]:  uncomment for variance
+                          )) +
+    geom_col() +
+    geom_errorbar(width=.8, alpha=.7, position="dodge") +
+    facet_wrap( ~ cores, ncol=10) +
+    ## labs(title = "Execution with 5 nodes",
+    ##      subtitle="Facets show amout of cores per node") +
+    ## geom_line(size=3, alpha=0.2) +
+    meu_estilo()
+
+  }
+
+
+col_g_err <- function(df) {
+  suppressMessages(library(ggplot2))
+
+  df |> ggplot(aes(fill=type, x=type, y=mean_time,
+                          ymin = mean_time - se,
+                          ymax = mean_time + se # [10:53:57; 12.02.2026]:  uncomment for variance
+                          )) +
+    geom_col() +
+    geom_errorbar(width=.8, alpha=.7, position="dodge") +
+    facet_wrap( ~ cores, ncol=10) +
+    ## labs(title = "Execution with 5 nodes",
+    ##      subtitle="Facets show amout of cores per node") +
+    ## geom_line(size=3, alpha=0.2) +
+    meu_estilo()
+
+  }
+
+
 
 col_g <- function(df) {
   suppressMessages(library(ggplot2))
@@ -107,13 +193,22 @@ col_g <- function(df) {
                           )) +
     geom_col() +
     ## geom_errorbar(width=.8, alpha=.7, position="dodge") +x
-    facet_wrap(~ cores) +
+    facet_wrap(~ cores, ncol=10) +
     ## labs(title = "Execution with 5 nodes",
     ##      subtitle="Facets show amout of cores per node") +
     ## geom_line(size=3, alpha=0.2) +
-    theme_bw()
+    meu_estilo()
 
   }
+
+timestep_g <- function(df) {
+  df |>
+    ggplot(aes(x=timestep, y=time, color=as.factor(type))) +
+    geom_point(size=1) +
+    geom_line() +
+    facet_wrap(~ cores) +
+    meu_estilo()
+}
 
 #+end_src
 
@@ -2041,7 +2136,7 @@ avg,1,1770977690,h5py,8,0.04799346500021784
 #+end_example
 
 #+begin_src R :results output :session *R* :exports both
-df <- load() |> stats()
+df <- load() |> filter(timestep != 0) |> stats()
 
 df |> print(n=100)
 #+end_src
@@ -2059,40 +2154,40 @@ df |> print(n=100)
 ℹ Use `summarise(.by = c(type, cores))` for per-operation grouping (`?dplyr::dplyr_by`) instead.
 # A tibble: 24 × 6
 # Groups:   type [3]
-   type    cores     N mean_time  sd_t     se
-   <chr>   <dbl> <int>     <dbl> <dbl>  <dbl>
- 1 h5py        1    50     0.128 0.174  1.46
- 2 to_hdf5     1    50     0.155 0.421  3.21
- 3 zarr        1    50     0.207 0.617  4.07
- 4 h5py        5    50     0.199 0.173  1.16
- 5 to_hdf5     5    50     0.648 2.10   7.83
- 6 zarr        5    50     0.884 2.81   8.97
- 7 h5py       15    50     0.388 0.190  0.915
- 8 to_hdf5    15    50     1.49  5.15  12.7
- 9 zarr       15    50     1.91  6.92  15.0
-10 h5py       20    50     0.486 0.214  0.919
-11 to_hdf5    20    50     1.76  5.25  11.9
-12 zarr       20    50     2.16  7.01  14.3
-13 h5py       25    50     0.559 0.190  0.764
-14 to_hdf5    25    50     2.00  5.29  11.2
-15 zarr       25    50     2.44  7.03  13.5
-16 h5py       30    50     0.668 0.195  0.716
-17 to_hdf5    30    50     2.20  5.20  10.5
-18 zarr       30    50     2.62  6.85  12.7
-19 h5py       40    50     0.842 0.211  0.688
-20 to_hdf5    40    50     2.80  5.74  10.3
-21 zarr       40    50     3.14  7.04  11.9
-22 h5py       50    50     1.04  0.208  0.614
-23 to_hdf5    50    50     3.79  9.80  15.1
-24 zarr       50    50     3.09  6.78  11.6
+   type    cores     N mean_time   sd_t    se
+   <chr>   <dbl> <int>     <dbl>  <dbl> <dbl>
+ 1 h5py        1    98    0.118  0.158  1.38
+ 2 to_hdf5     1    49    0.0953 0.0314 0.305
+ 3 zarr        1    98    0.120  0.0180 0.157
+ 4 h5py        5    98    0.201  0.185  1.24
+ 5 to_hdf5     5    49    0.351  0.0734 0.372
+ 6 zarr        5    98    0.492  0.121  0.516
+ 7 h5py       15    98    0.375  0.171  0.839
+ 8 to_hdf5    15    49    0.759  0.133  0.459
+ 9 zarr       15    98    0.931  0.188  0.584
+10 h5py       20    98    0.468  0.185  0.810
+11 to_hdf5    20    49    1.01   0.213  0.633
+12 zarr       20    98    1.17   0.242  0.670
+13 h5py       25    98    0.551  0.168  0.681
+14 to_hdf5    25    49    1.25   0.269  0.721
+15 zarr       25    98    1.45   0.352  0.878
+16 h5py       30    98    0.655  0.174  0.647
+17 to_hdf5    30    49    1.46   0.286  0.708
+18 zarr       30    98    1.66   0.315  0.734
+19 h5py       40    98    0.839  0.188  0.615
+20 to_hdf5    40    49    1.99   0.298  0.634
+21 zarr       40    98    2.12   0.362  0.747
+22 h5py       50    98    1.03   0.186  0.551
+23 to_hdf5    50    49    2.40   0.334  0.647
+24 zarr       50    98    2.39   0.494  0.960
 #+end_example
 
 #+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
-col_g(df)
+df |> col_g()
 #+end_src
 
 #+RESULTS:
-[[file:/tmp/babel-ZcpOwL/figureqN7bJB.png]]
+[[file:/tmp/babel-ZcpOwL/figure4JHY7C.png]]
 [12:00:28; 13.02.2026]: Yeah, this just don't scale at all. This
 executions are with 9 computational nodes...
 
@@ -2104,7 +2199,13 @@ load() |> filter(timestep != 0) |> stats() |> col_g()
 #+end_src
 
 #+RESULTS:
-[[file:/tmp/babel-ZcpOwL/figurea0Epjh.png]]
+[[file:/tmp/babel-ZcpOwL/figureTObeqz.png]]
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+load() |> mutate(time = time/cores) |> stats() |> col_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureSTrWIX.png]]
 
 [12:03:55; 13.02.2026]: we can see that there is a difference by
 looking at the scales...
@@ -2258,3 +2359,1029 @@ if anyone there works with it.
 
 [15:29:55; 13.02.2026]: Rechunking is not the correct strategy, next
 week I will try to follow the file per node one...
+
+** 2026 Week 08 [Feb]
+*** 2026-02-17
+:LOGBOOK:
+CLOCK: [2026-02-17 Tue 12:24]--[2026-02-18 Wed 12:02] => 23:38
+CLOCK: [2026-02-17 Tue 09:45]--[2026-02-17 Tue 11:05] =>  1:20
+:END:
+
+
+#+begin_src R :results output :session *R* :exports both
+df <- load() |> filter(timestep != 0) |> stats()
+
+df |> print(n=100)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results.csv
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by type and cores.
+ℹ Output is grouped by type.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(type, cores))` for per-operation grouping (`?dplyr::dplyr_by`) instead.
+# A tibble: 24 × 6
+# Groups:   type [3]
+   type    cores     N mean_time   sd_t    se
+   <chr>   <dbl> <int>     <dbl>  <dbl> <dbl>
+ 1 h5py        1    49     0.115 0.150  1.33
+ 2 to_hdf5     1    49     0.212 0.0839 0.547
+ 3 zarr        1    49     0.120 0.0183 0.159
+ 4 h5py        5    49     0.212 0.205  1.34
+ 5 to_hdf5     5    49     0.367 0.205  1.01
+ 6 zarr        5    49     0.496 0.133  0.568
+ 7 h5py       15    49     0.371 0.162  0.796
+ 8 to_hdf5    15    49     1.09  0.234  0.672
+ 9 zarr       15    49     0.930 0.195  0.605
+10 h5py       20    49     0.461 0.169  0.745
+11 to_hdf5    20    49     1.22  0.306  0.833
+12 zarr       20    49     1.17  0.224  0.621
+13 h5py       25    49     0.554 0.163  0.656
+14 to_hdf5    25    49     1.93  0.419  0.905
+15 zarr       25    49     1.45  0.317  0.789
+16 h5py       30    49     0.653 0.170  0.630
+17 to_hdf5    30    49     1.88  0.353  0.772
+18 zarr       30    49     1.67  0.304  0.706
+19 h5py       40    49     0.849 0.187  0.608
+20 to_hdf5    40    49     1.88  0.375  0.821
+21 zarr       40    49     2.08  0.342  0.710
+22 h5py       50    49     1.03  0.179  0.531
+23 to_hdf5    50    49     1.78  0.393  0.883
+24 zarr       50    49     2.64  0.506  0.933
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+df |> line_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureNvkNTw.png]]
+
+[10:58:17; 17.02.2026]: There is a decrease in the time when there us
+a lot of parallelism and the rechunk is made. This examples create 18
+chunks.
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+col_g(df)
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figure1aZrSR.png]]
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+col_g_err(df)
+
+                                        #+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figure6bqcQp.png]]
+
+[10:59:39; 17.02.2026]: The variancy is more controlled then
+before. Even with a lot of thread, this is of course because I have
+less parallelism. Anyway, this is not as good as sequencial, and I
+have  450 (9x50) process, whit is considerably a lot of parallelism. I
+will run full hdf5 parallel with h5py to see if It can be faster...
+
+#+begin_src python :results output :tangle h5-with-mpi.py :exports both
+
+import h5py
+import dask.array as da
+import numpy as np
+from mpi4py import MPI
+import os
+import time
+
+def parallel_workflow():
+
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
+
+    CHUNK_SIZE = 256
+    input_path = "entrada.h5"
+    output_path = "saida.h5"
+
+    f_in = h5py.File(input_path, 'r')
+    dask_arr = da.from_array(f_in['data'], chunks=(CHUNK_SIZE, CHUNK_SIZE))
+
+    grid_shape = dask_arr.blocks.shape
+    total_blocks = np.prod(grid_shape)
+
+
+    start = time.perf_counter()
+    f_out = h5py.File(output_path, 'w', driver='mpio', comm=comm)
+    dset_out = f_out.create_dataset('data', shape=dask_arr.shape, dtype=dask_arr.dtype)
+
+    all_block_coords = [
+        (i, j)
+        for i in range(grid_shape[0])
+        for j in range(grid_shape[1])
+    ]
+
+
+    my_blocks = [
+        coords for idx, coords in enumerate(all_block_coords)
+        if idx % size == rank
+    ]
+
+    # print(f"[Rank {rank}] Responsável por {len(my_blocks)} blocos de {CHUNK_SIZE}x{CHUNK_SIZE}", flush=True)
+
+    for (block_i, block_j) in my_blocks:
+
+        data_chunk = dask_arr.blocks[block_i, block_j].compute()
+
+        row_start = block_i * CHUNK_SIZE
+        row_end   = row_start + data_chunk.shape[0]
+
+        col_start = block_j * CHUNK_SIZE
+        col_end   = col_start + data_chunk.shape[1]
+
+        dset_out[row_start:row_end, col_start:col_end] = data_chunk
+
+    f_out.close()
+    f_in.close()
+
+    print(f"[Final {comm.Get_rank()}] {time.perf_counter() - start}", flush=True)
+
+if __name__ == "__main__":
+      print(h5py.get_config().mpi)
+      parallel_workflow()
+
+#+end_src
+
+[11:05:21; 17.02.2026]: I will run this to see what happens.
+
+[12:24:14; 17.02.2026]: I went out to eat, now I am back. I will
+adjust the code above and then will eat.
+
+[13:23:54; 17.02.2026]: I am trying to install the h5py with mpi but
+it is not working:
+
+#+begin_src shell :results output :exports both
+CC="mpicc" HDF5_MPI="ON" HDF5_DIR=$(dirname `dirname $(which h5cc)`) pip install --no-build-isolation --no-binary=h5py mpi4py h5pyz
+#+end_src
+
+[13:33:40; 17.02.2026]: I used UV to install over pip and it worked:
+
+#+begin_src shell :results output :exports both
+CC="mpicc" HDF5_MPI="ON" HDF5_DIR=$(dirname `dirname $(which h5cc)`) uv pip install --no-binary=h5py mpi4py h5py
+#+end_src
+
+[13:33:43; 17.02.2026]: Important to load the module from h5cc in the
+simgrid:
+
+#+begin_export latex
+module load hdf5
+#+end_export
+
+[15:13:36; 17.02.2026]: The MPI saving is taking a lot of time, to me
+this doesn't make sense, maybe is because of the saving idea?
+
+[15:14:58; 17.02.2026]: Maybe it is because I am using the home to
+compute instead of the scratch? IDK because the saving would need to
+be at the home anyway
+
+[15:26:56; 17.02.2026]: I will run with 20 nodes to see tomorrow if
+the rechunk will be useful or not, because the line make it looks like
+that the rechunk would pass the sequential in some moment. I also want
+to see how the sequential version will behavior with this much of parallelism.
+
+[16:08:17; 17.02.2026]: 256x256 -> 1024x1024
+
+- More workers
+- Bigger chunks
+
+[16:13:45; 17.02.2026]: Divided cores between workers and simulation project
+#+begin_src R :results output :session *R* :exports both
+options(crayon.enabled=FALSE)
+#install.packages('DoE.base', dependencies = TRUE, repos='http://cran.rstudio.com/')
+library(DoE.base)
+library(tidyverse)
+
+factor_cores = c(1, 2, 10, 15, 20, 25, 30) ## for each
+type = c("avg", "avg_zarr", "avg_hdf5")
+
+fac.design(nfactors=2,
+           replications=1,
+           repeat.only= FALSE ,
+           randomize=TRUE,
+           seed=5,
+           nlevels=c(length(type),
+                     length(factor_cores)),
+           factor.names=list(
+             experiment = type,
+             cores = factor_cores
+           )) |>
+  as_tibble() |>
+  ## mutate_at(vars(size:threads), as.character) |>
+  ## mutate_at(vars(size:threads), as.numeric) |>
+  #filter(threads == 16) |>1
+  print(n=100) |> ## |>1
+  write_csv("proj.csv", progress=FALSE)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+creating full factorial with 21 runs ...
+
+# A tibble: 21 × 2
+   experiment cores
+   <fct>      <fct>
+ 1 avg_zarr   1
+ 2 avg_zarr   15
+ 3 avg_hdf5   20
+ 4 avg_zarr   30
+ 5 avg_hdf5   10
+ 6 avg_zarr   2
+ 7 avg_zarr   20
+ 8 avg        10
+ 9 avg        30
+10 avg_hdf5   1
+11 avg_hdf5   15
+12 avg_hdf5   2
+13 avg        25
+14 avg        2
+15 avg_hdf5   30
+16 avg_zarr   25
+17 avg_hdf5   25
+18 avg        1
+19 avg        20
+20 avg        15
+21 avg_zarr   10
+#+end_example
+
+*** 2026-02-18
+:LOGBOOK:
+CLOCK: [2026-02-18 Wed 11:52]--[2026-02-18 Wed 16:00] =>  4:08
+CLOCK: [2026-02-18 Wed 09:40]--[2026-02-18 Wed 11:12] =>  1:32
+:END:
+
+[12:02:53; 18.02.2026]: I get the results for the last experience,
+lets analyse:
+
+#+begin_src R :results output :session *R* :exports both
+df <- load(regex="results-run4-rennes") |> filter(timestep != 0) |> stats() |> print(n=100)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results-run4-rennes.csv
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by type and cores.
+ℹ Output is grouped by type.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(type, cores))` for per-operation grouping (`?dplyr::dplyr_by`) instead.
+# A tibble: 21 × 6
+# Groups:   type [3]
+   type    cores     N mean_time   sd_t    se
+   <chr>   <dbl> <int>     <dbl>  <dbl> <dbl>
+ 1 h5py        1    49    0.209  0.365  2.40
+ 2 to_hdf5     1    49    0.0908 0.0187 0.187
+ 3 zarr        1    49    0.120  0.0166 0.143
+ 4 h5py        2    49    0.140  0.153  1.23
+ 5 to_hdf5     2    49    0.152  0.0297 0.229
+ 6 zarr        2    49    0.215  0.0483 0.313
+ 7 h5py       10    49    0.278  0.159  0.903
+ 8 to_hdf5    10    49    0.578  0.166  0.653
+ 9 zarr       10    49    0.740  0.200  0.696
+10 h5py       15    49    0.374  0.161  0.789
+11 to_hdf5    15    49    0.732  0.171  0.598
+12 zarr       15    49    0.852  0.201  0.653
+13 h5py       20    49    0.463  0.149  0.656
+14 to_hdf5    20    49    0.974  0.210  0.640
+15 zarr       20    49    0.982  0.209  0.631
+16 h5py       25    49    0.560  0.177  0.711
+17 to_hdf5    25    49    1.24   0.228  0.614
+18 zarr       25    49    1.18   0.245  0.676
+19 h5py       30    49    0.653  0.163  0.604
+20 to_hdf5    30    49    1.41   0.326  0.824
+21 zarr       30    49    1.37   0.297  0.761
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 1200 :height 400 :session *R*
+df |> col_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureVWEfSO.png]]
+[12:21:11; 18.02.2026]: Yeah, this didn't change that much... It
+stills bad.
+
+[12:23:16; 18.02.2026]: To compare, this are the results with 10 nodes
+but always using the same number of workers:
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 1200 :height 400 :session *R*
+run2.5 <- load(regex="results-run2.5") |> filter(timestep != 0) |> stats()
+run2.5 |> col_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureWRXD2E.png]]
+
+[12:30:56; 18.02.2026]: All the times are basically the
+same... Focusing in the case where mpi process == 20:
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+library(patchwork)
+
+run4g <- df |> filter(cores == 20) |> col_g() + ylim(0, 1.5) + labs(title="20 workers")
+
+run2.5g <- run2.5 |> filter(cores == 20) |> col_g() + ylim(0, 1.5) + labs(title="1 worker")
+
+run4g + run2.5g
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureiy9X9U.png]]
+
+[12:34:54; 18.02.2026]: This is very strange... Nothing changed, the
+time is the same...? Maybe the ray workers don't correctly started?
+
+[12:38:23; 18.02.2026]: Well, I started one worker with 20 cores, I
+will try to start 20 workers with one core each
+
+[15:53:45; 18.02.2026]: I am running with the greater chunk size now,
+zarr seems bad to save it...
+
+Chunk size of 1024x1024
+
+*** 2026-02-19
+:LOGBOOK:
+CLOCK: [2026-02-19 Thu 09:47]
+:END:
+
+[10:18:24; 19.02.2026]: it would be interesting to see where the tasks
+are being executed. Use ray worker to it...
+
+
+#+begin_src R :results output :session *R* :exports both
+df.big <- load(regex="results-run4-big") |>
+  filter(timestep!=0) |>
+  stats() |>
+  print(n=100)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results-run4-big-chunks-rennes.csv
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by type and cores.
+ℹ Output is grouped by type.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(type, cores))` for per-operation grouping (`?dplyr::dplyr_by`) instead.
+# A tibble: 21 × 6
+# Groups:   type [3]
+   type    cores     N mean_time   sd_t    se
+   <chr>   <dbl> <int>     <dbl>  <dbl> <dbl>
+ 1 h5py        1    49     0.454 0.313  1.40
+ 2 to_hdf5     1    49     0.231 0.0303 0.189
+ 3 zarr        1    49     0.751 0.193  0.670
+ 4 h5py        2    49     0.719 0.323  1.14
+ 5 to_hdf5     2    49     0.424 0.0424 0.195
+ 6 zarr        2    49     1.64  0.530  1.24
+ 7 h5py       10    49     2.91  0.428  0.753
+ 8 to_hdf5    10    49     1.66  0.166  0.387
+ 9 zarr       10    98     7.32  2.32   2.58
+10 h5py       15    49     4.16  0.494  0.727
+11 to_hdf5    15    49     2.25  0.234  0.469
+12 zarr       15    49     9.51  3.07   2.99
+13 h5py       20    49     5.57  0.565  0.719
+14 to_hdf5    20    49     2.83  0.288  0.513
+15 zarr       20    49    10.7   3.06   2.80
+16 h5py       25    49     6.52  0.625  0.734
+17 to_hdf5    25    49     3.29  0.455  0.753
+18 zarr       25    49    10.9   3.16   2.88
+19 h5py       30    42     8.07  0.714  0.754
+20 to_hdf5    30    42     3.33  0.251  0.412
+21 zarr       30    49    11.0   3.23   2.91
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+df.big |> col_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureGZoq8c.png]]
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+df.big |> line_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figurelxSkkC.png]]
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+load(regex="results-run4-big") |>
+  filter(timestep!=0) |>
+  mutate(time=time/(cores*9)) |> # time per chunk, there is CORES chunks per node, N nodes
+  stats() |>
+  col_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureLnZLlv.png]]
+
+#+begin_src R :results output :session *R* :exports both
+df.big |> print(n=100)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 21 × 6
+# Groups:   type [3]
+   type    cores     N mean_time   sd_t    se
+   <chr>   <dbl> <int>     <dbl>  <dbl> <dbl>
+ 1 h5py        1    49     0.454 0.313  1.40
+ 2 to_hdf5     1    49     0.231 0.0303 0.189
+ 3 zarr        1    49     0.751 0.193  0.670
+ 4 h5py        2    49     0.719 0.323  1.14
+ 5 to_hdf5     2    49     0.424 0.0424 0.195
+ 6 zarr        2    49     1.64  0.530  1.24
+ 7 h5py       10    49     2.91  0.428  0.753
+ 8 to_hdf5    10    49     1.66  0.166  0.387
+ 9 zarr       10    98     7.32  2.32   2.58
+10 h5py       15    49     4.16  0.494  0.727
+11 to_hdf5    15    49     2.25  0.234  0.469
+12 zarr       15    49     9.51  3.07   2.99
+13 h5py       20    49     5.57  0.565  0.719
+14 to_hdf5    20    49     2.83  0.288  0.513
+15 zarr       20    49    10.7   3.06   2.80
+16 h5py       25    49     6.52  0.625  0.734
+17 to_hdf5    25    49     3.29  0.455  0.753
+18 zarr       25    49    10.9   3.16   2.88
+19 h5py       30    42     8.07  0.714  0.754
+20 to_hdf5    30    42     3.33  0.251  0.412
+21 zarr       30    49    11.0   3.23   2.91
+#+end_example
+
+#+begin_src R :results output :session *R* :exports both
+load(regex="results-run4-big") |>
+  filter(type=="zarr" & cores == 15) |>
+  print(n=100)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results-run4-big-chunks-rennes.csv
+# A tibble: 50 × 5
+   type  cores         id timestep  time
+   <chr> <dbl>      <dbl>    <dbl> <dbl>
+ 1 zarr     15 1771425099        0 54.8
+ 2 zarr     15 1771425099        1  3.74
+ 3 zarr     15 1771425099        2  4.23
+ 4 zarr     15 1771425099        3  4.14
+ 5 zarr     15 1771425099        4  4.31
+ 6 zarr     15 1771425099        5  4.43
+ 7 zarr     15 1771425099        6  4.80
+ 8 zarr     15 1771425099        7  3.31
+ 9 zarr     15 1771425099        8  4.51
+10 zarr     15 1771425099        9  6.09
+11 zarr     15 1771425099       10  6.26
+12 zarr     15 1771425099       11  5.14
+13 zarr     15 1771425099       12  6.53
+14 zarr     15 1771425099       13  6.66
+15 zarr     15 1771425099       14  6.90
+16 zarr     15 1771425099       15  7.71
+17 zarr     15 1771425099       16  7.90
+18 zarr     15 1771425099       17 11.1
+19 zarr     15 1771425099       18  9.58
+20 zarr     15 1771425099       19  9.75
+21 zarr     15 1771425099       20 10.5
+22 zarr     15 1771425099       21  9.87
+23 zarr     15 1771425099       22 11.2
+24 zarr     15 1771425099       23 10.9
+25 zarr     15 1771425099       24 11.6
+26 zarr     15 1771425099       25 11.2
+27 zarr     15 1771425099       26 10.3
+28 zarr     15 1771425099       27 11.9
+29 zarr     15 1771425099       28 11.8
+30 zarr     15 1771425099       29 12.1
+31 zarr     15 1771425099       30 11.8
+32 zarr     15 1771425099       31 11.5
+33 zarr     15 1771425099       32 12.6
+34 zarr     15 1771425099       33 11.4
+35 zarr     15 1771425099       34 12.6
+36 zarr     15 1771425099       35 11.5
+37 zarr     15 1771425099       36 11.8
+38 zarr     15 1771425099       37 11.2
+39 zarr     15 1771425099       38 12.3
+40 zarr     15 1771425099       39 13.0
+41 zarr     15 1771425099       40 10.8
+42 zarr     15 1771425099       41 11.4
+43 zarr     15 1771425099       42 12.3
+44 zarr     15 1771425099       43 12.1
+45 zarr     15 1771425099       44 11.8
+46 zarr     15 1771425099       45 12.4
+47 zarr     15 1771425099       46 11.4
+48 zarr     15 1771425099       47 11.7
+49 zarr     15 1771425099       48 12.5
+50 zarr     15 1771425099       49 11.3
+#+end_example
+
+#+begin_src R :results output :session *R* :exports both
+load(regex="results-run4-big") |>
+  filter(type=="h5py" & cores == 20) |>
+  print(n=100)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results-run4-big-chunks-rennes.csv
+# A tibble: 50 × 5
+   type  cores         id timestep  time
+   <chr> <dbl>      <dbl>    <dbl> <dbl>
+ 1 h5py     20 1771430866        0  6.95
+ 2 h5py     20 1771430866        1  7.02
+ 3 h5py     20 1771430866        2  5.60
+ 4 h5py     20 1771430866        3  6.47
+ 5 h5py     20 1771430866        4  6.75
+ 6 h5py     20 1771430866        5  6.45
+ 7 h5py     20 1771430866        6  5.08
+ 8 h5py     20 1771430866        7  6.65
+ 9 h5py     20 1771430866        8  6.54
+10 h5py     20 1771430866        9  5.51
+11 h5py     20 1771430866       10  6.47
+12 h5py     20 1771430866       11  6.75
+13 h5py     20 1771430866       12  5.47
+14 h5py     20 1771430866       13  5.64
+15 h5py     20 1771430866       14  5.95
+16 h5py     20 1771430866       15  5.19
+17 h5py     20 1771430866       16  5.52
+18 h5py     20 1771430866       17  5.68
+19 h5py     20 1771430866       18  5.74
+20 h5py     20 1771430866       19  5.18
+21 h5py     20 1771430866       20  5.88
+22 h5py     20 1771430866       21  5.30
+23 h5py     20 1771430866       22  5.27
+24 h5py     20 1771430866       23  5.62
+25 h5py     20 1771430866       24  5.39
+26 h5py     20 1771430866       25  5.47
+27 h5py     20 1771430866       26  5.54
+28 h5py     20 1771430866       27  5.21
+29 h5py     20 1771430866       28  4.71
+30 h5py     20 1771430866       29  5.60
+31 h5py     20 1771430866       30  5.43
+32 h5py     20 1771430866       31  5.53
+33 h5py     20 1771430866       32  5.22
+34 h5py     20 1771430866       33  5.03
+35 h5py     20 1771430866       34  4.97
+36 h5py     20 1771430866       35  5.48
+37 h5py     20 1771430866       36  5.31
+38 h5py     20 1771430866       37  5.26
+39 h5py     20 1771430866       38  5.41
+40 h5py     20 1771430866       39  5.93
+41 h5py     20 1771430866       40  5.50
+42 h5py     20 1771430866       41  5.50
+43 h5py     20 1771430866       42  5.28
+44 h5py     20 1771430866       43  4.85
+45 h5py     20 1771430866       44  4.86
+46 h5py     20 1771430866       45  4.85
+47 h5py     20 1771430866       46  4.70
+48 h5py     20 1771430866       47  5.05
+49 h5py     20 1771430866       48  5.81
+50 h5py     20 1771430866       49  5.16
+#+end_example
+
+[10:43:41; 19.02.2026]: One more experiment, then see the workers if
+they are working...
+
+[12:27:44; 19.02.2026]: I talked with Andres and looks like Ray don't
+has a concept of workers as expected, in fact a worker is a
+abstraction, and the tasks are executed based on the resources
+available, meaning that each running task could be considerate a Ray
+worker...?
+
+https://docs.ray.io/en/latest/ray-core/scheduling/resources.html#core-resources
+
+[13:10:16; 19.02.2026]: The zarr is working in parallel without problem...
+
+[13:13:55; 19.02.2026]: I need to see why zarr is failing and also see
+why the hdf5 is not saving in the distributed node...
+
+[14:20:33; 19.02.2026]: The local Zarr doesn't show this increasing in
+the timing, lets see using dask distributed...
+
+[14:24:40; 19.02.2026]: I think maybe the increase in the time is
+because of persist... The distributed with dask also seems to be ok.
+
+[14:26:09; 19.02.2026]: I will run a only zarr without the persist to
+see if that was the cause...
+
+[14:33:06; 19.02.2026]: This doesn't see to be the cause...
+
+[14:48:14; 19.02.2026]: I don't know what can be. I want to be if is
+something with the between function call and analytics.
+
+[15:02:43; 19.02.2026]: I really don't know what is making zarr have
+this behavior... I will anyway try to discover this a little more
+today and after I will go home... Tomorrow I will focus on adjusting
+the github code...
+
+[15:22:03; 19.02.2026]: I changed the simulation ahead to 0, meaning
+that the simulation is basically synchronous with the analytics.
+
+[15:22:48; 19.02.2026]: It also didnt change anything...
+
+*** 2026-02-20
+:LOGBOOK:
+CLOCK: [2026-02-20 Fri 10:26]
+:END:
+
+[10:26:34; 20.02.2026]: Lets see the results for all mixed. I think
+the initial overhead is due to the loading of the libraries inside the
+functions (h5py or zarr). If there is no loading then everything will
+be ok.
+
+#+begin_src R :results output :session *R* :exports both
+df.4 <- load(regex="run4-all-mixed") |>
+  filter(type != "zarr_intern") |>
+  filter(timestep != 0) |>
+  stats() |>
+  print(n=100)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results-run4-all-mixed-rennes.csv
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by type and cores.
+ℹ Output is grouped by type.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(type, cores))` for per-operation grouping (`?dplyr::dplyr_by`) instead.
+# A tibble: 9 × 6
+# Groups:   type [3]
+  type    cores     N mean_time  sd_t    se
+  <chr>   <dbl> <int>     <dbl> <dbl> <dbl>
+1 h5py       10    49     3.18  0.255 0.429
+2 to_hdf5    10    49     0.968 0.132 0.403
+3 zarr       10    49     5.60  1.99  2.52
+4 h5py       30    49     9.47  0.716 0.698
+5 to_hdf5    30    49     1.82  0.392 0.870
+6 zarr       30    49     6.45  2.23  2.64
+7 h5py       50    49    15.3   0.859 0.659
+8 to_hdf5    50    49     2.88  0.613 1.08
+9 zarr       50    49     7.27  2.42  2.69
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+df.4 |> col_g_err()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figure30fTEp.png]]
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+df.4 |> line_g_err()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figurexhwKkf.png]]
+
+[10:32:39; 20.02.2026]: Here the zarr is better... And the number of
+cores for the ray is default to 20.
+
+[10:33:17; 20.02.2026]: Lets see how the zarr is is performing for
+every size
+
+#+begin_src R :results output :session *R* :exports both
+df.zarr <- load(regex="run4-all-mixed") |>
+  filter(timestep != 0) |>
+  filter(type!="zarr_intern") |> print()
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results-run4-all-mixed-rennes.csv
+# A tibble: 441 × 5
+   type    cores         id timestep  time
+   <chr>   <dbl>      <dbl>    <dbl> <dbl>
+ 1 h5py       10 1771512952        1 3.13
+ 2 zarr       10 1771512952        1 2.24
+ 3 to_hdf5    10 1771512952        1 0.909
+ 4 h5py       10 1771512952        2 3.23
+ 5 zarr       10 1771512952        2 2.12
+ 6 to_hdf5    10 1771512952        2 0.779
+ 7 h5py       10 1771512952        3 3.18
+ 8 zarr       10 1771512952        3 2.21
+ 9 to_hdf5    10 1771512952        3 0.765
+10 h5py       10 1771512952        4 3.84
+# ℹ 431 more rows
+# ℹ Use `print(n = ...)` to see more rows
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 800 :height 400 :session *R*
+df.zarr |>
+  timestep_g()
+## +
+  ## scale_fill_viridis()
+  ##scale_color_brewer(palette="Spectral")
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figure2BcqdJ.png]]
+
+[10:47:14; 20.02.2026]: This shows zarr consistency, it don't grows a
+lot, even with more parallelism the time remains the same.
+
+[11:09:05; 20.02.2026]: The time taken by zarr seems to stale after a
+initial rising.
+
+[11:15:02; 20.02.2026]: Between the timestep 10 to 25 that zarr has a
+hugh increase in the time
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+load(regex="run4-all-mixed") |>
+  filter(type != "zarr_intern") |>
+  filter(timestep != 0) |>
+  mutate(time = time/(9*cores)) |>
+  stats() |> col_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureUDGrVo.png]]
+[11:12:16; 20.02.2026]: This is the time per chunk. We can see that
+the to_hdf5 method seems to have a same value for every case, the zarr
+seems to have a lower time when the parallelism is increased. This
+maybe means that there is a preprocess before being able to use the
+full parallelism for zarr (like a pipeline initialization). So when
+there is enough parallelism the zarr can have a stable time with full parallelism.
+
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+load(regex="run4.44") |>
+  filter(timestep!=0) |>
+  filter(type == "zarr") |>
+  timestep_g() + facet_wrap(~ id )
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figurenHXFKn.png]]
+[11:21:58; 20.02.2026]: Remembering that this behavior just happens
+with a great chunk size
+
+#+begin_src R :results output :session *R* :exports both
+load(regex="results-run4.6-zarr")
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results-run4.6-zarr-random
+# A tibble: 136 × 5
+   type        cores         id timestep  time
+   <chr>       <dbl>      <dbl>    <dbl> <dbl>
+ 1 zarr_intern    30 1771583837        0 38.0
+ 2 zarr           30 1771583837        0 38.0
+ 3 zarr_intern    30 1771583837        1  3.31
+ 4 zarr           30 1771583837        1  3.31
+ 5 zarr_intern    30 1771583837        2  2.47
+ 6 zarr           30 1771583837        2  2.47
+ 7 zarr_intern    30 1771583837        3  3.28
+ 8 zarr           30 1771583837        3  3.28
+ 9 zarr_intern    30 1771583837        5  2.81
+10 zarr           30 1771583837        5  2.82
+# ℹ 126 more rows
+# ℹ Use `print(n = ...)` to see more rows
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+load(regex="results-run4.6-zarr") |>
+  filter(timestep!=0) |>
+  filter(type == "zarr") |>
+  ggplot(aes(x=timestep, y=time, color=as.factor(timestep))) +
+  geom_point(size=3) +
+  geom_line() +
+  facet_wrap(~ cores) +
+    meu_estilo() + theme(legend.position = "none")
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figurejdoYgK.png]]
+
+[11:46:29; 20.02.2026]: Ok! I have a interesting result. The problem
+is not the zarr, if I start saving just in the middle it also has a
+time. I means that something from deisa or the simulation that happens
+when increasing the timestep is also causing zarr to take more time
+But this thing is not interfering with hdf5
+
+[11:48:01; 20.02.2026]: Lets go to more several parallelism scenario.
+
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+load(regex="results-run4.7") |>
+  filter(timestep!=51) |>
+  filter(type == "zarr") |>
+  ggplot(aes(x=timestep, y=time, color=as.factor(timestep))) +
+  geom_point(size=3) +
+  geom_line() +
+  facet_wrap(~ cores) +
+    meu_estilo() + theme(legend.position = "none")
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figuretmGd1l.png]]
+
+[11:51:30; 20.02.2026]: There is a high variance but it is everything
+between 6 and 8. None is next to 2 or 4
+
+[11:52:35; 20.02.2026]: I will run now with 20 NODES.
+
+[13:45:10; 20.02.2026]: Maybe the problem with the zarr saving is the
+data itself? Maybe...
+
+[14:08:23; 20.02.2026]: I don't know why it isnt running with more
+than 10 nodes?
+
+[14:08:42; 20.02.2026]: I will focus in changing the code.
+
+** 2026 Week 09 [Feb]
+*** 2026-02-23
+
+**** Seeing results for high parallelism (max of 19 nodes, 50 cores each)
+[11:50:47; 23.02.2026]: Results for execution with 20 nodes.
+
+#+begin_src R :results output :session *R* :exports both
+df.20 <- load(regex="results-run5") |> filter(timestep != 0) |>
+  stats()
+
+df.20
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results-run5-20nodes
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by type and cores.
+ℹ Output is grouped by type.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(type, cores))` for per-operation grouping (`?dplyr::dplyr_by`) instead.
+# A tibble: 9 × 6
+# Groups:   type [3]
+  type    cores     N mean_time  sd_t    se
+  <chr>   <dbl> <int>     <dbl> <dbl> <dbl>
+1 h5py        1    57     1.94  2.87   6.18
+2 to_hdf5     1    57     0.481 0.432  1.87
+3 zarr        1    57     1.93  0.630  1.36
+4 h5py       30   138    23.1   6.57   4.10
+5 to_hdf5    30   138     3.41  1.10   1.79
+6 zarr       30   138     4.69  1.64   2.27
+7 h5py       50    49    33.7   4.60   2.38
+8 to_hdf5    50    49     4.94  0.912  1.23
+9 zarr       50    49     6.13  2.14   2.59
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+df.20 |> col_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureyRlaMk.png]]
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+df.20 |> line_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figurepepKZ6.png]]
+[11:53:52; 23.02.2026]: The times looks very good. It is increasing
+greatly for a good chunk size!
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+df.20 |> col_g_err()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureitH4F7.png]]
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+df.20 |> col_g_sd()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureLl3e6v.png]]
+
+[12:01:42; 23.02.2026]: Time in seconds
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureTmdnMo.png]]
+
+[12:01:59; 23.02.2026]: Approximated time taken by chunk
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+ load(regex="results-run5") |> filter(timestep != 0) |>
+   mutate(time = time/(19*cores)) |>
+   stats() |>
+   col_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureLdVjTB.png]]
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 1000 :height 400 :session *R*
+load(regex="results-run5") |> filter(timestep != 0) |>
+  timestep_g()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureFnInNC.png]]
+[11:58:09; 23.02.2026]: In the start zarr is almost the same as
+to_hdf5, but with the timesteps it increase the time...
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 800 :height 400 :session *R*
+load(regex="results-run5") |> filter(timestep != 0) |>
+  ## filter(timestep < 20) |>
+  stats() |>
+  col_g_err() +
+  labs(
+    title="Mean time for saving one chunk with 20 nodes",
+    subtitle="Facets shows the number of MPI process per node",
+    x="Saving Method",
+    y="Mean saving time (s)"
+  )
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureyGXVbw.png]]
+
+[12:10:22; 23.02.2026]: If the zarr performance don't degrated, It
+will be better then using our HDF5 solution...
+
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+load(regex="results-run5") |> filter(timestep != 0) |>
+  filter(timestep < 20) |>
+  stats() |>
+  line_g_err()
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figurewVGwyz.png]]
+
+
+**** Refactoring code
+
+[12:08:43; 23.02.2026]: Ok! As it is working fine now, we can continue
+to refactor the code
+
+[14:51:56; 23.02.2026]: Looks like the problem with the distributed
+was the the dask.map_blocks. I am back to delayed but I will again to
+compare with the previous results...
+*** 2026-02-25
+
+[12:32:57; 25.02.2026]: Continue with refactor
+
+*** 2026-02-26
+
+[13:41:21; 26.02.2026]: I did some more tests and added more resources
+to zarr.
+
+
+
+I recently get involved in a project that needed to save dask arrays
+to hdf5 files in a distributed system. As dask.to_zarr function
+doens't worked due to pickling issues, we did a work-around using HDF5
+Virtual Datasets (https://docs.h5py.org/en/latest/vds.html). Our idea
+was to create one separated file for each chunk and then merging it in
+one single file using the Virtual Dataset capabilities, similar to
+what zarr does (also with one file per chunk). This then enables full
+parallel writing without the need for a lock. This solution also
+removed the need to pickle hdf5 objects since we ship several tasks
+that on its own handles the file open, writing and closing for each separated
+chunk, and not send opened hdf5 objects.
+
+We were then thinking if this method could be used to solve this issue?
