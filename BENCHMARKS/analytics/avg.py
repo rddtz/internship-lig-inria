@@ -14,10 +14,13 @@ from deisa.ray.window_handler import Deisa
 from deisa.ray.types import WindowSpec, DeisaArray
 import deisa.ray as deisa
 import random
+import h5py
+import time 
+import os
 
-#deisa.config.enable_experimental_distributed_scheduling(enable_distributed_scheduling)
+# deisa.config.enable_experimental_distributed_scheduling(True)
 
-d = Deisa(n_sim_nodes=1)
+d = Deisa()
 random.seed(0)
 
 def simulation_callback(
@@ -25,21 +28,14 @@ def simulation_callback(
     U: list[DeisaArray]
 ):
 
-    # print(f"Callback triggered for step {U[0].t}", flush=True)
-    # # Some computation with dask
-    Vavg = V[0].dask.mean().compute()
-    Uavg = U[0].dask.mean().compute()
-    
-    # Saving with 50% chance
-    if(random.random() < 0.3):
-        import h5py
-        with h5py.File(f"data-{U[0].t}", "w") as f:
-            f.create_dataset(f"U", data=U[0].dask)
-    
-    # # Print formatted analytics information for the current step
-    # print(f"[ANALYTICS] Average at timestep {
-    #       U[0].t}: V={Vavg}, U={Uavg}", flush=True)
+    start = time.perf_counter()
+    with h5py.File(f"data-{U[0].t}.h5", "w") as f:
+        f.create_dataset(f"U", data=U[0].dask)
+            
+    print(f"[ANALYTICS]: h5py,{U[0].t},{time.perf_counter() - start}", flush=True)
 
+    os.system(f"rm -f data*.h5")
+    
 
 # --- Main execution section ---
 

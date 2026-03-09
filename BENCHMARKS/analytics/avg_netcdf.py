@@ -14,10 +14,13 @@ from deisa.ray.window_handler import Deisa
 from deisa.ray.types import WindowSpec, DeisaArray
 import deisa.ray as deisa
 import random
+import time
+import xarray as xr
+import os
 
-#deisa.config.enable_experimental_distributed_scheduling(enable_distributed_scheduling)
+# deisa.config.enable_experimental_distributed_scheduling(True)
 
-d = Deisa(n_sim_nodes=1)
+d = Deisa()
 random.seed(0)
 
 def simulation_callback(
@@ -25,28 +28,25 @@ def simulation_callback(
     U: list[DeisaArray]
 ):
 
-    # print(f"Callback triggered for step {U[0].t}", flush=True)
-    # # Some computation with dask
-    Vavg = V[0].dask.mean().compute()
-    Uavg = U[0].dask.mean().compute()
-    
-    # Saving with 50% chance
-    if(random.random() < 0.3):
-        import h5py
-        with h5py.File(f"data-{U[0].t}", "w") as f:
-            f.create_dataset(f"U", data=U[0].dask)
-    
-    # Print formatted analytics information for the current step
-    print(f"[ANALYTICS] Average at timestep {
-          U[0].t}: V={Vavg}, U={Uavg}", flush=True)
+    start = time.perf_counter()
+    xarray_da = xr.DataArray(
+        U[0].dask,
+        dims=["x", "y"],
+        name="data"
+    ).compute()
+
+    xarray_da.to_netcdf(f"data-{U[0].t}.nc")
+    # U[0].to_hdf5(f"data-{U[0].t}.h5")
+    print(f"[ANALYTICS]: to_netcdf,{U[0].t},{time.perf_counter() - start}", flush=True)
 
 
+    os.system(f"rm -f *.nc")
+    
 # --- Main execution section ---
 
 # Initialize the Doreisa head node
 # and registers this process as the analytics controller.
 print("Analytics Initialized", flush=True)
-
 
 d.register_callback(
     simulation_callback,
@@ -55,8 +55,4 @@ d.register_callback(
         WindowSpec("V", window_size=1),
     ],
 )
-
-
 d.execute_callbacks()
-
-print("Ending...", flush=True)

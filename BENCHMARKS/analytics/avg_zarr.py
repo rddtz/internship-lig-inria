@@ -14,10 +14,12 @@ from deisa.ray.window_handler import Deisa
 from deisa.ray.types import WindowSpec, DeisaArray
 import deisa.ray as deisa
 import random
+import time
+import os
 
-#deisa.config.enable_experimental_distributed_scheduling(enable_distributed_scheduling)
+# deisa.config.enable_experimental_distributed_scheduling(True)
 
-d = Deisa(n_sim_nodes=2)
+d = Deisa()
 random.seed(0)
 
 def simulation_callback(
@@ -25,19 +27,13 @@ def simulation_callback(
     U: list[DeisaArray]
 ):
 
-    # Some computation with dask
-    Vavg = V[0].dask.mean().compute()
-    Uavg = U[0].dask.mean().compute()
+    # if U[0].t > 50:
+    start = time.perf_counter()
+    U[0].to_zarr(f"data-{U[0].t}.zarr", component="data")
+    print(f"[ANALYTICS]: zarr,{U[0].t},{time.perf_counter() - start}", flush=True)
 
-    # Saving with 50% chance
-    if(random.random() < 0.5):
-        U[0].to_hdf5(f"data-{U[0].t}")
+    os.system(f"rm -rf data*.zarr")
     
-    # # Print formatted analytics information for the current step
-    # print(f"[ANALYTICS] Average at timestep {
-    #       U[0].t}: V={Vavg}, U={Uavg}", flush=True)
-
-
 # --- Main execution section ---
 
 # Initialize the Doreisa head node

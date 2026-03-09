@@ -350,6 +350,9 @@ def main():
     rank = comm.Get_rank()
     size = comm.Get_size()
 
+    local_comm = comm.Split_type(MPI.COMM_TYPE_SHARED)
+    local_ranks = local_comm.Get_size()
+    
     cart, (py, px), coords = make_cartesian(comm, args.px, args.py, args.periodic)
     nx, ny = args.nx_local, args.ny_local
     NX, NY = px * nx, py * ny
@@ -360,34 +363,41 @@ def main():
 
     update_ghosts(cart, U, args.periodic)
     update_ghosts(cart, V, args.periodic)
+    print(f"Initialized at rank {rank} with total size of {size}")
 
-
-    # --- deisa-ray integration ---
-    
+    # --- deisa integration ---    
     arrays_md = {
         "U": {
             "chunk_shape": (ny, nx),
             "nb_chunks_per_dim": (py, px),
-            "nb_chunks_of_node": size,
+            "nb_chunks_of_node": local_ranks,
             "dtype": U.dtype,
             "chunk_position": tuple(coords),
         },
         "V": {
             "chunk_shape": (ny, nx),
             "nb_chunks_per_dim": (py, px),
-            "nb_chunks_of_node": size,
+            "nb_chunks_of_node": local_ranks,
             "dtype": V.dtype,
             "chunk_position": tuple(coords),
         }
     }
-    
+
+    import socket
+    hostname = socket.gethostname()
+    local_ip = socket.gethostbyname(hostname)
+    master_addr = os.environ.get("MASTER_ADDR", local_ip)
+    port=12355
     sys_md = {
-        "nb_ranks": size,
+        "world_size" : size,
+        "master_address": master_addr,
+        "master_port": port,
         "ray_address": "auto",
     }
 
+    print(f"[SIM, rank {rank}] Sending metadata to deisa", flush = True)
     client = Bridge(bridge_id=rank, arrays_metadata=arrays_md, system_metadata=sys_md)
-    print(f"[SIM, rank {rank}] connected to doreisa client", flush = True)
+    print(f"[SIM, rank {rank}] connected to deisa client", flush = True)
     # -------------------------
 
     # after initialize

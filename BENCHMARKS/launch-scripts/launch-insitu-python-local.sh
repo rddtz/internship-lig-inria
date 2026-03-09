@@ -45,16 +45,16 @@ trap cleanup EXIT
 
 # Start Ray head + a worker (use localhost rather than a hardcoded LAN IP)
 ray start --head --port=6379 --node-ip-address=127.0.0.1    > .logs/ray-head.log 2>&1
-ray start --address=127.0.0.1:6379 --num-cpus 20            > .logs/ray-workers.log 2>&1
+ray start --address=127.0.0.1:6379 --num-cpus 10            > .logs/ray-workers.log 2>&1
 
 
 # Start analytics (uses venv python)
-time "$PY" -m "analytics.${TYPE}" 2>.logs/analytics.e&
+"$PY" -m "analytics.${TYPE}" 2>.logs/analytics.e&
 ANALYTICS_PID=$!
 
 # Run the simulation under MPI with the venv python.
 # Export env vars to each rank so they inherit the venv PATH/PYTHONPATH.
-time mpirun --merge-stderr-to-stdout -n 20 \
+time mpirun --merge-stderr-to-stdout -n 10 \
   -x PATH \
   -x VIRTUAL_ENV \
   "$PY" "$PROJECT_ROOT/python/sim-deisa-ray.py" \
