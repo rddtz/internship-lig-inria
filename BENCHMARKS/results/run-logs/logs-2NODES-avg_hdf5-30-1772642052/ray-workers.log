@@ -1,0 +1,9 @@
+2026-03-04 17:33:00,138	INFO scripts.py:1094 -- [37mLocal node IP[39m: [1m172.16.101.8[22m
+[2026-03-04 17:33:00,371 W 319777 319777] global_state_accessor.cc:435: Retrying to get node with node ID 7e3e807396e432b866aabf3a63a3b3440af47421ce157c0937a10734
+[2026-03-04 17:33:01,372 W 319777 319777] global_state_accessor.cc:435: Retrying to get node with node ID 7e3e807396e432b866aabf3a63a3b3440af47421ce157c0937a10734
+2026-03-04 17:33:02,401	SUCC scripts.py:1110 -- [32m--------------------[39m
+2026-03-04 17:33:02,401	SUCC scripts.py:1111 -- [32mRay runtime started.[39m
+2026-03-04 17:33:02,401	SUCC scripts.py:1112 -- [32m--------------------[39m
+2026-03-04 17:33:02,401	INFO scripts.py:1114 -- To terminate the Ray runtime, run
+2026-03-04 17:33:02,401	INFO scripts.py:1115 -- [1m  ray stop[22m
+[0m

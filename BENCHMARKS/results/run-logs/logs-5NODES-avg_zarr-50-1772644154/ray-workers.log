@@ -1,0 +1,33 @@
+2026-03-04 18:04:26,085	INFO scripts.py:1094 -- [37mLocal node IP[39m: [1m172.16.101.64[22m
+2026-03-04 18:04:26,129	INFO scripts.py:1094 -- [37mLocal node IP[39m: [1m172.16.101.17[22m
+2026-03-04 18:04:26,195	INFO scripts.py:1094 -- [37mLocal node IP[39m: [1m172.16.101.8[22m
+[2026-03-04 18:04:26,235 W 87412 87412] global_state_accessor.cc:435: Retrying to get node with node ID b75a5350276cdfe993b6530ddfea540116a71ccbed75bd62e347761d
+2026-03-04 18:04:26,277	INFO scripts.py:1094 -- [37mLocal node IP[39m: [1m172.16.101.13[22m
+[2026-03-04 18:04:26,280 W 325764 325764] global_state_accessor.cc:435: Retrying to get node with node ID ce852bd3003fe319d53587bf3fed4758a89b696141ceb2f73b2de345
+[2026-03-04 18:04:26,352 W 413125 413125] global_state_accessor.cc:435: Retrying to get node with node ID 526576761252fe4c98a81b276fa9c80dbbc313ddc484ae76dd1a656f
+[2026-03-04 18:04:26,450 W 87350 87350] global_state_accessor.cc:435: Retrying to get node with node ID 80393a48c282302b5930410ae52e483e4a7c51421fbe215175cd7dc6
+[2026-03-04 18:04:27,236 W 87412 87412] global_state_accessor.cc:435: Retrying to get node with node ID b75a5350276cdfe993b6530ddfea540116a71ccbed75bd62e347761d
+[2026-03-04 18:04:27,281 W 325764 325764] global_state_accessor.cc:435: Retrying to get node with node ID ce852bd3003fe319d53587bf3fed4758a89b696141ceb2f73b2de345
+[2026-03-04 18:04:27,353 W 413125 413125] global_state_accessor.cc:435: Retrying to get node with node ID 526576761252fe4c98a81b276fa9c80dbbc313ddc484ae76dd1a656f
+[2026-03-04 18:04:27,452 W 87350 87350] global_state_accessor.cc:435: Retrying to get node with node ID 80393a48c282302b5930410ae52e483e4a7c51421fbe215175cd7dc6
+2026-03-04 18:04:28,248	SUCC scripts.py:1110 -- [32m--------------------[39m
+2026-03-04 18:04:28,248	SUCC scripts.py:1111 -- [32mRay runtime started.[39m
+2026-03-04 18:04:28,248	SUCC scripts.py:1112 -- [32m--------------------[39m
+2026-03-04 18:04:28,248	INFO scripts.py:1114 -- To terminate the Ray runtime, run
+2026-03-04 18:04:28,248	INFO scripts.py:1115 -- [1m  ray stop[22m
+[0m2026-03-04 18:04:28,293	SUCC scripts.py:1110 -- [32m--------------------[39m
+2026-03-04 18:04:28,293	SUCC scripts.py:1111 -- [32mRay runtime started.[39m
+2026-03-04 18:04:28,293	SUCC scripts.py:1112 -- [32m--------------------[39m
+2026-03-04 18:04:28,293	INFO scripts.py:1114 -- To terminate the Ray runtime, run
+2026-03-04 18:04:28,293	INFO scripts.py:1115 -- [1m  ray stop[22m
+[0m2026-03-04 18:04:28,365	SUCC scripts.py:1110 -- [32m--------------------[39m
+2026-03-04 18:04:28,366	SUCC scripts.py:1111 -- [32mRay runtime started.[39m
+2026-03-04 18:04:28,366	SUCC scripts.py:1112 -- [32m--------------------[39m
+2026-03-04 18:04:28,366	INFO scripts.py:1114 -- To terminate the Ray runtime, run
+2026-03-04 18:04:28,366	INFO scripts.py:1115 -- [1m  ray stop[22m
+[0m2026-03-04 18:04:28,464	SUCC scripts.py:1110 -- [32m--------------------[39m
+2026-03-04 18:04:28,464	SUCC scripts.py:1111 -- [32mRay runtime started.[39m
+2026-03-04 18:04:28,464	SUCC scripts.py:1112 -- [32m--------------------[39m
+2026-03-04 18:04:28,464	INFO scripts.py:1114 -- To terminate the Ray runtime, run
+2026-03-04 18:04:28,464	INFO scripts.py:1115 -- [1m  ray stop[22m
+[0m

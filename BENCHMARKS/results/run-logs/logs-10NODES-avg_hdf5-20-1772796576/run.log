@@ -1,0 +1,1465 @@
+++ date
++ echo '[INFO] Starting at: Fri 06 Mar 2026 12:28:08 PM CET'
+[INFO] Starting at: Fri 06 Mar 2026 12:28:08 PM CET
++ NODES=($(cat "$OAR_NODE_FILE" | uniq))
+++ cat /var/lib/oar/3549820
+++ uniq
++ N_NODES=10
++ echo '[INFO] Execution using 10 node(s)'
+[INFO] Execution using 10 node(s)
++ echo '[INFO] Nodes used: paradoxe-57.rennes.grid5000.fr' paradoxe-58.rennes.grid5000.fr paradoxe-59.rennes.grid5000.fr paradoxe-6.rennes.grid5000.fr paradoxe-60.rennes.grid5000.fr paradoxe-63.rennes.grid5000.fr paradoxe-64.rennes.grid5000.fr paradoxe-7.rennes.grid5000.fr paradoxe-8.rennes.grid5000.fr paradoxe-9.rennes.grid5000.fr
+[INFO] Nodes used: paradoxe-57.rennes.grid5000.fr paradoxe-58.rennes.grid5000.fr paradoxe-59.rennes.grid5000.fr paradoxe-6.rennes.grid5000.fr paradoxe-60.rennes.grid5000.fr paradoxe-63.rennes.grid5000.fr paradoxe-64.rennes.grid5000.fr paradoxe-7.rennes.grid5000.fr paradoxe-8.rennes.grid5000.fr paradoxe-9.rennes.grid5000.fr
++ HEAD_NODE=paradoxe-57.rennes.grid5000.fr
++ [[ 10 -eq 1 ]]
++ SIM_NODES=("${NODES[@]:1}")
++ N_SIM_NODES=9
++ COMP_CORES=20
++ [[ -z 20 ]]
++ PORT=4242
++ HEAD_ADDRESS=paradoxe-57.rennes.grid5000.fr:4242
++ echo '[INFO] Head node (paradoxe-57.rennes.grid5000.fr) at address: paradoxe-57.rennes.grid5000.fr:4242'
+[INFO] Head node (paradoxe-57.rennes.grid5000.fr) at address: paradoxe-57.rennes.grid5000.fr:4242
++ echo '[INFO] Left with 9 simulation node(s): paradoxe-58.rennes.grid5000.fr paradoxe-59.rennes.grid5000.fr paradoxe-6.rennes.grid5000.fr paradoxe-60.rennes.grid5000.fr paradoxe-63.rennes.grid5000.fr paradoxe-64.rennes.grid5000.fr paradoxe-7.rennes.grid5000.fr paradoxe-8.rennes.grid5000.fr paradoxe-9.rennes.grid5000.fr'
+[INFO] Left with 9 simulation node(s): paradoxe-58.rennes.grid5000.fr paradoxe-59.rennes.grid5000.fr paradoxe-6.rennes.grid5000.fr paradoxe-60.rennes.grid5000.fr paradoxe-63.rennes.grid5000.fr paradoxe-64.rennes.grid5000.fr paradoxe-7.rennes.grid5000.fr paradoxe-8.rennes.grid5000.fr paradoxe-9.rennes.grid5000.fr
+++ pwd
++ OLDPWD=/home/rraddatz/deisa-ray/BENCHMARKS
++++ dirname -- launch-scripts/launch-insitu-python-multinode.sh
+++ cd -- launch-scripts/..
+++ pwd
++ PROJECT_ROOT=/home/rraddatz/deisa-ray/BENCHMARKS
++ export OMP_PROC_BIND=spread
++ OMP_PROC_BIND=spread
++ export OMP_PLACES=cores
++ OMP_PLACES=cores
++ nodes=9
++ export 'PS4=+ $(date "+%F %T") ${BASH_SOURCE##*/}:${LINENO}: '
++ PS4='+ $(date "+%F %T") ${BASH_SOURCE##*/}:${LINENO}: '
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:59: cd /home/rraddatz/deisa-ray/BENCHMARKS
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:60: VENV=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:64: [[ -d /home/rraddatz/deisa-ray/BENCHMARKS/../.venv ]]
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:65: echo '[INFO] Using Python virtualenv at /home/rraddatz/deisa-ray/BENCHMARKS/../.venv'
+[INFO] Using Python virtualenv at /home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:66: export VIRTUAL_ENV=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:66: VIRTUAL_ENV=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:67: export PATH=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin:/usr/lib/oar/oardodo:/usr/lib/oar/oardodo:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/cuda/bin:/grid5000/code/bin:/opt/rocm/bin:/opt/dell/srvadmin/bin
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:67: PATH=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin:/usr/lib/oar/oardodo:/usr/lib/oar/oardodo:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/cuda/bin:/grid5000/code/bin:/opt/rocm/bin:/opt/dell/srvadmin/bin
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:68: PY=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin/python
+++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:77: date +%s
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:77: start=1772796488
++ 2026-03-06 12:28:08 launch-insitu-python-multinode.sh:80: mpirun --host paradoxe-57.rennes.grid5000.fr:1 -x PATH -x VIRTUAL_ENV bash -c 'ray start --head --port=4242 --num-cpus=60'
+++ 2026-03-06 12:28:16 launch-insitu-python-multinode.sh:85: date +%s
++ 2026-03-06 12:28:16 launch-insitu-python-multinode.sh:85: end=1772796496
+++ 2026-03-06 12:28:16 launch-insitu-python-multinode.sh:86: expr 1772796496 - 1772796488
++ 2026-03-06 12:28:16 launch-insitu-python-multinode.sh:86: echo '[INFO] Ray head node started at 8/s.'
+[INFO] Ray head node started at 8/s.
++ 2026-03-06 12:28:16 launch-insitu-python-multinode.sh:88: sleep 1
++ 2026-03-06 12:28:17 launch-insitu-python-multinode.sh:93: '[' 10 -gt 1 ']'
+++ 2026-03-06 12:28:17 launch-insitu-python-multinode.sh:95: printf %s:1, paradoxe-58.rennes.grid5000.fr paradoxe-59.rennes.grid5000.fr paradoxe-6.rennes.grid5000.fr paradoxe-60.rennes.grid5000.fr paradoxe-63.rennes.grid5000.fr paradoxe-64.rennes.grid5000.fr paradoxe-7.rennes.grid5000.fr paradoxe-8.rennes.grid5000.fr paradoxe-9.rennes.grid5000.fr
+++ 2026-03-06 12:28:17 launch-insitu-python-multinode.sh:95: sed 's/,$//'
++ 2026-03-06 12:28:17 launch-insitu-python-multinode.sh:95: mpirun --host paradoxe-58.rennes.grid5000.fr:1,paradoxe-59.rennes.grid5000.fr:1,paradoxe-6.rennes.grid5000.fr:1,paradoxe-60.rennes.grid5000.fr:1,paradoxe-63.rennes.grid5000.fr:1,paradoxe-64.rennes.grid5000.fr:1,paradoxe-7.rennes.grid5000.fr:1,paradoxe-8.rennes.grid5000.fr:1,paradoxe-9.rennes.grid5000.fr:1 -x PATH -x VIRTUAL_ENV bash -c 'ulimit -n 65536; ray start --address paradoxe-57.rennes.grid5000.fr:4242 --num-cpus=30'
+++ 2026-03-06 12:28:22 launch-insitu-python-multinode.sh:100: date +%s
++ 2026-03-06 12:28:22 launch-insitu-python-multinode.sh:100: end=1772796502
+++ 2026-03-06 12:28:22 launch-insitu-python-multinode.sh:101: expr 1772796502 - 1772796488
++ 2026-03-06 12:28:22 launch-insitu-python-multinode.sh:101: echo '[INFO] Ray workers started and connected to head node at 14/s.'
+[INFO] Ray workers started and connected to head node at 14/s.
++ 2026-03-06 12:28:22 launch-insitu-python-multinode.sh:102: sleep 10
+++ 2026-03-06 12:28:32 launch-insitu-python-multinode.sh:107: date +%s
++ 2026-03-06 12:28:32 launch-insitu-python-multinode.sh:107: end=1772796512
++ 2026-03-06 12:28:32 launch-insitu-python-multinode.sh:108: ANALYTICS_START=1772796512
+++ 2026-03-06 12:28:32 launch-insitu-python-multinode.sh:109: expr 1772796512 - 1772796488
++ 2026-03-06 12:28:32 launch-insitu-python-multinode.sh:109: echo 'Launching Analytics at 24/s.'
+Launching Analytics at 24/s.
++ 2026-03-06 12:28:32 launch-insitu-python-multinode.sh:111: TYPE=avg_hdf5
++ 2026-03-06 12:28:32 launch-insitu-python-multinode.sh:112: [[ -z avg_hdf5 ]]
++ 2026-03-06 12:28:32 launch-insitu-python-multinode.sh:122: sleep 5
++ 2026-03-06 12:28:32 launch-insitu-python-multinode.sh:117: mpirun --host paradoxe-57.rennes.grid5000.fr:1 -x PATH -x VIRTUAL_ENV bash -c '/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin/python -m analytics.avg_hdf5'
+Analytics Initialized
++ 2026-03-06 12:28:37 launch-insitu-python-multinode.sh:124: ANALYTICS_PID=28476
++ 2026-03-06 12:28:37 launch-insitu-python-multinode.sh:125: echo '[INFO] Analytics PID: 28476'
+[INFO] Analytics PID: 28476
++ 2026-03-06 12:28:37 launch-insitu-python-multinode.sh:129: echo '[INFO] Launching Simulation...'
+[INFO] Launching Simulation...
+++ 2026-03-06 12:28:37 launch-insitu-python-multinode.sh:131: printf %s:20, paradoxe-58.rennes.grid5000.fr paradoxe-59.rennes.grid5000.fr paradoxe-6.rennes.grid5000.fr paradoxe-60.rennes.grid5000.fr paradoxe-63.rennes.grid5000.fr paradoxe-64.rennes.grid5000.fr paradoxe-7.rennes.grid5000.fr paradoxe-8.rennes.grid5000.fr paradoxe-9.rennes.grid5000.fr
+++ 2026-03-06 12:28:37 launch-insitu-python-multinode.sh:131: sed 's/,$//'
++ 2026-03-06 12:28:37 launch-insitu-python-multinode.sh:131: mpirun --merge-stderr-to-stdout -x PATH -x VIRTUAL_ENV -x MASTER_ADDR=paradoxe-58.rennes.grid5000.fr --host paradoxe-58.rennes.grid5000.fr:20,paradoxe-59.rennes.grid5000.fr:20,paradoxe-6.rennes.grid5000.fr:20,paradoxe-60.rennes.grid5000.fr:20,paradoxe-63.rennes.grid5000.fr:20,paradoxe-64.rennes.grid5000.fr:20,paradoxe-7.rennes.grid5000.fr:20,paradoxe-8.rennes.grid5000.fr:20,paradoxe-9.rennes.grid5000.fr:20 /home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin/python /home/rraddatz/deisa-ray/BENCHMARKS/python/sim-deisa-ray.py --steps 50 --print-every 0 --seed-mode local --periodic --nx_local 1024 --ny_local 1024
+[1772796518.471546] [paradoxe-9:61691:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.471565] [paradoxe-9:61691:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.471545] [paradoxe-9:61697:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.471565] [paradoxe-9:61697:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.472338] [paradoxe-9:61680:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472355] [paradoxe-9:61680:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.472322] [paradoxe-9:61682:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472340] [paradoxe-9:61682:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.472305] [paradoxe-9:61685:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472323] [paradoxe-9:61685:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.472426] [paradoxe-9:61689:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472444] [paradoxe-9:61689:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-9.rennes.grid5000.fr:61691] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61697] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.472115] [paradoxe-7:23196:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472133] [paradoxe-7:23196:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.472222] [paradoxe-7:23199:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472238] [paradoxe-7:23199:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.472256] [paradoxe-7:23203:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472273] [paradoxe-7:23203:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-9.rennes.grid5000.fr:61680] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61682] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61685] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61689] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23196] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.468594] [paradoxe-59:23187:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.468613] [paradoxe-59:23187:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-7.rennes.grid5000.fr:23203] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.468594] [paradoxe-59:23182:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.468613] [paradoxe-59:23182:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-7.rennes.grid5000.fr:23199] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23182] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.469770] [paradoxe-59:23185:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.469788] [paradoxe-59:23185:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-59.rennes.grid5000.fr:23187] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.474812] [paradoxe-7:23198:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.474833] [paradoxe-7:23198:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.474788] [paradoxe-7:23201:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.474814] [paradoxe-7:23201:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.470268] [paradoxe-59:23191:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.470282] [paradoxe-59:23191:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.470214] [paradoxe-59:23193:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.470231] [paradoxe-59:23193:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.470264] [paradoxe-59:23197:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.470280] [paradoxe-59:23197:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.470595] [paradoxe-59:23203:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.470613] [paradoxe-59:23203:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-59.rennes.grid5000.fr:23185] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23201] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23193] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23198] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23191] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23197] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23203] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.478765] [paradoxe-9:61696:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.478784] [paradoxe-9:61696:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.474440] [paradoxe-60:23148:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.474459] [paradoxe-60:23148:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.474448] [paradoxe-60:23153:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.474464] [paradoxe-60:23153:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.474560] [paradoxe-60:23163:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.474580] [paradoxe-60:23163:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-9.rennes.grid5000.fr:61696] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.473953] [paradoxe-59:23186:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.473977] [paradoxe-59:23186:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.475024] [paradoxe-60:23167:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.475041] [paradoxe-60:23167:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.474851] [paradoxe-60:23151:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.474868] [paradoxe-60:23151:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.473973] [paradoxe-59:23192:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.473993] [paradoxe-59:23192:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23153] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.479055] [paradoxe-6:23165:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.479071] [paradoxe-6:23165:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.479043] [paradoxe-6:23146:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.479064] [paradoxe-6:23146:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23163] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.479112] [paradoxe-6:23149:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.479129] [paradoxe-6:23149:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23148] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.479164] [paradoxe-6:23155:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.479179] [paradoxe-6:23155:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.480883] [paradoxe-9:61692:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.480900] [paradoxe-9:61692:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.479974] [paradoxe-7:23194:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.479991] [paradoxe-7:23194:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.479562] [paradoxe-6:23151:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.479579] [paradoxe-6:23151:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.480844] [paradoxe-9:61694:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.480862] [paradoxe-9:61694:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23151] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.480909] [paradoxe-9:61700:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.480925] [paradoxe-9:61700:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.479988] [paradoxe-7:23205:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.480003] [paradoxe-7:23205:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23167] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.481326] [paradoxe-9:61681:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481342] [paradoxe-9:61681:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-59.rennes.grid5000.fr:23186] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23192] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61694] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61692] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23149] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23155] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61700] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.475871] [paradoxe-59:23194:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.475886] [paradoxe-59:23194:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-6.rennes.grid5000.fr:23165] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23194] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23146] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.475827] [paradoxe-59:23204:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.475844] [paradoxe-59:23204:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-7.rennes.grid5000.fr:23205] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23151] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.477436] [paradoxe-60:23158:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.477452] [paradoxe-60:23158:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.477433] [paradoxe-60:23161:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.477451] [paradoxe-60:23161:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.477454] [paradoxe-60:23165:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.477470] [paradoxe-60:23165:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.481520] [paradoxe-64:61601:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481537] [paradoxe-64:61601:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.481353] [paradoxe-64:61602:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481371] [paradoxe-64:61602:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.481350] [paradoxe-64:61608:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481371] [paradoxe-64:61608:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-59.rennes.grid5000.fr:23194] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.481375] [paradoxe-64:61614:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481391] [paradoxe-64:61614:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.482744] [paradoxe-9:61701:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482759] [paradoxe-9:61701:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-59.rennes.grid5000.fr:23204] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.482719] [paradoxe-9:61703:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482737] [paradoxe-9:61703:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-9.rennes.grid5000.fr:61681] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.477611] [paradoxe-59:23198:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.477628] [paradoxe-59:23198:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.483240] [paradoxe-9:61707:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.483257] [paradoxe-9:61707:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.481965] [paradoxe-6:23163:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481980] [paradoxe-6:23163:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23158] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.483167] [paradoxe-9:61690:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.483186] [paradoxe-9:61690:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.481929] [paradoxe-6:23166:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481945] [paradoxe-6:23166:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.482004] [paradoxe-6:23147:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482019] [paradoxe-6:23147:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.483391] [paradoxe-9:61684:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.483411] [paradoxe-9:61684:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23161] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.481914] [paradoxe-6:23150:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481929] [paradoxe-6:23150:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23165] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.481835] [paradoxe-6:23156:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481853] [paradoxe-6:23156:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.482051] [paradoxe-6:23159:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482067] [paradoxe-6:23159:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-9.rennes.grid5000.fr:61703] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-64.rennes.grid5000.fr:61602] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.477996] [paradoxe-59:23190:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.478011] [paradoxe-59:23190:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.482168] [paradoxe-7:23195:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482183] [paradoxe-7:23195:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.482160] [paradoxe-7:23204:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482179] [paradoxe-7:23204:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.482639] [paradoxe-64:61603:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482660] [paradoxe-64:61603:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.483787] [paradoxe-9:61687:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.483806] [paradoxe-9:61687:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.477829] [paradoxe-59:23200:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.477845] [paradoxe-59:23200:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-9.rennes.grid5000.fr:61701] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-64.rennes.grid5000.fr:61608] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.482175] [paradoxe-7:23210:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482191] [paradoxe-7:23210:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.482383] [paradoxe-7:23211:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482400] [paradoxe-7:23211:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-64.rennes.grid5000.fr:61614] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.482558] [paradoxe-7:23215:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482580] [paradoxe-7:23215:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-64.rennes.grid5000.fr:61601] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.482783] [paradoxe-7:23209:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.482798] [paradoxe-7:23209:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-7.rennes.grid5000.fr:23210] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23211] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61707] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23204] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61690] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.478298] [paradoxe-59:23183:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.478314] [paradoxe-59:23183:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-7.rennes.grid5000.fr:23195] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.467867] [paradoxe-58:23140:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.467884] [paradoxe-58:23140:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.483609] [paradoxe-7:23214:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.483629] [paradoxe-7:23214:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.467853] [paradoxe-58:23142:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.467873] [paradoxe-58:23142:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.483536] [paradoxe-7:23206:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.483558] [paradoxe-7:23206:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.467856] [paradoxe-58:23162:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.467873] [paradoxe-58:23162:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-6.rennes.grid5000.fr:23156] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61684] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23200] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23209] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23163] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23198] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23166] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23150] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23159] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23147] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23215] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61687] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23190] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.483559] [paradoxe-64:61606:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.483576] [paradoxe-64:61606:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.483698] [paradoxe-64:61610:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.483714] [paradoxe-64:61610:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-64.rennes.grid5000.fr:61603] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23183] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.468705] [paradoxe-58:23152:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.468721] [paradoxe-58:23152:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.468703] [paradoxe-58:23156:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.468721] [paradoxe-58:23156:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.468748] [paradoxe-58:23137:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.468764] [paradoxe-58:23137:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.483999] [paradoxe-6:23154:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.484020] [paradoxe-6:23154:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-7.rennes.grid5000.fr:23206] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23140] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-64.rennes.grid5000.fr:61606] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23142] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.480612] [paradoxe-60:23168:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.480629] [paradoxe-60:23168:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-64.rennes.grid5000.fr:61610] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23162] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.480517] [paradoxe-60:23152:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.480538] [paradoxe-60:23152:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.479717] [paradoxe-59:23199:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.479737] [paradoxe-59:23199:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-7.rennes.grid5000.fr:23214] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.484694] [paradoxe-6:23157:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.484715] [paradoxe-6:23157:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.469542] [paradoxe-58:23141:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.469567] [paradoxe-58:23141:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.481267] [paradoxe-60:23156:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481289] [paradoxe-60:23156:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.481350] [paradoxe-60:23157:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481372] [paradoxe-60:23157:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.481350] [paradoxe-60:23159:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481372] [paradoxe-60:23159:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.481267] [paradoxe-60:23149:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.481289] [paradoxe-60:23149:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.484694] [paradoxe-6:23161:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.484715] [paradoxe-6:23161:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-58.rennes.grid5000.fr:23156] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23137] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23152] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23199] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-60.rennes.grid5000.fr:23152] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23154] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-60.rennes.grid5000.fr:23168] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.484704] [paradoxe-8:23129:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.484722] [paradoxe-8:23129:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.485017] [paradoxe-8:23120:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.485034] [paradoxe-8:23120:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-6.rennes.grid5000.fr:23161] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.470379] [paradoxe-58:23146:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.470400] [paradoxe-58:23146:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.470386] [paradoxe-58:23148:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.470405] [paradoxe-58:23148:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23157] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-60.rennes.grid5000.fr:23149] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23157] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23129] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23141] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-60.rennes.grid5000.fr:23156] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-60.rennes.grid5000.fr:23159] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23120] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23146] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23148] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.472109] [paradoxe-58:23147:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472127] [paradoxe-58:23147:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.472128] [paradoxe-58:23149:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472144] [paradoxe-58:23149:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.472320] [paradoxe-58:23158:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472338] [paradoxe-58:23158:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.472362] [paradoxe-58:23166:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.472377] [paradoxe-58:23166:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-58.rennes.grid5000.fr:23149] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.484202] [paradoxe-63:23160:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.484228] [paradoxe-63:23160:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.488164] [paradoxe-64:61618:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.488181] [paradoxe-64:61618:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.488297] [paradoxe-64:61597:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.488312] [paradoxe-64:61597:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.488287] [paradoxe-64:61600:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.488303] [paradoxe-64:61600:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-58.rennes.grid5000.fr:23147] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23158] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23166] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.488903] [paradoxe-6:23168:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.488919] [paradoxe-6:23168:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.488942] [paradoxe-6:23176:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.488957] [paradoxe-6:23176:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-64.rennes.grid5000.fr:61618] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-64.rennes.grid5000.fr:61597] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-64.rennes.grid5000.fr:61600] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.489369] [paradoxe-6:23167:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.489386] [paradoxe-6:23167:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-63.rennes.grid5000.fr:23160] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23168] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23176] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23167] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.490167] [paradoxe-8:23128:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.490191] [paradoxe-8:23128:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.490167] [paradoxe-8:23121:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.490191] [paradoxe-8:23121:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.475687] [paradoxe-58:23138:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.475707] [paradoxe-58:23138:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.475599] [paradoxe-58:23144:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.475617] [paradoxe-58:23144:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.475590] [paradoxe-58:23153:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.475611] [paradoxe-58:23153:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.491066] [paradoxe-64:61620:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491080] [paradoxe-64:61620:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.491035] [paradoxe-64:61624:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491052] [paradoxe-64:61624:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.491108] [paradoxe-64:61627:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491125] [paradoxe-64:61627:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.491171] [paradoxe-64:61598:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491189] [paradoxe-64:61598:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.491239] [paradoxe-6:23172:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491256] [paradoxe-6:23172:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.491495] [paradoxe-64:61613:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491517] [paradoxe-64:61613:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-58.rennes.grid5000.fr:23153] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23121] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23172] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.491503] [paradoxe-64:61619:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491518] [paradoxe-64:61619:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-64.rennes.grid5000.fr:61624] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23128] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.476940] [paradoxe-58:23159:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.476956] [paradoxe-58:23159:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.491717] [paradoxe-64:61607:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491740] [paradoxe-64:61607:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-58.rennes.grid5000.fr:23138] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.491717] [paradoxe-64:61609:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491740] [paradoxe-64:61609:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-58.rennes.grid5000.fr:23144] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.491912] [paradoxe-64:61622:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491928] [paradoxe-64:61622:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-64.rennes.grid5000.fr:61620] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-64.rennes.grid5000.fr:61627] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-64.rennes.grid5000.fr:61598] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.493692] [paradoxe-9:61702:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493708] [paradoxe-9:61702:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-64.rennes.grid5000.fr:61619] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.493703] [paradoxe-9:61706:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493718] [paradoxe-9:61706:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493744] [paradoxe-9:61710:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493760] [paradoxe-9:61710:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.488115] [paradoxe-59:23210:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.488131] [paradoxe-59:23210:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-64.rennes.grid5000.fr:61622] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-64.rennes.grid5000.fr:61607] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23159] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-64.rennes.grid5000.fr:61613] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-64.rennes.grid5000.fr:61609] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.492940] [paradoxe-6:23170:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.492962] [paradoxe-6:23170:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.492940] [paradoxe-6:23174:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.492962] [paradoxe-6:23174:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.488607] [paradoxe-59:23206:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.488624] [paradoxe-59:23206:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.488592] [paradoxe-59:23205:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.488609] [paradoxe-59:23205:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-9.rennes.grid5000.fr:61710] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23210] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61702] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-9.rennes.grid5000.fr:61706] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.493424] [paradoxe-8:23123:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493440] [paradoxe-8:23123:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493404] [paradoxe-8:23138:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493421] [paradoxe-8:23138:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.489922] [paradoxe-63:23164:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.489941] [paradoxe-63:23164:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-59.rennes.grid5000.fr:23205] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23170] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-6.rennes.grid5000.fr:23174] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-59.rennes.grid5000.fr:23206] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.479391] [paradoxe-58:23167:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.479406] [paradoxe-58:23167:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.494563] [paradoxe-64:61617:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.494585] [paradoxe-64:61617:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.479321] [paradoxe-58:23157:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.479339] [paradoxe-58:23157:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.479365] [paradoxe-58:23163:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.479382] [paradoxe-58:23163:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-8.rennes.grid5000.fr:23123] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23138] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23163] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23167] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-58.rennes.grid5000.fr:23157] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23164] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.490945] [paradoxe-59:23207:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.490962] [paradoxe-59:23207:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-64.rennes.grid5000.fr:61617] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.491896] [paradoxe-63:23169:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.491913] [paradoxe-63:23169:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.492003] [paradoxe-63:23187:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.492020] [paradoxe-63:23187:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-59.rennes.grid5000.fr:23207] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.495598] [paradoxe-8:23125:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.495614] [paradoxe-8:23125:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.495837] [paradoxe-8:23133:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.495853] [paradoxe-8:23133:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.495690] [paradoxe-8:23135:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.495705] [paradoxe-8:23135:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.492466] [paradoxe-63:23182:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.492483] [paradoxe-63:23182:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.495640] [paradoxe-8:23136:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.495656] [paradoxe-8:23136:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.495687] [paradoxe-8:23141:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.495702] [paradoxe-8:23141:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.495965] [paradoxe-8:23130:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.495982] [paradoxe-8:23130:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493035] [paradoxe-63:23180:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493053] [paradoxe-63:23180:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-8.rennes.grid5000.fr:23136] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.493058] [paradoxe-63:23188:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493076] [paradoxe-63:23188:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-8.rennes.grid5000.fr:23125] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23135] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23141] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23133] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23130] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.493161] [paradoxe-63:23163:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493182] [paradoxe-63:23163:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493218] [paradoxe-63:23168:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493235] [paradoxe-63:23168:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-63.rennes.grid5000.fr:23169] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.493319] [paradoxe-63:23171:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493336] [paradoxe-63:23171:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493192] [paradoxe-63:23175:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493212] [paradoxe-63:23175:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493310] [paradoxe-63:23178:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493326] [paradoxe-63:23178:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493422] [paradoxe-63:23172:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493438] [paradoxe-63:23172:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493450] [paradoxe-63:23174:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493468] [paradoxe-63:23174:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-63.rennes.grid5000.fr:23187] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.493494] [paradoxe-63:23184:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493513] [paradoxe-63:23184:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493444] [paradoxe-63:23159:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493462] [paradoxe-63:23159:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493632] [paradoxe-63:23167:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493649] [paradoxe-63:23167:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.493707] [paradoxe-63:23179:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493723] [paradoxe-63:23179:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-63.rennes.grid5000.fr:23182] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.493639] [paradoxe-63:23162:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.493655] [paradoxe-63:23162:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.498202] [paradoxe-8:23131:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.498221] [paradoxe-8:23131:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.498307] [paradoxe-8:23140:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.498326] [paradoxe-8:23140:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.498368] [paradoxe-8:23143:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.498384] [paradoxe-8:23143:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.498327] [paradoxe-8:23124:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.498343] [paradoxe-8:23124:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-63.rennes.grid5000.fr:23167] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23172] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23175] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23180] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23188] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23168] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23163] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23184] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23159] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23162] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23171] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23174] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23178] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:23179] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23143] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23131] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23140] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23124] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.497721] [paradoxe-60:23173:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.497738] [paradoxe-60:23173:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.498137] [paradoxe-60:23170:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.498152] [paradoxe-60:23170:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.498125] [paradoxe-60:23179:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.498141] [paradoxe-60:23179:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.498439] [paradoxe-60:23175:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.498454] [paradoxe-60:23175:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23173] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.502820] [paradoxe-7:23222:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.502838] [paradoxe-7:23222:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23179] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-60.rennes.grid5000.fr:23170] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.503192] [paradoxe-7:23216:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.503208] [paradoxe-7:23216:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-60.rennes.grid5000.fr:23175] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.503543] [paradoxe-7:23221:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.503559] [paradoxe-7:23221:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-7.rennes.grid5000.fr:23222] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23216] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23221] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.504340] [paradoxe-8:23145:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.504356] [paradoxe-8:23145:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-8.rennes.grid5000.fr:23145] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.507223] [paradoxe-8:23147:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.507240] [paradoxe-8:23147:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.507422] [paradoxe-8:23142:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.507437] [paradoxe-8:23142:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.507850] [paradoxe-8:23148:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.507869] [paradoxe-8:23148:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-8.rennes.grid5000.fr:23147] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23142] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-8.rennes.grid5000.fr:23148] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.512396] [paradoxe-7:23217:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.512412] [paradoxe-7:23217:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.512628] [paradoxe-7:23218:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.512645] [paradoxe-7:23218:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-7.rennes.grid5000.fr:23217] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-7.rennes.grid5000.fr:23218] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772796518.509149] [paradoxe-63:23189:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.509166] [paradoxe-63:23189:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.509948] [paradoxe-60:23176:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.509969] [paradoxe-60:23176:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772796518.510127] [paradoxe-60:23169:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772796518.510145] [paradoxe-60:23169:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-63.rennes.grid5000.fr:23189] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-60.rennes.grid5000.fr:23176] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-60.rennes.grid5000.fr:23169] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+Initialized at rank 149 with total size of 180
+Initialized at rank 26 with total size of 180
+Initialized at rank 146 with total size of 180
+Initialized at rank 166 with total size of 180
+Initialized at rank 93 with total size of 180
+Initialized at rank 83 with total size of 180
+Initialized at rank 145 with total size of 180
+Initialized at rank 141 with total size of 180
+Initialized at rank 140 with total size of 180
+Initialized at rank 144 with total size of 180
+Initialized at rank 147 with total size of 180
+Initialized at rank 142 with total size of 180
+Initialized at rank 148 with total size of 180
+Initialized at rank 143 with total size of 180
+Initialized at rank 40 with total size of 180
+Initialized at rank 44 with total size of 180
+Initialized at rank 41 with total size of 180
+Initialized at rank 46 with total size of 180
+Initialized at rank 103 with total size of 180
+Initialized at rank 42 with total size of 180
+Initialized at rank 35 with total size of 180
+Initialized at rank 125 with total size of 180
+Initialized at rank 102 with total size of 180
+Initialized at rank 156 with total size of 180
+Initialized at rank 111 with total size of 180
+Initialized at rank 4 with total size of 180
+Initialized at rank 28 with total size of 180
+Initialized at rank 124 with total size of 180
+Initialized at rank 121 with total size of 180
+Initialized at rank 117 with total size of 180
+Initialized at rank 13 with total size of 180
+Initialized at rank 32 with total size of 180
+Initialized at rank 109 with total size of 180
+Initialized at rank 17 with total size of 180
+Initialized at rank 25 with total size of 180
+Initialized at rank 120 with total size of 180
+Initialized at rank 14 with total size of 180
+Initialized at rank 21 with total size of 180
+Initialized at rank 133 with total size of 180
+Initialized at rank 43 with total size of 180
+Initialized at rank 116 with total size of 180
+Initialized at rank 30 with total size of 180
+Initialized at rank 134 with total size of 180
+Initialized at rank 115 with total size of 180
+Initialized at rank 15 with total size of 180
+Initialized at rank 118 with total size of 180
+Initialized at rank 0 with total size of 180
+Initialized at rank 29 with total size of 180
+Initialized at rank 129 with total size of 180
+Initialized at rank 127 with total size of 180
+Initialized at rank 112 with total size of 180
+Initialized at rank 8 with total size of 180
+Initialized at rank 37 with total size of 180
+Initialized at rank 39 with total size of 180
+Initialized at rank 130 with total size of 180
+Initialized at rank 110 with total size of 180
+Initialized at rank 2 with total size of 180
+Initialized at rank 131 with total size of 180
+Initialized at rank 104 with total size of 180
+Initialized at rank 1 with total size of 180
+Initialized at rank 38 with total size of 180
+Initialized at rank 6 with total size of 180
+Initialized at rank 24 with total size of 180
+Initialized at rank 132 with total size of 180
+Initialized at rank 105 with total size of 180
+Initialized at rank 139 with total size of 180
+Initialized at rank 107 with total size of 180
+Initialized at rank 7 with total size of 180
+Initialized at rank 89 with total size of 180
+Initialized at rank 20 with total size of 180
+Initialized at rank 33 with total size of 180
+Initialized at rank 137 with total size of 180
+Initialized at rank 106 with total size of 180
+Initialized at rank 18 with total size of 180
+Initialized at rank 88 with total size of 180
+Initialized at rank 136 with total size of 180
+Initialized at rank 49 with total size of 180
+Initialized at rank 101 with total size of 180
+Initialized at rank 16 with total size of 180
+Initialized at rank 91 with total size of 180
+Initialized at rank 34 with total size of 180
+Initialized at rank 135 with total size of 180
+Initialized at rank 45 with total size of 180
+Initialized at rank 108 with total size of 180
+Initialized at rank 5 with total size of 180
+Initialized at rank 154 with total size of 180
+Initialized at rank 27 with total size of 180
+Initialized at rank 47 with total size of 180
+Initialized at rank 113 with total size of 180
+Initialized at rank 11 with total size of 180
+Initialized at rank 150 with total size of 180
+Initialized at rank 36 with total size of 180
+Initialized at rank 128 with total size of 180
+Initialized at rank 138 with total size of 180
+Initialized at rank 48 with total size of 180
+Initialized at rank 119 with total size of 180
+Initialized at rank 10 with total size of 180
+Initialized at rank 151 with total size of 180
+Initialized at rank 22 with total size of 180
+Initialized at rank 126 with total size of 180
+Initialized at rank 55 with total size of 180
+Initialized at rank 100 with total size of 180
+Initialized at rank 3 with total size of 180
+Initialized at rank 158 with total size of 180
+Initialized at rank 31 with total size of 180
+Initialized at rank 23 with total size of 180
+Initialized at rank 122 with total size of 180
+Initialized at rank 52 with total size of 180
+Initialized at rank 114 with total size of 180
+Initialized at rank 19 with total size of 180
+Initialized at rank 9 with total size of 180
+Initialized at rank 85 with total size of 180
+Initialized at rank 123 with total size of 180
+Initialized at rank 53 with total size of 180
+Initialized at rank 50 with total size of 180
+Initialized at rank 12 with total size of 180
+Initialized at rank 95 with total size of 180
+Initialized at rank 51 with total size of 180
+Initialized at rank 97 with total size of 180
+Initialized at rank 59 with total size of 180
+Initialized at rank 87 with total size of 180
+Initialized at rank 153 with total size of 180
+Initialized at rank 90 with total size of 180
+Initialized at rank 157 with total size of 180
+Initialized at rank 94 with total size of 180
+Initialized at rank 159 with total size of 180
+Initialized at rank 96 with total size of 180
+Initialized at rank 74 with total size of 180
+Initialized at rank 99 with total size of 180
+Initialized at rank 81 with total size of 180
+Initialized at rank 98 with total size of 180
+Initialized at rank 84 with total size of 180
+Initialized at rank 80 with total size of 180
+Initialized at rank 54 with total size of 180
+Initialized at rank 82 with total size of 180
+Initialized at rank 58 with total size of 180
+Initialized at rank 86 with total size of 180
+Initialized at rank 92 with total size of 180
+Initialized at rank 57 with total size of 180
+Initialized at rank 56 with total size of 180
+Initialized at rank 169 with total size of 180
+[SIM, rank 26] Sending metadata to deisa
+Initialized at rank 75 with total size of 180
+Initialized at rank 155 with total size of 180
+Initialized at rank 161 with total size of 180
+Initialized at rank 68 with total size of 180
+[SIM, rank 93] Sending metadata to deisa
+Initialized at rank 73 with total size of 180
+[SIM, rank 83] Sending metadata to deisa
+Initialized at rank 171 with total size of 180
+Initialized at rank 61 with total size of 180
+Initialized at rank 168 with total size of 180
+Initialized at rank 170 with total size of 180
+Initialized at rank 60 with total size of 180
+Initialized at rank 165 with total size of 180
+Initialized at rank 62 with total size of 180
+Initialized at rank 174 with total size of 180
+Initialized at rank 63 with total size of 180
+Initialized at rank 163 with total size of 180
+Initialized at rank 65 with total size of 180
+Initialized at rank 66 with total size of 180
+Initialized at rank 175 with total size of 180
+Initialized at rank 67 with total size of 180
+Initialized at rank 64 with total size of 180
+Initialized at rank 69 with total size of 180
+Initialized at rank 76 with total size of 180
+Initialized at rank 71 with total size of 180
+Initialized at rank 70 with total size of 180
+Initialized at rank 78 with total size of 180
+Initialized at rank 77 with total size of 180
+Initialized at rank 79 with total size of 180
+Initialized at rank 72 with total size of 180
+Initialized at rank 177 with total size of 180
+Initialized at rank 176 with total size of 180
+Initialized at rank 160 with total size of 180
+Initialized at rank 167 with total size of 180
+[SIM, rank 27] Sending metadata to deisa
+Initialized at rank 162 with total size of 180
+Initialized at rank 164 with total size of 180
+Initialized at rank 178 with total size of 180
+Initialized at rank 179 with total size of 180
+[SIM, rank 31] Sending metadata to deisa
+Initialized at rank 172 with total size of 180
+[SIM, rank 28] Sending metadata to deisa
+Initialized at rank 152 with total size of 180
+Initialized at rank 173 with total size of 180
+[SIM, rank 25] Sending metadata to deisa
+[SIM, rank 21] Sending metadata to deisa
+[SIM, rank 33] Sending metadata to deisa
+[SIM, rank 23] Sending metadata to deisa
+[SIM, rank 14] Sending metadata to deisa
+[SIM, rank 6] Sending metadata to deisa
+[SIM, rank 16] Sending metadata to deisa
+[SIM, rank 29] Sending metadata to deisa
+[SIM, rank 139] Sending metadata to deisa
+[SIM, rank 116] Sending metadata to deisa
+[SIM, rank 149] Sending metadata to deisa
+[SIM, rank 136] Sending metadata to deisa
+[SIM, rank 114] Sending metadata to deisa
+[SIM, rank 147] Sending metadata to deisa
+[SIM, rank 113] Sending metadata to deisa
+[SIM, rank 141] Sending metadata to deisa
+[SIM, rank 123] Sending metadata to deisa
+[SIM, rank 121] Sending metadata to deisa
+[SIM, rank 112] Sending metadata to deisa
+[SIM, rank 142] Sending metadata to deisa
+[SIM, rank 177] Sending metadata to deisa
+[SIM, rank 105] Sending metadata to deisa
+[SIM, rank 145] Sending metadata to deisa
+[SIM, rank 164] Sending metadata to deisa
+[SIM, rank 106] Sending metadata to deisa
+[SIM, rank 143] Sending metadata to deisa
+[SIM, rank 166] Sending metadata to deisa
+[SIM, rank 148] Sending metadata to deisa
+[SIM, rank 103] Sending metadata to deisa
+[SIM, rank 102] Sending metadata to deisa
+[SIM, rank 111] Sending metadata to deisa
+[SIM, rank 117] Sending metadata to deisa
+[SIM, rank 159] Sending metadata to deisa
+[SIM, rank 37] Sending metadata to deisa
+[SIM, rank 133] Sending metadata to deisa
+[SIM, rank 115] Sending metadata to deisa
+[SIM, rank 146] Sending metadata to deisa
+[SIM, rank 22] Sending metadata to deisa
+[SIM, rank 129] Sending metadata to deisa
+[SIM, rank 100] Sending metadata to deisa
+[SIM, rank 69] Sending metadata to deisa
+[SIM, rank 155] Sending metadata to deisa
+[SIM, rank 32] Sending metadata to deisa
+[SIM, rank 124] Sending metadata to deisa
+[SIM, rank 118] Sending metadata to deisa
+[SIM, rank 30] Sending metadata to deisa
+[SIM, rank 127] Sending metadata to deisa
+[SIM, rank 110] Sending metadata to deisa
+[SIM, rank 84] Sending metadata to deisa
+[SIM, rank 156] Sending metadata to deisa
+[SIM, rank 107] Sending metadata to deisa
+[SIM, rank 140] Sending metadata to deisa
+[SIM, rank 39] Sending metadata to deisa
+[SIM, rank 101] Sending metadata to deisa
+[SIM, rank 144] Sending metadata to deisa
+[SIM, rank 24] Sending metadata to deisa
+[SIM, rank 150] Sending metadata to deisa
+[SIM, rank 34] Sending metadata to deisa
+[SIM, rank 104] Sending metadata to deisa
+[SIM, rank 108] Sending metadata to deisa
+[SIM, rank 151] Sending metadata to deisa
+[SIM, rank 35] Sending metadata to deisa
+[SIM, rank 153] Sending metadata to deisa
+[SIM, rank 20] Sending metadata to deisa
+[SIM, rank 109] Sending metadata to deisa
+[SIM, rank 152] Sending metadata to deisa
+[SIM, rank 36] Sending metadata to deisa
+[SIM, rank 119] Sending metadata to deisa
+[SIM, rank 130] Sending metadata to deisa
+[SIM, rank 154] Sending metadata to deisa
+[SIM, rank 38] Sending metadata to deisa
+[SIM, rank 131] Sending metadata to deisa
+[SIM, rank 157] Sending metadata to deisa
+[SIM, rank 158] Sending metadata to deisa
+[SIM, rank 132] Sending metadata to deisa
+[SIM, rank 137] Sending metadata to deisa
+[SIM, rank 135] Sending metadata to deisa
+[SIM, rank 128] Sending metadata to deisa
+[SIM, rank 138] Sending metadata to deisa
+[SIM, rank 125] Sending metadata to deisa
+[SIM, rank 161] Sending metadata to deisa
+[SIM, rank 126] Sending metadata to deisa
+[SIM, rank 122] Sending metadata to deisa
+[SIM, rank 120] Sending metadata to deisa
+[SIM, rank 163] Sending metadata to deisa
+[SIM, rank 134] Sending metadata to deisa
+[SIM, rank 48] Sending metadata to deisa
+[SIM, rank 74] Sending metadata to deisa
+[SIM, rank 162] Sending metadata to deisa
+[SIM, rank 178] Sending metadata to deisa
+[SIM, rank 169] Sending metadata to deisa
+[SIM, rank 44] Sending metadata to deisa
+[SIM, rank 46] Sending metadata to deisa
+[SIM, rank 168] Sending metadata to deisa
+[SIM, rank 42] Sending metadata to deisa
+[SIM, rank 175] Sending metadata to deisa
+[SIM, rank 165] Sending metadata to deisa
+[SIM, rank 43] Sending metadata to deisa
+[SIM, rank 49] Sending metadata to deisa
+[SIM, rank 174] Sending metadata to deisa
+[SIM, rank 45] Sending metadata to deisa
+[SIM, rank 160] Sending metadata to deisa
+[SIM, rank 170] Sending metadata to deisa
+[SIM, rank 47] Sending metadata to deisa
+[SIM, rank 173] Sending metadata to deisa
+[SIM, rank 51] Sending metadata to deisa
+[SIM, rank 176] Sending metadata to deisa
+[SIM, rank 59] Sending metadata to deisa
+[SIM, rank 167] Sending metadata to deisa
+[SIM, rank 171] Sending metadata to deisa
+[SIM, rank 179] Sending metadata to deisa
+[SIM, rank 172] Sending metadata to deisa
+[SIM, rank 82] Sending metadata to deisa
+[SIM, rank 54] Sending metadata to deisa
+[SIM, rank 73] Sending metadata to deisa
+[SIM, rank 58] Sending metadata to deisa
+[SIM, rank 86] Sending metadata to deisa
+[SIM, rank 52] Sending metadata to deisa
+[SIM, rank 40] Sending metadata to deisa
+[SIM, rank 41] Sending metadata to deisa
+[SIM, rank 53] Sending metadata to deisa
+[SIM, rank 55] Sending metadata to deisa
+[SIM, rank 50] Sending metadata to deisa
+[SIM, rank 56] Sending metadata to deisa
+[SIM, rank 85] Sending metadata to deisa
+[SIM, rank 61] Sending metadata to deisa
+[SIM, rank 12] Sending metadata to deisa
+[SIM, rank 63] Sending metadata to deisa
+[SIM, rank 8] Sending metadata to deisa
+[SIM, rank 97] Sending metadata to deisa
+[SIM, rank 57] Sending metadata to deisa
+[SIM, rank 65] Sending metadata to deisa
+[SIM, rank 1] Sending metadata to deisa
+[SIM, rank 90] Sending metadata to deisa
+[SIM, rank 66] Sending metadata to deisa
+[SIM, rank 96] Sending metadata to deisa
+[SIM, rank 67] Sending metadata to deisa
+[SIM, rank 94] Sending metadata to deisa
+[SIM, rank 62] Sending metadata to deisa
+[SIM, rank 81] Sending metadata to deisa
+[SIM, rank 92] Sending metadata to deisa
+[SIM, rank 60] Sending metadata to deisa
+[SIM, rank 89] Sending metadata to deisa
+[SIM, rank 76] Sending metadata to deisa
+[SIM, rank 71] Sending metadata to deisa
+[SIM, rank 88] Sending metadata to deisa
+[SIM, rank 68] Sending metadata to deisa
+[SIM, rank 75] Sending metadata to deisa
+[SIM, rank 70] Sending metadata to deisa
+[SIM, rank 72] Sending metadata to deisa
+[SIM, rank 78] Sending metadata to deisa
+[SIM, rank 77] Sending metadata to deisa
+[SIM, rank 64] Sending metadata to deisa
+[SIM, rank 79] Sending metadata to deisa
+[SIM, rank 91] Sending metadata to deisa
+[SIM, rank 99] Sending metadata to deisa
+[SIM, rank 98] Sending metadata to deisa
+[SIM, rank 80] Sending metadata to deisa
+[SIM, rank 95] Sending metadata to deisa
+[SIM, rank 87] Sending metadata to deisa
+[SIM, rank 9] Sending metadata to deisa
+[SIM, rank 10] Sending metadata to deisa
+[SIM, rank 4] Sending metadata to deisa
+[SIM, rank 17] Sending metadata to deisa
+[SIM, rank 2] Sending metadata to deisa
+[SIM, rank 7] Sending metadata to deisa
+[SIM, rank 18] Sending metadata to deisa
+[SIM, rank 5] Sending metadata to deisa
+[SIM, rank 3] Sending metadata to deisa
+[SIM, rank 19] Sending metadata to deisa
+[SIM, rank 13] Sending metadata to deisa
+[SIM, rank 15] Sending metadata to deisa
+[SIM, rank 0] Sending metadata to deisa
+[SIM, rank 11] Sending metadata to deisa
+[Gloo] Rank 9 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 2 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 14 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 6 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 1 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 22 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 4 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 7 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 25 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 12 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 0 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 24 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 30 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 10 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 32 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 38 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 31 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 34 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 16 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 5 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 27 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 18 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 11 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 33 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 36 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 29 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 20 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 28 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 23 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 60 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 26 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 35 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 21 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 17 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 68 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 71 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 8 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 13 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 37 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 39 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 15 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 80 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 61 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 3 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 19 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 84 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 40 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 41 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 69 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 42 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 43 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 57 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 51 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 99 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 44 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 47 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 50 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 48 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 49 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 53 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 52 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 87 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 100 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 63 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 95 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 59 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 74 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 62 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 46 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 45 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 55 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 54 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 58 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 56 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 98 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 93 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 96 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 90 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 89 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 97 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 85 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 105 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 88 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 91 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 81 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 82 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 86 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 94 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 83 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 102 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 117 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 113 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 65 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 92 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 77 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 104 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 66 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 72 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 75 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 78 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 70 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 67 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 76 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 64 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 79 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 101 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 73 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 116 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 106 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 108 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 109 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 118 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 110 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 115 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 119 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 112 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 103 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 111 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 107 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 114 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 121 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 120 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 122 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 123 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 124 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 125 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 126 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 127 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 128 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 129 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 130 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 131 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 132 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 133 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 134 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 135 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 136 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 137 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 138 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 140 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 141 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 142 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 139 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 143 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 165 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 144 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 146 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 145 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 147 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 149 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 148 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 153 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 155 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 152 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 150 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 151 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 154 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 156 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 157 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 158 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 159 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 177 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 167 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 160 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 161 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 162 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 163 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 178 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 175 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 170 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 168 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 164 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 166 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 169 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 172 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 171 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 173 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 174 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 179 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[Gloo] Rank 176 is connected to 179 peer ranks. Expected number of connected peer ranks is : 179
+[SIM, rank 38] connected to deisa client
+[SIM, rank 42] connected to deisa client
+[SIM, rank 64] connected to deisa client
+[SIM, rank 63] connected to deisa client
+[SIM, rank 10] connected to deisa client
+[SIM, rank 90] connected to deisa client
+[SIM, rank 71] connected to deisa client
+[SIM, rank 26] connected to deisa client
+[SIM, rank 21] connected to deisa client
+[SIM, rank 143] connected to deisa client
+[SIM, rank 31] connected to deisa client
+[SIM, rank 73] connected to deisa client
+[SIM, rank 96] connected to deisa client
+[SIM, rank 78] connected to deisa client
+[SIM, rank 152] connected to deisa client
+[SIM, rank 36] connected to deisa client
+[SIM, rank 138] connected to deisa client
+[SIM, rank 66] connected to deisa client
+[SIM, rank 76] connected to deisa client
+[SIM, rank 7] connected to deisa client
+[SIM, rank 68] connected to deisa client
+[SIM, rank 24] connected to deisa client
+[SIM, rank 137] connected to deisa client
+[SIM, rank 74] connected to deisa client
+[SIM, rank 17] connected to deisa client
+[SIM, rank 88] connected to deisa client
+[SIM, rank 142] connected to deisa client
+[SIM, rank 168] connected to deisa client
+[SIM, rank 23] connected to deisa client
+[SIM, rank 128] connected to deisa client
+[SIM, rank 62] connected to deisa client
+[SIM, rank 2] connected to deisa client
+[SIM, rank 164] connected to deisa client
+[SIM, rank 29] connected to deisa client
+[SIM, rank 27] connected to deisa client
+[SIM, rank 133] connected to deisa client
+[SIM, rank 44] connected to deisa client
+[SIM, rank 108] connected to deisa client
+[SIM, rank 75] connected to deisa client
+[SIM, rank 4] connected to deisa client
+[SIM, rank 167] connected to deisa client
+[SIM, rank 169] connected to deisa client
+[SIM, rank 39] connected to deisa client
+[SIM, rank 121] connected to deisa client
+[SIM, rank 57] connected to deisa client
+[SIM, rank 79] connected to deisa client
+[SIM, rank 12] connected to deisa client
+[SIM, rank 132] connected to deisa client
+[SIM, rank 52] connected to deisa client
+[SIM, rank 115] connected to deisa client
+[SIM, rank 69] connected to deisa client
+[SIM, rank 0] connected to deisa client
+[SIM, rank 160] connected to deisa client
+[SIM, rank 32] connected to deisa client
+[SIM, rank 118] connected to deisa client
+[SIM, rank 67] connected to deisa client
+[SIM, rank 3] connected to deisa client
+[SIM, rank 158] connected to deisa client
+[SIM, rank 170] connected to deisa client
+[SIM, rank 22] connected to deisa client
+[SIM, rank 123] connected to deisa client
+[SIM, rank 125] connected to deisa client
+[SIM, rank 100] connected to deisa client
+[SIM, rank 72] connected to deisa client
+[SIM, rank 9] connected to deisa client
+[SIM, rank 150] connected to deisa client
+[SIM, rank 174] connected to deisa client
+[SIM, rank 30] connected to deisa client
+[SIM, rank 98] connected to deisa client
+[SIM, rank 148] connected to deisa client
+[SIM, rank 179] connected to deisa client
+[SIM, rank 20] connected to deisa client
+[SIM, rank 122] connected to deisa client
+[SIM, rank 116] connected to deisa client
+[SIM, rank 61] connected to deisa client
+[SIM, rank 14] connected to deisa client
+[SIM, rank 120] connected to deisa client
+[SIM, rank 55] connected to deisa client
+[SIM, rank 103] connected to deisa client
+[SIM, rank 60] connected to deisa client
+[SIM, rank 5] connected to deisa client
+[SIM, rank 154] connected to deisa client
+[SIM, rank 177] connected to deisa client
+[SIM, rank 33] connected to deisa client
+[SIM, rank 18] connected to deisa client
+[SIM, rank 155] connected to deisa client
+[SIM, rank 166] connected to deisa client
+[SIM, rank 37] connected to deisa client
+[SIM, rank 126] connected to deisa client
+[SIM, rank 47] connected to deisa client
+[SIM, rank 106] connected to deisa client
+[SIM, rank 70] connected to deisa client
+[SIM, rank 157] connected to deisa client
+[SIM, rank 172] connected to deisa client
+[SIM, rank 35] connected to deisa client
+[SIM, rank 129] connected to deisa client
+[SIM, rank 54] connected to deisa client
+[SIM, rank 101] connected to deisa client
+[SIM, rank 77] connected to deisa client
+[SIM, rank 15] connected to deisa client
+[SIM, rank 1] connected to deisa client
+[SIM, rank 94] connected to deisa client
+[SIM, rank 147] connected to deisa client
+[SIM, rank 175] connected to deisa client
+[SIM, rank 25] connected to deisa client
+[SIM, rank 130] connected to deisa client
+[SIM, rank 43] connected to deisa client
+[SIM, rank 102] connected to deisa client
+[SIM, rank 65] connected to deisa client
+[SIM, rank 135] connected to deisa client
+[SIM, rank 59] connected to deisa client
+[SIM, rank 114] connected to deisa client
+[SIM, rank 6] connected to deisa client
+[SIM, rank 81] connected to deisa client
+[SIM, rank 140] connected to deisa client
+[SIM, rank 171] connected to deisa client
+[SIM, rank 34] connected to deisa client
+[SIM, rank 111] connected to deisa client
+[SIM, rank 19] connected to deisa client
+[SIM, rank 83] connected to deisa client
+[SIM, rank 159] connected to deisa client
+[SIM, rank 173] connected to deisa client
+[SIM, rank 28] connected to deisa client
+[SIM, rank 131] connected to deisa client
+[SIM, rank 56] connected to deisa client
+[SIM, rank 139] connected to deisa client
+[SIM, rank 48] connected to deisa client
+[SIM, rank 113] connected to deisa client
+[SIM, rank 8] connected to deisa client
+[SIM, rank 95] connected to deisa client
+[SIM, rank 141] connected to deisa client
+[SIM, rank 162] connected to deisa client
+[SIM, rank 11] connected to deisa client
+[SIM, rank 91] connected to deisa client
+[SIM, rank 146] connected to deisa client
+[SIM, rank 165] connected to deisa client
+[SIM, rank 134] connected to deisa client
+[SIM, rank 46] connected to deisa client
+[SIM, rank 112] connected to deisa client
+[SIM, rank 127] connected to deisa client
+[SIM, rank 58] connected to deisa client
+[SIM, rank 105] connected to deisa client
+[SIM, rank 13] connected to deisa client
+[SIM, rank 80] connected to deisa client
+[SIM, rank 145] connected to deisa client
+[SIM, rank 161] connected to deisa client
+[SIM, rank 136] connected to deisa client
+[SIM, rank 49] connected to deisa client
+[SIM, rank 110] connected to deisa client
+[SIM, rank 16] connected to deisa client
+[SIM, rank 85] connected to deisa client
+[SIM, rank 151] connected to deisa client
+[SIM, rank 176] connected to deisa client
+[SIM, rank 163] connected to deisa client
+[SIM, rank 124] connected to deisa client
+[SIM, rank 53] connected to deisa client
+[SIM, rank 107] connected to deisa client
+[SIM, rank 82] connected to deisa client
+[SIM, rank 149] connected to deisa client
+[SIM, rank 50] connected to deisa client
+[SIM, rank 117] connected to deisa client
+[SIM, rank 99] connected to deisa client
+[SIM, rank 156] connected to deisa client
+[SIM, rank 178] connected to deisa client
+[SIM, rank 109] connected to deisa client
+[SIM, rank 87] connected to deisa client
+[SIM, rank 144] connected to deisa client
+[SIM, rank 51] connected to deisa client
+[SIM, rank 89] connected to deisa client
+[SIM, rank 153] connected to deisa client
+[SIM, rank 41] connected to deisa client
+[SIM, rank 104] connected to deisa client
+[SIM, rank 93] connected to deisa client
+[SIM, rank 45] connected to deisa client
+[SIM, rank 119] connected to deisa client
+[SIM, rank 86] connected to deisa client
+[SIM, rank 40] connected to deisa client
+[SIM, rank 84] connected to deisa client
+[SIM, rank 97] connected to deisa client
+[SIM, rank 92] connected to deisa client
+[ANALYTICS]: to_hdf5,0,1.2185997720000046
+[ANALYTICS]: to_hdf5,1,0.5591208200000324
+[ANALYTICS]: to_hdf5,2,0.5338252810000199
+[ANALYTICS]: to_hdf5,3,0.5319529679999846
+[ANALYTICS]: to_hdf5,4,0.5214642199999844
+[ANALYTICS]: to_hdf5,5,0.5534718199999702
+[ANALYTICS]: to_hdf5,6,0.5259740079999915
+[ANALYTICS]: to_hdf5,7,0.4707705550000014
+[ANALYTICS]: to_hdf5,8,0.5772328130000233
+[ANALYTICS]: to_hdf5,9,0.6034407490000149
+[ANALYTICS]: to_hdf5,10,0.5259707099999673
+[ANALYTICS]: to_hdf5,11,0.5273984010000277
+[ANALYTICS]: to_hdf5,12,0.5359243940000056
+[ANALYTICS]: to_hdf5,13,0.5440943659999675
+[ANALYTICS]: to_hdf5,14,0.5313697779999984
+[ANALYTICS]: to_hdf5,15,0.5180628499999784
+[ANALYTICS]: to_hdf5,16,0.5384251529999915
+[ANALYTICS]: to_hdf5,17,0.5678984020000257
+[ANALYTICS]: to_hdf5,18,0.5012559410000108
+[ANALYTICS]: to_hdf5,19,0.5236329890000206
+[ANALYTICS]: to_hdf5,20,0.5123897529999795
+[ANALYTICS]: to_hdf5,21,0.5064988249999942
+[ANALYTICS]: to_hdf5,22,0.5300740150000252
+[ANALYTICS]: to_hdf5,23,0.5655479060000062
+[ANALYTICS]: to_hdf5,24,0.5233640390000005
+[ANALYTICS]: to_hdf5,25,0.4895652800000221
+[ANALYTICS]: to_hdf5,26,0.516668138
+[ANALYTICS]: to_hdf5,27,0.5086570320000305
+[ANALYTICS]: to_hdf5,28,0.5379498130000115
+[ANALYTICS]: to_hdf5,29,0.5317021660000023
+[ANALYTICS]: to_hdf5,30,0.5435961819999875
+[ANALYTICS]: to_hdf5,31,0.5632545920000211
+[ANALYTICS]: to_hdf5,32,0.48738209700002244
+[ANALYTICS]: to_hdf5,33,0.49489155800000617
+[ANALYTICS]: to_hdf5,34,0.46207917999998926
+[ANALYTICS]: to_hdf5,35,0.5073170929999833
+[ANALYTICS]: to_hdf5,36,0.5243236929999853
+[ANALYTICS]: to_hdf5,37,0.5202878479999526
+[ANALYTICS]: to_hdf5,38,0.5244199659999822
+[ANALYTICS]: to_hdf5,39,0.5441405219999638
+[ANALYTICS]: to_hdf5,40,0.4963980809999953
+[ANALYTICS]: to_hdf5,41,0.7401289899999597
+[ANALYTICS]: to_hdf5,42,0.5095722460000047
+[ANALYTICS]: to_hdf5,43,0.49100580499998614
+[ANALYTICS]: to_hdf5,44,0.5534330990000171
+[ANALYTICS]: to_hdf5,45,0.5337930340000412
+[ANALYTICS]: to_hdf5,46,0.6522761780000224
+[SIM] DONE.
+[ANALYTICS]: to_hdf5,47,0.4967058770000108
+[ANALYTICS]: to_hdf5,48,0.5114562379999938
+[ANALYTICS]: to_hdf5,49,0.49456828999996105
+++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:140: date +%s
++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:140: end=1772796568
+++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:142: expr 1772796568 - 1772796488
++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:142: echo '[INFO] Simulation finished at 80/s.'
+[INFO] Simulation finished at 80/s.
++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:146: echo '[INFO] Waiting on analytics..'
+[INFO] Waiting on analytics..
+++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:147: date +%s
++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:147: end=1772796568
++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:148: wait 28476
+[0m++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:149: expr 1772796568 - 1772796512
++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:149: echo '[INFO] Analytics finished at 56/s.'
+[INFO] Analytics finished at 56/s.
++ 2026-03-06 12:29:28 launch-insitu-python-multinode.sh:151: mpirun -hostfile /var/lib/oar/3549820 -x PATH -x VIRTUAL_ENV bash -c 'ray stop'
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+++ 2026-03-06 12:29:36 launch-insitu-python-multinode.sh:156: date
++ 2026-03-06 12:29:36 launch-insitu-python-multinode.sh:156: echo '[INFO] Finishing at: Fri 06 Mar 2026 12:29:36 PM CET'
+[INFO] Finishing at: Fri 06 Mar 2026 12:29:36 PM CET
++ 2026-03-06 12:29:36 launch-insitu-python-multinode.sh:158: cd /home/rraddatz/deisa-ray/BENCHMARKS

@@ -1,0 +1,34 @@
+Warning: Permanently added 'paradoxe-13,172.16.101.13' (ECDSA) to the list of known hosts.
+Warning: Permanently added 'paradoxe-17,172.16.101.17' (ECDSA) to the list of known hosts.
+2026-03-04 17:47:47,086	INFO scripts.py:1094 -- [37mLocal node IP[39m: [1m172.16.101.17[22m
+2026-03-04 17:47:47,161	INFO scripts.py:1094 -- [37mLocal node IP[39m: [1m172.16.101.13[22m
+2026-03-04 17:47:47,247	INFO scripts.py:1094 -- [37mLocal node IP[39m: [1m172.16.101.8[22m
+[2026-03-04 17:47:47,286 W 246064 246064] global_state_accessor.cc:435: Retrying to get node with node ID 6957e6ee3d6989abd555017e2fdb0d37aea29694c24982b7451d8e56
+[2026-03-04 17:47:47,351 W 7676 7676] global_state_accessor.cc:435: Retrying to get node with node ID 40741f744fa017a7205ed8840627bcfbe0531d5c2b8a750958b1d024
+2026-03-04 17:47:47,422	INFO scripts.py:1094 -- [37mLocal node IP[39m: [1m172.16.101.64[22m
+[2026-03-04 17:47:47,438 W 333436 333436] global_state_accessor.cc:435: Retrying to get node with node ID 72b070a97afaeb7feb768061512b7189ace661b5a347068b58c8804c
+[2026-03-04 17:47:47,624 W 7610 7610] global_state_accessor.cc:435: Retrying to get node with node ID ec4af539003a768443c1589f712002db121f001b43a09d208b4ff53a
+[2026-03-04 17:47:48,287 W 246064 246064] global_state_accessor.cc:435: Retrying to get node with node ID 6957e6ee3d6989abd555017e2fdb0d37aea29694c24982b7451d8e56
+[2026-03-04 17:47:48,352 W 7676 7676] global_state_accessor.cc:435: Retrying to get node with node ID 40741f744fa017a7205ed8840627bcfbe0531d5c2b8a750958b1d024
+2026-03-04 17:47:48,449	SUCC scripts.py:1110 -- [32m--------------------[39m
+2026-03-04 17:47:48,449	SUCC scripts.py:1111 -- [32mRay runtime started.[39m
+2026-03-04 17:47:48,449	SUCC scripts.py:1112 -- [32m--------------------[39m
+2026-03-04 17:47:48,449	INFO scripts.py:1114 -- To terminate the Ray runtime, run
+2026-03-04 17:47:48,449	INFO scripts.py:1115 -- [1m  ray stop[22m
+[0m[2026-03-04 17:47:48,625 W 7610 7610] global_state_accessor.cc:435: Retrying to get node with node ID ec4af539003a768443c1589f712002db121f001b43a09d208b4ff53a
+2026-03-04 17:47:49,298	SUCC scripts.py:1110 -- [32m--------------------[39m
+2026-03-04 17:47:49,298	SUCC scripts.py:1111 -- [32mRay runtime started.[39m
+2026-03-04 17:47:49,298	SUCC scripts.py:1112 -- [32m--------------------[39m
+2026-03-04 17:47:49,298	INFO scripts.py:1114 -- To terminate the Ray runtime, run
+2026-03-04 17:47:49,298	INFO scripts.py:1115 -- [1m  ray stop[22m
+[0m2026-03-04 17:47:49,382	SUCC scripts.py:1110 -- [32m--------------------[39m
+2026-03-04 17:47:49,382	SUCC scripts.py:1111 -- [32mRay runtime started.[39m
+2026-03-04 17:47:49,382	SUCC scripts.py:1112 -- [32m--------------------[39m
+2026-03-04 17:47:49,382	INFO scripts.py:1114 -- To terminate the Ray runtime, run
+2026-03-04 17:47:49,382	INFO scripts.py:1115 -- [1m  ray stop[22m
+[0m2026-03-04 17:47:49,661	SUCC scripts.py:1110 -- [32m--------------------[39m
+2026-03-04 17:47:49,661	SUCC scripts.py:1111 -- [32mRay runtime started.[39m
+2026-03-04 17:47:49,661	SUCC scripts.py:1112 -- [32m--------------------[39m
+2026-03-04 17:47:49,661	INFO scripts.py:1114 -- To terminate the Ray runtime, run
+2026-03-04 17:47:49,661	INFO scripts.py:1115 -- [1m  ray stop[22m
+[0m

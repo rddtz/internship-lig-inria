@@ -1,0 +1,1 @@
+cat ../template.csv; for i in `ls -d logs*`; do RID=`echo $i | cut -d- -f 2,3,4,5 | sed "s/-/,/g"`; for l in `cat $i/run.log | grep "\[ANALYTICS\]" | cut -d: -f2`; do echo "$RID,`echo $l`"; done; done

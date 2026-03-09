@@ -1,0 +1,231 @@
+++ date
++ echo '[INFO] Starting at: Tue 03 Mar 2026 02:44:19 PM CET'
+[INFO] Starting at: Tue 03 Mar 2026 02:44:19 PM CET
++ NODES=($(cat "$OAR_NODE_FILE" | uniq))
+++ cat /var/lib/oar/3542430
+++ uniq
++ N_NODES=1
++ echo '[INFO] Execution using 1 node(s)'
+[INFO] Execution using 1 node(s)
++ echo '[INFO] Nodes used: paradoxe-63.rennes.grid5000.fr'
+[INFO] Nodes used: paradoxe-63.rennes.grid5000.fr
++ HEAD_NODE=paradoxe-63.rennes.grid5000.fr
++ [[ 1 -eq 1 ]]
++ SIM_NODES=("${NODES[@]:0}")
++ N_SIM_NODES=1
++ COMP_CORES=5
++ [[ -z 5 ]]
++ PORT=4242
++ HEAD_ADDRESS=paradoxe-63.rennes.grid5000.fr:4242
++ echo '[INFO] Head node (paradoxe-63.rennes.grid5000.fr) at address: paradoxe-63.rennes.grid5000.fr:4242'
+[INFO] Head node (paradoxe-63.rennes.grid5000.fr) at address: paradoxe-63.rennes.grid5000.fr:4242
++ echo '[INFO] Left with 1 simulation node(s): paradoxe-63.rennes.grid5000.fr'
+[INFO] Left with 1 simulation node(s): paradoxe-63.rennes.grid5000.fr
+++ pwd
++ OLDPWD=/home/rraddatz/deisa-ray/BENCHMARKS
++++ dirname -- launch-scripts/launch-insitu-python-multinode.sh
+++ cd -- launch-scripts/..
+++ pwd
++ PROJECT_ROOT=/home/rraddatz/deisa-ray/BENCHMARKS
++ export OMP_PROC_BIND=spread
++ OMP_PROC_BIND=spread
++ export OMP_PLACES=cores
++ OMP_PLACES=cores
++ nodes=1
++ export 'PS4=+ $(date "+%F %T") ${BASH_SOURCE##*/}:${LINENO}: '
++ PS4='+ $(date "+%F %T") ${BASH_SOURCE##*/}:${LINENO}: '
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:59: cd /home/rraddatz/deisa-ray/BENCHMARKS
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:60: VENV=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:64: [[ -d /home/rraddatz/deisa-ray/BENCHMARKS/../.venv ]]
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:65: echo '[INFO] Using Python virtualenv at /home/rraddatz/deisa-ray/BENCHMARKS/../.venv'
+[INFO] Using Python virtualenv at /home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:66: export VIRTUAL_ENV=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:66: VIRTUAL_ENV=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:67: export PATH=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin:/usr/lib/oar/oardodo:/usr/lib/oar/oardodo:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/cuda/bin:/grid5000/code/bin:/opt/rocm/bin:/opt/dell/srvadmin/bin
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:67: PATH=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin:/usr/lib/oar/oardodo:/usr/lib/oar/oardodo:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/cuda/bin:/grid5000/code/bin:/opt/rocm/bin:/opt/dell/srvadmin/bin
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:68: PY=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin/python
+++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:77: date +%s
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:77: start=1772545459
++ 2026-03-03 14:44:19 launch-insitu-python-multinode.sh:80: mpirun --host paradoxe-63.rennes.grid5000.fr:1 -x PATH -x VIRTUAL_ENV bash -c 'ray start --head --port=4242 --num-cpus=60'
+++ 2026-03-03 14:44:28 launch-insitu-python-multinode.sh:85: date +%s
++ 2026-03-03 14:44:28 launch-insitu-python-multinode.sh:85: end=1772545468
+++ 2026-03-03 14:44:28 launch-insitu-python-multinode.sh:86: expr 1772545468 - 1772545459
++ 2026-03-03 14:44:28 launch-insitu-python-multinode.sh:86: echo '[INFO] Ray head node started at 9/s.'
+[INFO] Ray head node started at 9/s.
++ 2026-03-03 14:44:28 launch-insitu-python-multinode.sh:88: sleep 1
++ 2026-03-03 14:44:29 launch-insitu-python-multinode.sh:93: '[' 1 -gt 1 ']'
+++ 2026-03-03 14:44:29 launch-insitu-python-multinode.sh:107: date +%s
++ 2026-03-03 14:44:29 launch-insitu-python-multinode.sh:107: end=1772545469
++ 2026-03-03 14:44:29 launch-insitu-python-multinode.sh:108: ANALYTICS_START=1772545469
+++ 2026-03-03 14:44:29 launch-insitu-python-multinode.sh:109: expr 1772545469 - 1772545459
++ 2026-03-03 14:44:29 launch-insitu-python-multinode.sh:109: echo 'Launching Analytics at 10/s.'
+Launching Analytics at 10/s.
++ 2026-03-03 14:44:29 launch-insitu-python-multinode.sh:111: TYPE=avg_zarr
++ 2026-03-03 14:44:29 launch-insitu-python-multinode.sh:112: [[ -z avg_zarr ]]
++ 2026-03-03 14:44:29 launch-insitu-python-multinode.sh:122: sleep 5
++ 2026-03-03 14:44:29 launch-insitu-python-multinode.sh:117: mpirun --host paradoxe-63.rennes.grid5000.fr:1 -x PATH -x VIRTUAL_ENV bash -c '/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin/python -m analytics.avg_zarr'
+Analytics Initialized
++ 2026-03-03 14:44:34 launch-insitu-python-multinode.sh:124: ANALYTICS_PID=112067
++ 2026-03-03 14:44:34 launch-insitu-python-multinode.sh:125: echo '[INFO] Analytics PID: 112067'
+[INFO] Analytics PID: 112067
++ 2026-03-03 14:44:34 launch-insitu-python-multinode.sh:129: echo '[INFO] Launching Simulation...'
+[INFO] Launching Simulation...
+++ 2026-03-03 14:44:34 launch-insitu-python-multinode.sh:131: printf %s:5, paradoxe-63.rennes.grid5000.fr
+++ 2026-03-03 14:44:34 launch-insitu-python-multinode.sh:131: sed 's/,$//'
++ 2026-03-03 14:44:34 launch-insitu-python-multinode.sh:131: mpirun --merge-stderr-to-stdout -x PATH -x VIRTUAL_ENV -x MASTER_ADDR=paradoxe-63.rennes.grid5000.fr --host paradoxe-63.rennes.grid5000.fr:5 /home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin/python /home/rraddatz/deisa-ray/BENCHMARKS/python/sim-deisa-ray.py --steps 50 --print-every 0 --seed-mode local --periodic --nx_local 1024 --ny_local 1024
+[1772545475.224355] [paradoxe-63:112384:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772545475.224372] [paradoxe-63:112384:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772545475.224433] [paradoxe-63:112385:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772545475.224449] [paradoxe-63:112385:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772545475.224420] [paradoxe-63:112390:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772545475.224438] [paradoxe-63:112390:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772545475.224345] [paradoxe-63:112391:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772545475.224365] [paradoxe-63:112391:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-63.rennes.grid5000.fr:112391] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:112384] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:112385] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-63.rennes.grid5000.fr:112390] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772545475.251684] [paradoxe-63:112386:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772545475.251702] [paradoxe-63:112386:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-63.rennes.grid5000.fr:112386] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+Initialized at rank 3 with total size of 5
+Initialized at rank 4 with total size of 5
+Initialized at rank 2 with total size of 5
+Initialized at rank 0 with total size of 5
+Initialized at rank 1 with total size of 5
+[SIM, rank 3] Sending metadata to deisa
+[SIM, rank 1] Sending metadata to deisa
+[SIM, rank 2] Sending metadata to deisa
+[SIM, rank 0] Sending metadata to deisa
+[SIM, rank 4] Sending metadata to deisa
+[Gloo] Rank 1 is connected to 4 peer ranks. Expected number of connected peer ranks is : 4
+[Gloo] Rank 4 is connected to 4 peer ranks. Expected number of connected peer ranks is : 4
+[Gloo] Rank 3 is connected to 4 peer ranks. Expected number of connected peer ranks is : 4
+[Gloo] Rank 2 is connected to 4 peer ranks. Expected number of connected peer ranks is : 4
+[Gloo] Rank 0 is connected to 4 peer ranks. Expected number of connected peer ranks is : 4
+[SIM, rank 4] connected to deisa client
+[SIM, rank 1] connected to deisa client
+[SIM, rank 3] connected to deisa client
+[SIM, rank 2] connected to deisa client
+[SIM, rank 0] connected to deisa client
+[ANALYTICS]: zarr,0,3.1259137690003627
+[ANALYTICS]: zarr,1,0.4708550979999018
+[ANALYTICS]: zarr,2,0.3782959629998004
+[ANALYTICS]: zarr,3,0.3491161169999941
+[ANALYTICS]: zarr,4,0.39755243399986284
+[ANALYTICS]: zarr,5,0.39636980200020844
+[ANALYTICS]: zarr,6,0.5033964240001296
+[ANALYTICS]: zarr,7,0.42632721700010734
+[ANALYTICS]: zarr,8,0.4120845570000711
+[ANALYTICS]: zarr,9,0.44175806100020054
+[ANALYTICS]: zarr,10,0.33571778399982577
+[ANALYTICS]: zarr,11,0.5136404729996684
+[ANALYTICS]: zarr,12,0.6598373749998245
+[ANALYTICS]: zarr,13,0.7945188479998251
+[ANALYTICS]: zarr,14,0.4886053870000069
+[ANALYTICS]: zarr,15,0.5756898489999003
+[ANALYTICS]: zarr,16,0.5095546290003767
+[ANALYTICS]: zarr,17,0.5678165819999776
+[ANALYTICS]: zarr,18,0.601462148000337
+[ANALYTICS]: zarr,19,0.6613185310002336
+[ANALYTICS]: zarr,20,1.097371903000294
+[ANALYTICS]: zarr,21,0.6901406280003357
+[ANALYTICS]: zarr,22,0.744448809000005
+[ANALYTICS]: zarr,23,0.5596330570001555
+[ANALYTICS]: zarr,24,0.5486282990000291
+[ANALYTICS]: zarr,25,0.4647524759998305
+[ANALYTICS]: zarr,26,0.7247765399997661
+[ANALYTICS]: zarr,27,0.572688067999934
+[ANALYTICS]: zarr,28,0.62097626700006
+[ANALYTICS]: zarr,29,0.6257291320002878
+[ANALYTICS]: zarr,30,0.8998917889998665
+[ANALYTICS]: zarr,31,0.7377155809999749
+[ANALYTICS]: zarr,32,0.43280676399990625
+[ANALYTICS]: zarr,33,0.7278028199998516
+[ANALYTICS]: zarr,34,0.8599371749996862
+[ANALYTICS]: zarr,35,0.5312876339999093
+[ANALYTICS]: zarr,36,0.6420163099996898
+[ANALYTICS]: zarr,37,0.7909939689998282
+[ANALYTICS]: zarr,38,0.48263510100014173
+[ANALYTICS]: zarr,39,0.7120330980001199
+[ANALYTICS]: zarr,40,0.524861681999937
+[ANALYTICS]: zarr,41,0.6099847440000303
+[ANALYTICS]: zarr,42,0.6587223559999984
+[ANALYTICS]: zarr,43,1.0606722010002159
+[ANALYTICS]: zarr,44,0.8707536719998643
+[ANALYTICS]: zarr,45,0.6104528830001072
+[ANALYTICS]: zarr,46,0.7229394220003087
+[SIM] DONE.
+[ANALYTICS]: zarr,47,0.4806980409998687
+[ANALYTICS]: zarr,48,0.96344262599996
+[ANALYTICS]: zarr,49,0.768281148999904
+++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:140: date +%s
++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:140: end=1772545534
+++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:142: expr 1772545534 - 1772545459
++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:142: echo '[INFO] Simulation finished at 75/s.'
+[INFO] Simulation finished at 75/s.
++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:146: echo '[INFO] Waiting on analytics..'
+[INFO] Waiting on analytics..
+++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:147: date +%s
++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:147: end=1772545534
++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:148: wait 112067
+[0m++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:149: expr 1772545534 - 1772545469
++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:149: echo '[INFO] Analytics finished at 65/s.'
+[INFO] Analytics finished at 65/s.
++ 2026-03-03 14:45:34 launch-insitu-python-multinode.sh:151: mpirun -hostfile /var/lib/oar/3542430 -x PATH -x VIRTUAL_ENV bash -c 'ray stop'
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+++ 2026-03-03 14:45:41 launch-insitu-python-multinode.sh:156: date
++ 2026-03-03 14:45:41 launch-insitu-python-multinode.sh:156: echo '[INFO] Finishing at: Tue 03 Mar 2026 02:45:41 PM CET'
+[INFO] Finishing at: Tue 03 Mar 2026 02:45:41 PM CET
++ 2026-03-03 14:45:41 launch-insitu-python-multinode.sh:158: cd /home/rraddatz/deisa-ray/BENCHMARKS

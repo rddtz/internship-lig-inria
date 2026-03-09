@@ -1,0 +1,336 @@
+++ date
++ echo '[INFO] Starting at: Wed 04 Mar 2026 04:02:40 PM CET'
+[INFO] Starting at: Wed 04 Mar 2026 04:02:40 PM CET
++ NODES=($(cat "$OAR_NODE_FILE" | uniq))
+++ cat /var/lib/oar/3545248
+++ uniq
++ N_NODES=1
++ echo '[INFO] Execution using 1 node(s)'
+[INFO] Execution using 1 node(s)
++ echo '[INFO] Nodes used: paradoxe-13.rennes.grid5000.fr'
+[INFO] Nodes used: paradoxe-13.rennes.grid5000.fr
++ HEAD_NODE=paradoxe-13.rennes.grid5000.fr
++ [[ 1 -eq 1 ]]
++ SIM_NODES=("${NODES[@]:0}")
++ N_SIM_NODES=1
++ COMP_CORES=20
++ [[ -z 20 ]]
++ PORT=4242
++ HEAD_ADDRESS=paradoxe-13.rennes.grid5000.fr:4242
++ echo '[INFO] Head node (paradoxe-13.rennes.grid5000.fr) at address: paradoxe-13.rennes.grid5000.fr:4242'
+[INFO] Head node (paradoxe-13.rennes.grid5000.fr) at address: paradoxe-13.rennes.grid5000.fr:4242
++ echo '[INFO] Left with 1 simulation node(s): paradoxe-13.rennes.grid5000.fr'
+[INFO] Left with 1 simulation node(s): paradoxe-13.rennes.grid5000.fr
+++ pwd
++ OLDPWD=/home/rraddatz/deisa-ray/BENCHMARKS
++++ dirname -- launch-scripts/launch-insitu-python-multinode.sh
+++ cd -- launch-scripts/..
+++ pwd
++ PROJECT_ROOT=/home/rraddatz/deisa-ray/BENCHMARKS
++ export OMP_PROC_BIND=spread
++ OMP_PROC_BIND=spread
++ export OMP_PLACES=cores
++ OMP_PLACES=cores
++ nodes=1
++ export 'PS4=+ $(date "+%F %T") ${BASH_SOURCE##*/}:${LINENO}: '
++ PS4='+ $(date "+%F %T") ${BASH_SOURCE##*/}:${LINENO}: '
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:59: cd /home/rraddatz/deisa-ray/BENCHMARKS
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:60: VENV=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:64: [[ -d /home/rraddatz/deisa-ray/BENCHMARKS/../.venv ]]
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:65: echo '[INFO] Using Python virtualenv at /home/rraddatz/deisa-ray/BENCHMARKS/../.venv'
+[INFO] Using Python virtualenv at /home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:66: export VIRTUAL_ENV=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:66: VIRTUAL_ENV=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:67: export PATH=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin:/usr/lib/oar/oardodo:/usr/lib/oar/oardodo:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/cuda/bin:/grid5000/code/bin:/opt/rocm/bin:/opt/dell/srvadmin/bin
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:67: PATH=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin:/usr/lib/oar/oardodo:/usr/lib/oar/oardodo:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/cuda/bin:/grid5000/code/bin:/opt/rocm/bin:/opt/dell/srvadmin/bin
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:68: PY=/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin/python
+++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:77: date +%s
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:77: start=1772636560
++ 2026-03-04 16:02:40 launch-insitu-python-multinode.sh:80: mpirun --host paradoxe-13.rennes.grid5000.fr:1 -x PATH -x VIRTUAL_ENV bash -c 'ray start --head --port=4242 --num-cpus=60'
+++ 2026-03-04 16:02:48 launch-insitu-python-multinode.sh:85: date +%s
++ 2026-03-04 16:02:48 launch-insitu-python-multinode.sh:85: end=1772636568
+++ 2026-03-04 16:02:48 launch-insitu-python-multinode.sh:86: expr 1772636568 - 1772636560
++ 2026-03-04 16:02:48 launch-insitu-python-multinode.sh:86: echo '[INFO] Ray head node started at 8/s.'
+[INFO] Ray head node started at 8/s.
++ 2026-03-04 16:02:48 launch-insitu-python-multinode.sh:88: sleep 1
++ 2026-03-04 16:02:49 launch-insitu-python-multinode.sh:93: '[' 1 -gt 1 ']'
+++ 2026-03-04 16:02:49 launch-insitu-python-multinode.sh:107: date +%s
++ 2026-03-04 16:02:49 launch-insitu-python-multinode.sh:107: end=1772636569
++ 2026-03-04 16:02:49 launch-insitu-python-multinode.sh:108: ANALYTICS_START=1772636569
+++ 2026-03-04 16:02:49 launch-insitu-python-multinode.sh:109: expr 1772636569 - 1772636560
++ 2026-03-04 16:02:49 launch-insitu-python-multinode.sh:109: echo 'Launching Analytics at 9/s.'
+Launching Analytics at 9/s.
++ 2026-03-04 16:02:49 launch-insitu-python-multinode.sh:111: TYPE=avg_netcdf
++ 2026-03-04 16:02:49 launch-insitu-python-multinode.sh:112: [[ -z avg_netcdf ]]
++ 2026-03-04 16:02:49 launch-insitu-python-multinode.sh:122: sleep 5
++ 2026-03-04 16:02:49 launch-insitu-python-multinode.sh:117: mpirun --host paradoxe-13.rennes.grid5000.fr:1 -x PATH -x VIRTUAL_ENV bash -c '/home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin/python -m analytics.avg_netcdf'
+Analytics Initialized
++ 2026-03-04 16:02:54 launch-insitu-python-multinode.sh:124: ANALYTICS_PID=37783
++ 2026-03-04 16:02:54 launch-insitu-python-multinode.sh:125: echo '[INFO] Analytics PID: 37783'
+[INFO] Analytics PID: 37783
++ 2026-03-04 16:02:54 launch-insitu-python-multinode.sh:129: echo '[INFO] Launching Simulation...'
+[INFO] Launching Simulation...
+++ 2026-03-04 16:02:54 launch-insitu-python-multinode.sh:131: printf %s:20, paradoxe-13.rennes.grid5000.fr
+++ 2026-03-04 16:02:54 launch-insitu-python-multinode.sh:131: sed 's/,$//'
++ 2026-03-04 16:02:54 launch-insitu-python-multinode.sh:131: mpirun --merge-stderr-to-stdout -x PATH -x VIRTUAL_ENV -x MASTER_ADDR=paradoxe-13.rennes.grid5000.fr --host paradoxe-13.rennes.grid5000.fr:20 /home/rraddatz/deisa-ray/BENCHMARKS/../.venv/bin/python /home/rraddatz/deisa-ray/BENCHMARKS/python/sim-deisa-ray.py --steps 50 --print-every 0 --seed-mode local --periodic --nx_local 1024 --ny_local 1024
+[1772636575.633711] [paradoxe-13:38130:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.633732] [paradoxe-13:38130:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.633852] [paradoxe-13:38115:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.633870] [paradoxe-13:38115:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.633872] [paradoxe-13:38118:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.633893] [paradoxe-13:38118:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.634641] [paradoxe-13:38129:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.634656] [paradoxe-13:38129:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.634613] [paradoxe-13:38114:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.634630] [paradoxe-13:38114:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.635262] [paradoxe-13:38126:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.635279] [paradoxe-13:38126:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.635277] [paradoxe-13:38142:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.635294] [paradoxe-13:38142:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.635213] [paradoxe-13:38113:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.635230] [paradoxe-13:38113:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.635174] [paradoxe-13:38124:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.635191] [paradoxe-13:38124:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-13.rennes.grid5000.fr:38130] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38115] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38118] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772636575.635389] [paradoxe-13:38117:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.635406] [paradoxe-13:38117:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.635391] [paradoxe-13:38123:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.635406] [paradoxe-13:38123:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.635425] [paradoxe-13:38136:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.635439] [paradoxe-13:38136:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.635412] [paradoxe-13:38138:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.635431] [paradoxe-13:38138:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-13.rennes.grid5000.fr:38114] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38129] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38126] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38138] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38142] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38113] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38123] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38124] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38117] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38136] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772636575.647543] [paradoxe-13:38120:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.647565] [paradoxe-13:38120:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.647656] [paradoxe-13:38122:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.647679] [paradoxe-13:38122:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.647619] [paradoxe-13:38125:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.647639] [paradoxe-13:38125:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.647543] [paradoxe-13:38132:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.647565] [paradoxe-13:38132:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.647656] [paradoxe-13:38134:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.647679] [paradoxe-13:38134:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[1772636575.647619] [paradoxe-13:38139:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.647639] [paradoxe-13:38139:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-13.rennes.grid5000.fr:38120] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38132] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38134] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38122] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38125] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[paradoxe-13.rennes.grid5000.fr:38139] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+[1772636575.659234] [paradoxe-13:38145:0]      rdmacm_cm.c:638  UCX  ERROR rdma_create_event_channel failed: No such device
+[1772636575.659249] [paradoxe-13:38145:0]     ucp_worker.c:1432 UCX  ERROR failed to open CM on component rdmacm with status Input/output error
+[paradoxe-13.rennes.grid5000.fr:38145] ../../../../../../ompi/mca/pml/ucx/pml_ucx.c:273  Error: Failed to create UCP worker
+Initialized at rank 11 with total size of 20
+[SIM, rank 11] Sending metadata to deisa
+Initialized at rank 10 with total size of 20
+[SIM, rank 10] Sending metadata to deisa
+Initialized at rank 12 with total size of 20
+Initialized at rank 15 with total size of 20
+[SIM, rank 15] Sending metadata to deisa
+[SIM, rank 12] Sending metadata to deisa
+Initialized at rank 13 with total size of 20
+Initialized at rank 14 with total size of 20
+Initialized at rank 5 with total size of 20
+Initialized at rank 4 with total size of 20
+[SIM, rank 4] Sending metadata to deisa
+Initialized at rank 6 with total size of 20
+[SIM, rank 13] Sending metadata to deisa
+[SIM, rank 14] Sending metadata to deisa
+[SIM, rank 5] Sending metadata to deisa
+Initialized at rank 7 with total size of 20
+[SIM, rank 7] Sending metadata to deisa
+[SIM, rank 6] Sending metadata to deisa
+Initialized at rank 19 with total size of 20
+Initialized at rank 18 with total size of 20
+Initialized at rank 8 with total size of 20
+[SIM, rank 8] Sending metadata to deisa
+[SIM, rank 18] Sending metadata to deisa
+Initialized at rank 9 with total size of 20
+[SIM, rank 19] Sending metadata to deisa
+[SIM, rank 9] Sending metadata to deisa
+Initialized at rank 0 with total size of 20
+Initialized at rank 2 with total size of 20
+Initialized at rank 3 with total size of 20
+Initialized at rank 1 with total size of 20
+[SIM, rank 0] Sending metadata to deisa
+[SIM, rank 2] Sending metadata to deisa
+[SIM, rank 3] Sending metadata to deisa
+[SIM, rank 1] Sending metadata to deisa
+Initialized at rank 16 with total size of 20
+Initialized at rank 17 with total size of 20
+[SIM, rank 16] Sending metadata to deisa
+[SIM, rank 17] Sending metadata to deisa
+[Gloo] Rank 10 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 7 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 14 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 16 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 13 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 0 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 1 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 2 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 3 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 4 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 5 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 6 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 8 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 11 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 12 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 9 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 15 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 17 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 19 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[Gloo] Rank 18 is connected to 19 peer ranks. Expected number of connected peer ranks is : 19
+[SIM, rank 19] connected to deisa client
+[SIM, rank 8] connected to deisa client
+[SIM, rank 4] connected to deisa client
+[SIM, rank 1] connected to deisa client
+[SIM, rank 11] connected to deisa client
+[SIM, rank 17] connected to deisa client
+[SIM, rank 6] connected to deisa client
+[SIM, rank 15] connected to deisa client
+[SIM, rank 13] connected to deisa client
+[SIM, rank 5] connected to deisa client
+[SIM, rank 2] connected to deisa client
+[SIM, rank 7] connected to deisa client
+[SIM, rank 0] connected to deisa client
+[SIM, rank 16] connected to deisa client
+[SIM, rank 3] connected to deisa client
+[SIM, rank 18] connected to deisa client
+[SIM, rank 9] connected to deisa client
+[SIM, rank 10] connected to deisa client
+[SIM, rank 12] connected to deisa client
+[SIM, rank 14] connected to deisa client
+[ANALYTICS]: to_netcdf,0,10.580999054000017
+[ANALYTICS]: to_netcdf,1,4.238255354999978
+[ANALYTICS]: to_netcdf,2,4.169419842000025
+[ANALYTICS]: to_netcdf,3,3.7307767329999706
+[ANALYTICS]: to_netcdf,4,3.3051137979999794
+[ANALYTICS]: to_netcdf,5,4.964768573000015
+[ANALYTICS]: to_netcdf,6,5.056357509000009
+[ANALYTICS]: to_netcdf,7,5.2125056569999515
+[ANALYTICS]: to_netcdf,8,4.355068447999997
+[ANALYTICS]: to_netcdf,9,5.030880837000041
+[ANALYTICS]: to_netcdf,10,4.133436786999937
+[ANALYTICS]: to_netcdf,11,5.798080721000019
+[ANALYTICS]: to_netcdf,12,4.8378157380000175
+[ANALYTICS]: to_netcdf,13,5.334954805000052
+[ANALYTICS]: to_netcdf,14,5.391875900999935
+[ANALYTICS]: to_netcdf,15,4.883358893000036
+[ANALYTICS]: to_netcdf,16,5.254247254000006
+[ANALYTICS]: to_netcdf,17,4.703458038000008
+[ANALYTICS]: to_netcdf,18,4.6122963760000175
+[ANALYTICS]: to_netcdf,19,3.698231359000033
+[ANALYTICS]: to_netcdf,20,4.694418134999978
+[ANALYTICS]: to_netcdf,21,4.642821854999966
+[ANALYTICS]: to_netcdf,22,4.283214717999954
+[ANALYTICS]: to_netcdf,23,4.273436388000164
+[ANALYTICS]: to_netcdf,24,4.3193331840000155
+[ANALYTICS]: to_netcdf,25,5.2500641940000605
+[ANALYTICS]: to_netcdf,26,5.147313008999845
+[ANALYTICS]: to_netcdf,27,4.756583700999954
+[ANALYTICS]: to_netcdf,28,3.2057176930002242
+[ANALYTICS]: to_netcdf,29,4.569206640000175
+[ANALYTICS]: to_netcdf,30,5.1690114429998175
+[ANALYTICS]: to_netcdf,31,2.5316252289999284
+[ANALYTICS]: to_netcdf,32,6.413419813000019
+[ANALYTICS]: to_netcdf,33,5.051350804000094
+[ANALYTICS]: to_netcdf,34,6.020628137000131
+[ANALYTICS]: to_netcdf,35,4.858416011000145
+[ANALYTICS]: to_netcdf,36,3.3958299920000172
+[ANALYTICS]: to_netcdf,37,4.576804996999954
+[ANALYTICS]: to_netcdf,38,4.846824147999996
+[ANALYTICS]: to_netcdf,39,3.7859651809999377
+[ANALYTICS]: to_netcdf,40,3.4838106929998958
+[ANALYTICS]: to_netcdf,41,4.999174985999844
+[ANALYTICS]: to_netcdf,42,4.772419473000127
+[ANALYTICS]: to_netcdf,43,4.57689941600006
+[ANALYTICS]: to_netcdf,44,4.075187155999856
+[ANALYTICS]: to_netcdf,45,5.009260369000003
+[ANALYTICS]: to_netcdf,46,4.888228256000048
+[SIM] DONE.
+[ANALYTICS]: to_netcdf,47,2.751080649999949
+[ANALYTICS]: to_netcdf,48,4.047148406999895
+[ANALYTICS]: to_netcdf,49,0.44645181999999295
+[0m++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:140: date +%s
++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:140: end=1772636871
+++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:142: expr 1772636871 - 1772636560
++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:142: echo '[INFO] Simulation finished at 311/s.'
+[INFO] Simulation finished at 311/s.
++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:146: echo '[INFO] Waiting on analytics..'
+[INFO] Waiting on analytics..
+++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:147: date +%s
++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:147: end=1772636871
++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:148: wait 37783
+++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:149: expr 1772636871 - 1772636569
++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:149: echo '[INFO] Analytics finished at 302/s.'
+[INFO] Analytics finished at 302/s.
++ 2026-03-04 16:07:51 launch-insitu-python-multinode.sh:151: mpirun -hostfile /var/lib/oar/3545248 -x PATH -x VIRTUAL_ENV bash -c 'ray stop'
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+/var/lib/oar/.batch_job_bashrc: line 5: /home/rraddatz/.bashrc: No such file or directory
+++ 2026-03-04 16:07:57 launch-insitu-python-multinode.sh:156: date
++ 2026-03-04 16:07:57 launch-insitu-python-multinode.sh:156: echo '[INFO] Finishing at: Wed 04 Mar 2026 04:07:57 PM CET'
+[INFO] Finishing at: Wed 04 Mar 2026 04:07:57 PM CET
++ 2026-03-04 16:07:57 launch-insitu-python-multinode.sh:158: cd /home/rraddatz/deisa-ray/BENCHMARKS
