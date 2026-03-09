@@ -8,12 +8,15 @@
 
 * TODOS
 
-** TODO See about scotch and how it can be used
+** IN-PROGRESS See about scotch and how it can be used
+
+- State "IN-PROGRESS" from "TODO"       [2026-03-03 Tue 15:45]
+
+** TODO Create a report about what was done with hdf5
 
 ** IN-PROGRESS Keep track of PR in dask
 - State "IN-PROGRESS" from              [2026-02-27 Fri 16:16]
 
-** TODO Create a report about what was done with hdf5
 
 * DONES
 ** DONE Rewrite to a manner similar to dask, saving multiple arrays at a time
@@ -83,7 +86,7 @@ meu_estilo <- function() {
         theme_bw(base_size = 22),
         theme(
             legend.title = element_blank(),
-            plot.margin = unit(c(0, 0, 0, 0), "cm"),
+            plot.margin = unit(c(1, 1, 1, 1), "cm"),
             legend.spacing = unit(1, "mm"),
             legend.position = "right",
             legend.justification = "left",
@@ -3385,3 +3388,558 @@ that on its own handles the file open, writing and closing for each separated
 chunk, and not send opened hdf5 objects.
 
 We were then thinking if this method could be used to solve this issue?
+** 2026 W10 [Mar]
+*** 2026-03-03
+
+#+begin_src R :results output :session *R* :exports both
+options(crayon.enabled=FALSE)
+#install.packages('DoE.base', dependencies = TRUE, repos='http://cran.rstudio.com/')
+library(DoE.base)
+library(tidyverse)
+
+factor_cores = c(1, 5, 10, 20, 30, 50) ## for each
+type = c("avg", "avg_zarr", "avg_hdf5", "avg_netcdf")
+
+fac.design(nfactors=2,
+           replications=1,
+           repeat.only= FALSE ,
+           randomize=TRUE,
+           seed=5,
+           nlevels=c(length(type),
+                     length(factor_cores)),
+           factor.names=list(
+             experiment = type,
+             cores = factor_cores
+           )) |>
+  as_tibble() |>
+  print(n=100) |>
+  write_csv("proj.csv", progress=FALSE)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+creating full factorial with 24 runs ...
+
+# A tibble: 24 × 2
+   experiment cores
+   <fct>      <fct>
+ 1 avg_zarr   1
+ 2 avg_hdf5   10
+ 3 avg_hdf5   20
+ 4 avg_hdf5   50
+ 5 avg        10
+ 6 avg_hdf5   5
+ 7 avg_hdf5   1
+ 8 avg_zarr   5
+ 9 avg_zarr   10
+10 avg_zarr   50
+11 avg        5
+12 avg_netcdf 10
+13 avg_netcdf 20
+14 avg_zarr   20
+15 avg_netcdf 30
+16 avg        30
+17 avg_netcdf 1
+18 avg_zarr   30
+19 avg_netcdf 50
+20 avg        50
+21 avg        20
+22 avg_netcdf 5
+23 avg        1
+24 avg_hdf5   30
+#+end_example
+*** 2026-03-04
+
+*** 2026-03-05
+#+begin_src R :results output :session *R* :exports both
+BASE <- "deisa-ray/tests/"
+
+tibble(CSV = dir_ls(BASE, regexp = ".csv$", recurse=TRUE)) |> print() |>
+    mutate(DATA = map(CSV, read_csv, show_col_types=FALSE, progress=FALSE)) |>
+    unnest(DATA) -> df
+
+## |> select(-CSV, -type) |> filter(timestep != 4) |>
+##   select(type=type2, everything()) -> df
+
+#+end_src
+
+#+RESULTS:
+: # A tibble: 1 × 1
+:   CSV
+:   <fs::path>
+: 1 deisa-ray/tests/out.csv
+
+#+begin_src R :results output :session *R* :exports both
+df |> group_by(partition, id, type) |>
+  summarise(
+    mean = mean(time),
+    sd = sd(time),
+    cv = sd / mean
+  ) -> stats
+
+stats
+#+end_src
+
+#+RESULTS:
+#+begin_example
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by partition, id, and type.
+ℹ Output is grouped by partition and id.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(partition, id, type))` for per-operation grouping (`?dplyr::dplyr_by`)
+  instead.
+# A tibble: 12 × 6
+# Groups:   partition, id [6]
+   partition    id type           mean         sd     cv
+   <chr>     <dbl> <chr>         <dbl>      <dbl>  <dbl>
+ 1 greedy        1 execute   0.488     0.862      1.77
+ 2 greedy        1 partition 0.000178  0.0000221  0.124
+ 3 greedy        2 execute   0.877     1.09       1.25
+ 4 greedy        2 partition 0.000103  0.00000695 0.0675
+ 5 random        1 execute   0.456     0.881      1.93
+ 6 random        1 partition 0.0000738 0.00000925 0.125
+ 7 random        2 execute   0.485     0.960      1.98
+ 8 random        2 partition 0.0000515 0.00000497 0.0965
+ 9 scotch        1 execute   0.510     0.994      1.95
+10 scotch        1 partition 0.00586   0.00600    1.02
+11 scotch        2 execute   0.472     0.923      1.95
+12 scotch        2 partition 0.00606   0.00354    0.585
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+stats |>
+  ggplot(aes(x = partition, y = mean, color = partition, fill = partition)) +
+
+  geom_col() +
+  meu_estilo() +
+  facet_grid(id ~ type)
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureD5P9ZT.png]]
+[14:32:04; 05.03.2026]: Scotch looks promising...
+
+#+begin_src R :results output :session *R* :exports both
+BASE <- "deisa-ray/tests/"
+
+tibble(CSV = dir_ls(BASE, regexp = "even.*.csv$", recurse=TRUE)) |> print() |>
+    mutate(DATA = map(CSV, read_csv, show_col_types=FALSE, progress=FALSE)) |>
+    unnest(DATA) -> df
+
+df
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 deisa-ray/tests/even_bigger.csv
+# A tibble: 42 × 6
+   CSV                             type        run      time partition    id
+   <fs::path>                      <chr>     <dbl>     <dbl> <chr>     <dbl>
+ 1 deisa-ray/tests/even_bigger.csv partition     1 0.0000912 random        1
+ 2 deisa-ray/tests/even_bigger.csv execute       1 1.99      random        1
+ 3 deisa-ray/tests/even_bigger.csv partition     1 0.000210  random        2
+ 4 deisa-ray/tests/even_bigger.csv execute       1 9.40      random        2
+ 5 deisa-ray/tests/even_bigger.csv partition     2 0.00212   random        1
+ 6 deisa-ray/tests/even_bigger.csv execute       2 0.0588    random        1
+ 7 deisa-ray/tests/even_bigger.csv partition     2 0.000245  random        2
+ 8 deisa-ray/tests/even_bigger.csv execute       2 4.26      random        2
+ 9 deisa-ray/tests/even_bigger.csv partition     3 0.0000784 random        1
+10 deisa-ray/tests/even_bigger.csv execute       3 0.0625    random        1
+# ℹ 32 more rows
+# ℹ Use `print(n = ...)` to see more rows
+#+end_example
+
+#+begin_src R :results output :session *R* :exports both
+df |> group_by(partition, id, type) |>
+  filter(run > 1) |>
+  summarise(
+    mean = mean(time),
+    sd = sd(time),
+    cv = sd / mean
+  ) -> stats
+
+stats
+#+end_src
+
+#+RESULTS:
+#+begin_example
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by partition, id, and type.
+ℹ Output is grouped by partition and id.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(partition, id, type))` for per-operation grouping (`?dplyr::dplyr_by`)
+  instead.
+# A tibble: 8 × 6
+# Groups:   partition, id [4]
+  partition    id type          mean       sd    cv
+  <chr>     <dbl> <chr>        <dbl>    <dbl> <dbl>
+1 random        1 execute   0.0956   0.0426   0.445
+2 random        1 partition 0.000584 0.00102  1.75
+3 random        2 execute   3.34     1.29     0.386
+4 random        2 partition 0.000321 0.000113 0.353
+5 scotch        1 execute   0.0845   0.00877  0.104
+6 scotch        1 partition 0.0118   0.00168  0.143
+7 scotch        2 execute   3.29     0.329    0.100
+8 scotch        2 partition 0.00697  0.00267  0.383
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 600 :height 400 :session *R*
+
+stats |>
+  ggplot(aes(x = partition, y = mean, color = partition, fill = partition)) +
+
+  geom_col() +
+  meu_estilo() +
+  facet_grid(id ~ type)
+
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figurenFaZhZ.png]]
+
+[15:09:29; 05.03.2026] Looks like there is some difficults to run the
+partitioning even longer. Tomorrow I will start tests with the
+partitioning in larger scales.
+
+*** 2026-03-06
+
+**** New funcs for nodes also
+
+#+begin_src R :results output :session *R* :exports both
+line_g <- function(df) {
+
+suppressMessages(library(ggplot2))
+
+  df |> ggplot(aes(color=type,x=cores, y=mean_time)) +
+    geom_point(size=5) +
+    geom_line(size=3, alpha=0.2) +
+    meu_estilo()
+
+}
+
+line_g_err <- function(df) {
+
+suppressMessages(library(ggplot2))
+
+  df |> ggplot(aes(color=type,x=cores, y=mean_time,
+                   ymin = mean_time - se,
+                   ymax = mean_time + se # [10:53:57; 12.02.2026]:  uncomment for variance
+                   )) +
+    geom_point(size=5) +
+    geom_line(size=3, alpha=0.2) +
+    geom_errorbar(width=.8, alpha=.7, position="dodge") +
+    meu_estilo()
+
+}
+
+
+
+col_g_sd <- function(df) {
+  suppressMessages(library(ggplot2))
+
+  df |> ggplot(aes(fill=type, x=type, y=mean_time,
+                          ymin = mean_time - sd_t,
+                          ymax = mean_time + sd_t # [10:53:57; 12.02.2026]:  uncomment for variance
+                          )) +
+    geom_col() +
+    geom_errorbar(width=.8, alpha=.7, position="dodge") +
+    facet_grid(nodes ~ cores) +
+    ## labs(title = "Execution with 5 nodes",
+    ##      subtitle="Facets show amout of cores per node") +
+    ## geom_line(size=3, alpha=0.2) +
+    meu_estilo()
+
+  }
+
+
+col_g_err <- function(df) {
+  suppressMessages(library(ggplot2))
+
+  df |> ggplot(aes(fill=type, x=type, y=mean_time,
+                          ymin = mean_time - se,
+                          ymax = mean_time + se # [10:53:57; 12.02.2026]:  uncomment for variance
+                          )) +
+    geom_col() +
+    geom_errorbar(width=.8, alpha=.7, position="dodge") +
+    facet_grid(nodes ~ cores) +
+    ## labs(title = "Execution with 5 nodes",
+    ##      subtitle="Facets show amout of cores per node") +
+    ## geom_line(size=3, alpha=0.2) +
+    meu_estilo()
+
+  }
+
+
+
+col_g <- function(df) {
+  suppressMessages(library(ggplot2))
+
+  df |> ggplot(aes(fill=type, x=type, y=mean_time,
+                          ## ymin = mean_time - se,
+                          ## ymax = mean_time + se # [10:53:57; 12.02.2026]:  uncomment for variance
+                          )) +
+    geom_col() +
+    ## geom_errorbar(width=.8, alpha=.7, position="dodge") +x
+    facet_grid(nodes ~ cores) +
+    ## labs(title = "Execution with 5 nodes",
+    ##      subtitle="Facets show amout of cores per node") +
+    ## geom_line(size=3, alpha=0.2) +
+    meu_estilo()
+
+  }
+
+timestep_g <- function(df) {
+  df |>
+    ggplot(aes(x=timestep, y=time, color=as.factor(type))) +
+    geom_point(size=1) +
+    geom_line() +
+    facet_grid(nodes ~ cores) +
+    meu_estilo()
+}
+#+end_src
+
+#+RESULTS:
+
+**** Seeing results
+#+begin_src R :results output :session *R* :exports both
+df.raw <- load(regex="results-runF")  |>
+  filter(timestep != 0) |>
+  mutate(mpi_procs = cores) |>
+  select(-cores) |>
+  mutate(nodes = as.numeric(gsub("[A-Z]*$", "", nodes)))
+
+df.raw |>
+  group_by(type, nodes, mpi_procs) |>
+  summarise(N=n(),
+            mean_time = mean(time),
+            sd_t = sd(time),
+            se = 3*sd_t / sqrt(mean_time)
+            ) |>
+  arrange(mpi_procs) -> df.final
+
+df.raw
+df.final |> arrange(nodes) |> print(n=24)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 ./BENCHMARKS/results/results-runF.csv
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by type, nodes, and mpi_procs.
+ℹ Output is grouped by type and nodes.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(type, nodes, mpi_procs))` for per-operation grouping (`?dplyr::dplyr_by`)
+  instead.
+# A tibble: 4,742 × 6
+   type  nodes         id timestep  time mpi_procs
+   <chr> <dbl>      <dbl>    <dbl> <dbl>     <dbl>
+ 1 h5py     10 1772796916        1  2.86        10
+ 2 h5py     10 1772796916        2  3.83        10
+ 3 h5py     10 1772796916        3  3.57        10
+ 4 h5py     10 1772796916        4  3.74        10
+ 5 h5py     10 1772796916        5  2.86        10
+ 6 h5py     10 1772796916        6  3.65        10
+ 7 h5py     10 1772796916        7  2.97        10
+ 8 h5py     10 1772796916        8  3.91        10
+ 9 h5py     10 1772796916        9  2.80        10
+10 h5py     10 1772796916       10  3.73        10
+# ℹ 4,732 more rows
+# ℹ Use `print(n = ...)` to see more rows
+# A tibble: 96 × 7
+# Groups:   type, nodes [16]
+   type      nodes mpi_procs     N mean_time    sd_t    se
+   <chr>     <dbl>     <dbl> <int>     <dbl>   <dbl> <dbl>
+ 1 h5py          1         1    49    0.0695 0.0151  0.172
+ 2 to_hdf5       1         1    49    0.0531 0.00910 0.118
+ 3 to_netcdf     1         1    49    0.0835 0.0246  0.255
+ 4 zarr          1         1    49    0.133  0.0209  0.172
+ 5 h5py          1         5    49    0.368  0.156   0.771
+ 6 to_hdf5       1         5    49    0.297  0.150   0.826
+ 7 to_netcdf     1         5    49    0.397  0.161   0.765
+ 8 zarr          1         5    49    0.617  0.179   0.683
+ 9 h5py          1        10    49    1.38   0.423   1.08
+10 to_hdf5       1        10    49    1.02   0.306   0.907
+11 to_netcdf     1        10    49    1.35   0.453   1.17
+12 zarr          1        10    49    2.03   0.573   1.21
+13 h5py          1        20    49    4.05   1.38    2.05
+14 to_hdf5       1        20    49    2.18   0.760   1.55
+15 to_netcdf     1        20    49    4.48   0.974   1.38
+16 zarr          1        20    49    5.72   1.19    1.50
+17 h5py          1        30    49    5.72   1.46    1.83
+18 to_hdf5       1        30    49    2.76   1.25    2.26
+19 to_netcdf     1        30    49    5.88   1.06    1.31
+20 zarr          1        30    49    8.09   1.87    1.97
+21 h5py          1        50    49   10.0    1.78    1.69
+22 to_hdf5       1        50    49    4.38   1.48    2.12
+23 to_netcdf     1        50    49   10.1    1.55    1.46
+24 zarr          1        50    49   13.2    2.85    2.35
+# ℹ 72 more rows
+# ℹ Use `print(n = ...)` to see more rows
+#+end_example
+
+#+begin_src R :results output :session *R* :exports both
+df.raw |> filter(
+            type == "h5py" &
+            nodes == 1 &
+            mpi_procs == 1
+          ) |>
+  print(n=100)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 49 × 6
+   type  nodes         id timestep   time mpi_procs
+   <chr> <dbl>      <dbl>    <dbl>  <dbl>     <dbl>
+ 1 h5py      1 1772547716        1 0.0614         1
+ 2 h5py      1 1772547716        2 0.0852         1
+ 3 h5py      1 1772547716        3 0.0905         1
+ 4 h5py      1 1772547716        4 0.0688         1
+ 5 h5py      1 1772547716        5 0.0679         1
+ 6 h5py      1 1772547716        6 0.0978         1
+ 7 h5py      1 1772547716        7 0.0686         1
+ 8 h5py      1 1772547716        8 0.0791         1
+ 9 h5py      1 1772547716        9 0.0647         1
+10 h5py      1 1772547716       10 0.0938         1
+11 h5py      1 1772547716       11 0.0757         1
+12 h5py      1 1772547716       12 0.0657         1
+13 h5py      1 1772547716       13 0.104          1
+14 h5py      1 1772547716       14 0.0650         1
+15 h5py      1 1772547716       15 0.0770         1
+16 h5py      1 1772547716       16 0.0779         1
+17 h5py      1 1772547716       17 0.0960         1
+18 h5py      1 1772547716       18 0.0535         1
+19 h5py      1 1772547716       19 0.0419         1
+20 h5py      1 1772547716       20 0.0632         1
+21 h5py      1 1772547716       21 0.0788         1
+22 h5py      1 1772547716       22 0.0519         1
+23 h5py      1 1772547716       23 0.0572         1
+24 h5py      1 1772547716       24 0.0501         1
+25 h5py      1 1772547716       25 0.0753         1
+26 h5py      1 1772547716       26 0.0508         1
+27 h5py      1 1772547716       27 0.0750         1
+28 h5py      1 1772547716       28 0.0831         1
+29 h5py      1 1772547716       29 0.0795         1
+30 h5py      1 1772547716       30 0.0587         1
+31 h5py      1 1772547716       31 0.0610         1
+32 h5py      1 1772547716       32 0.0541         1
+33 h5py      1 1772547716       33 0.0810         1
+34 h5py      1 1772547716       34 0.0642         1
+35 h5py      1 1772547716       35 0.0756         1
+36 h5py      1 1772547716       36 0.0734         1
+37 h5py      1 1772547716       37 0.0609         1
+38 h5py      1 1772547716       38 0.0853         1
+39 h5py      1 1772547716       39 0.0698         1
+40 h5py      1 1772547716       40 0.0856         1
+41 h5py      1 1772547716       41 0.0707         1
+42 h5py      1 1772547716       42 0.0649         1
+43 h5py      1 1772547716       43 0.0697         1
+44 h5py      1 1772547716       44 0.0724         1
+45 h5py      1 1772547716       45 0.0611         1
+46 h5py      1 1772547716       46 0.0763         1
+47 h5py      1 1772547716       47 0.0472         1
+48 h5py      1 1772547716       48 0.0371         1
+49 h5py      1 1772547716       49 0.0376         1
+#+end_example
+
+#+begin_src R :results output graphics file :file imgs/overview.png :exports both :width 1200 :height 800 :session *R*
+df.final |>
+  ggplot(aes(fill=type, x=type, y=mean_time)) +
+
+  geom_col() +
+  geom_errorbar(aes(ymin = mean_time - se, ymax = mean_time + se), width=.8, alpha=.7, position="dodge") +
+
+  ## geom_jitter(data = df.raw,
+  ##             aes(x=type,
+  ##                 y=time), size = 1, alpha = 0.1) +
+
+  facet_grid(nodes ~ mpi_procs,
+             labeller = labeller(mpi_procs = label_both, nodes = label_both)) +
+  labs(title = "Scalability of Saving Methods for Parallel Writing with Deisa-Ray Framework",
+       x="Saving Method",
+       y="Mean Saving Time [seconds]") +
+  meu_estilo()
+
+#+end_src
+
+#+RESULTS:
+[[file:imgs/overview.png]]
+
+
+#+begin_src R :results output graphics file :file imgs/10nodes.png :exports both :width 1400 :height 600 :session *R*
+df.final |>
+  filter(nodes==10) |>
+  ggplot(aes(fill=type, x=type, y=mean_time)) +
+
+  geom_col() +
+  geom_errorbar(aes(ymin = mean_time - se, ymax = mean_time + se), width=.8, alpha=.7, position="dodge") +
+
+  geom_jitter(data = df.raw |> filter(nodes==10),
+              aes(x=type,
+                  y=time), size = 1, alpha = 0.3) +
+
+  facet_grid(. ~ mpi_procs,
+             labeller = labeller(mpi_procs = label_both, nodes = label_both)) +
+  labs(title = "Scalability of Saving Methods for Parallel Writing with Deisa-Ray Framework",
+       subtitle="Execution with 10 nodes",
+       x="Saving Method",
+       y="Mean Saving Time [seconds]") +
+  meu_estilo()
+
+#+end_src
+
+#+RESULTS:
+[[file:imgs/10nodes.png]]
+
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 1000 :height 400 :session *R*
+df.final |> line_g() + facet_wrap(~ nodes)
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figure5HFtWv.png]]
+
+#+begin_src R :results output graphics file :file imgs/timestep.png :exports both :width 2000 :height 450 :session *R*
+df.raw |>
+  filter(nodes==10) |>
+  ggplot(aes(x=timestep, y=time, color=as.factor(type))) +
+  geom_point(size=1) +
+  geom_line() +
+  facet_grid(. ~ mpi_procs, labeller = labeller(mpi_procs = label_both, nodes = label_both)) +
+  labs(title = "Behaviour of Saving Methods During Simulation Execution",
+       subtitle="Execution with 10 nodes",
+       x="Timestep",
+       y="Saving Time [seconds]") +
+  meu_estilo()
+#+end_src
+
+#+RESULTS:
+[[file:imgs/timestep.png]]
+
+
+
+#+begin_src R :results output graphics file :file imgs/timestep_full.png :exports both :width 2000 :height 1050 :session *R*
+df.raw |>
+  ggplot(aes(x=timestep, y=time, color=as.factor(type))) +
+  geom_point(size=1) +
+  geom_line() +
+  facet_grid(nodes ~ mpi_procs, labeller = labeller(mpi_procs = label_both, nodes = label_both)) +
+    labs(title = "Behaviour of Saving Methods During Simulation Execution",
+       x="Timestep",
+       y="Saving Time [seconds]") +
+  meu_estilo()
+#+end_src
+
+#+RESULTS:
+[[file:imgs/timestep_full.png]]
+** 2026 W11 [Mar]
+*** 2026-03-09
