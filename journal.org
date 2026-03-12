@@ -4164,4 +4164,9 @@ df |> simple_plot() +
 [[file:/tmp/babel-ZcpOwL/figureNJM2nI.png]]
 [13:32:34; 10.03.2026]: We can see that the variance looks very
 high. Scotch in general looks ok, but not as good as the normal
-partition level.
+partition
+
+
+*** 2026-03-12
+[16:28:03; 12.03.2026]: I am leaving now for the last time, it was a
+good time, thank you everyone for the support!
