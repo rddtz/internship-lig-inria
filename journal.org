@@ -3943,3 +3943,225 @@ df.raw |>
 [[file:imgs/timestep_full.png]]
 ** 2026 W11 [Mar]
 *** 2026-03-09
+
+#+begin_src R :results output :session *R* :exports both
+BASE <- "BENCHMARKS/sched-results"
+
+tibble(CSV = dir_ls(BASE, regexp = ".csv$", recurse=TRUE)) |> print() |>
+    mutate(DATA = map(CSV, read_csv, show_col_types=FALSE, progress=FALSE)) |>
+    unnest(DATA) |> select(-CSV) -> df
+
+## |> select(-CSV, -type) |> filter(timestep != 4) |>
+##   select(type=type2, everything()) -> df
+df |> glimpse()
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 BENCHMARKS/sched-results/run1/execute.csv
+Rows: 850
+Columns: 4
+$ nodes     <chr> "5NODES", "5NODES", "5NODES", "5NODES", "5NODES", "5NODES", "5NODES", "5NODES", "5NOD…
+$ type      <chr> "avg_scotch", "avg_scotch", "avg_scotch", "avg_scotch", "avg_scotch", "avg_scotch", "…
+$ mpi_procs <dbl> 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 1…
+$ time      <dbl> 1.6460454, 1.1084970, 0.1753802, 1.3919941, 0.9348540, 0.1685650, 0.1900260, 0.167317…
+#+end_example
+
+#+begin_src R :results output :session *R* :exports both
+df |> group_by(mpi_procs, type) |>
+  summarise(
+    mean = mean(time),
+    sd = sd(time),
+    cv = sd / mean
+  ) -> stats
+
+stats
+#+end_src
+
+#+RESULTS:
+#+begin_example
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by mpi_procs and type.
+ℹ Output is grouped by mpi_procs.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(mpi_procs, type))` for per-operation grouping (`?dplyr::dplyr_by`) instead.
+# A tibble: 17 × 5
+# Groups:   mpi_procs [6]
+   mpi_procs type        mean    sd    cv
+       <dbl> <chr>      <dbl> <dbl> <dbl>
+ 1         1 avg_greedy 0.299 0.426 1.43
+ 2         1 avg_random 0.296 0.402 1.36
+ 3         1 avg_scotch 0.124 0.187 1.51
+ 4         5 avg_greedy 0.200 0.387 1.93
+ 5         5 avg_random 0.639 0.855 1.34
+ 6         5 avg_scotch 0.234 0.386 1.65
+ 7        10 avg_greedy 0.118 0.147 1.25
+ 8        10 avg_random 0.608 0.608 1.00
+ 9        10 avg_scotch 0.248 0.314 1.27
+10        20 avg_greedy 0.314 0.314 0.999
+11        20 avg_random 0.856 0.806 0.941
+12        20 avg_scotch 0.507 0.596 1.18
+13        30 avg_greedy 0.473 0.533 1.13
+14        30 avg_random 1.01  0.932 0.927
+15        30 avg_scotch 0.717 0.839 1.17
+16        50 avg_random 1.36  1.50  1.10
+17        50 avg_scotch 0.950 1.15  1.20
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 1000 :height 400 :session *R*
+
+stats |>
+  ggplot(aes(x = type, y = mean, color = type, fill = type)) +
+
+  geom_col() +
+  meu_estilo() +
+  facet_grid(. ~ mpi_procs)
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureLDxEbQ.png]]
+scotch looks not that good on scale when compared to greedy.
+
+*** 2026-03-10
+Looks like for a bug in the csv file the last greedy didnt executed,
+lets go again:
+
+#+begin_src R :results output :session *R* :exports both
+
+load <- function(BASE="BENCHMARKS/sched-results/", regex=".csv$"){
+
+tibble(CSV = dir_ls(BASE, regexp = regex, recurse=TRUE)) |> print() |>
+    mutate(DATA = map(CSV, read_csv, show_col_types=FALSE, progress=FALSE)) |>
+    unnest(DATA) |> select(-CSV)
+
+  }
+
+stats <- function(df){
+df |> group_by(mpi_procs, type) |>
+  filter(run > 1) |>
+  summarise(
+    mean = mean(time),
+    sd = sd(time),
+    cv = sd / mean
+  ) -> stats
+
+stats
+}
+
+simple_plot <- function(df) {
+  df |>
+  ggplot(aes(x = type, y = mean, fill = type)) +
+
+  geom_col() +
+  meu_estilo() +
+  facet_grid(. ~ mpi_procs)
+}
+
+#+end_src
+
+#+RESULTS:
+
+#+begin_src R :results output :session *R* :exports both
+df <- load(regex="run2.csv") |> stats()
+
+df
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 BENCHMARKS/sched-results/results-run2.csv
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by mpi_procs and type.
+ℹ Output is grouped by mpi_procs.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(mpi_procs, type))` for per-operation grouping (`?dplyr::dplyr_by`) instead.
+# A tibble: 18 × 5
+# Groups:   mpi_procs [6]
+   mpi_procs type         mean     sd    cv
+       <dbl> <chr>       <dbl>  <dbl> <dbl>
+ 1         1 avg_greedy 0.269  0.430  1.60
+ 2         1 avg_random 0.322  0.514  1.60
+ 3         1 avg_scotch 0.103  0.119  1.15
+ 4         5 avg_greedy 0.180  0.355  1.97
+ 5         5 avg_random 0.653  0.901  1.38
+ 6         5 avg_scotch 0.256  0.368  1.43
+ 7        10 avg_greedy 0.0979 0.0132 0.135
+ 8        10 avg_random 0.724  0.809  1.12
+ 9        10 avg_scotch 0.245  0.300  1.23
+10        20 avg_greedy 0.345  0.403  1.17
+11        20 avg_random 0.752  0.808  1.07
+12        20 avg_scotch 0.484  0.505  1.04
+13        30 avg_greedy 0.450  0.563  1.25
+14        30 avg_random 1.16   1.49   1.29
+15        30 avg_scotch 0.611  0.614  1.01
+16        50 avg_greedy 0.562  0.605  1.08
+17        50 avg_random 1.22   0.883  0.722
+18        50 avg_scotch 0.818  0.513  0.626
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 1000 :height 400 :session *R*
+df |> simple_plot() +
+  geom_errorbar(aes(ymin=mean - sd, ymax=mean + sd), width=.8, alpha=.7, position="dodge")
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figure2U1MU4.png]]
+A bizarre variance.
+
+#+begin_src R :results output :session *R* :exports both
+df.10 <- load(regex="10nodes.*csv") |> stats()
+
+df.10
+#+end_src
+
+#+RESULTS:
+#+begin_example
+# A tibble: 1 × 1
+  CSV
+  <fs::path>
+1 BENCHMARKS/sched-results/results-run2-10nodes.csv
+`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by mpi_procs and type.
+ℹ Output is grouped by mpi_procs.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(mpi_procs, type))` for per-operation grouping (`?dplyr::dplyr_by`) instead.
+# A tibble: 18 × 5
+# Groups:   mpi_procs [6]
+   mpi_procs type         mean     sd    cv
+       <dbl> <chr>       <dbl>  <dbl> <dbl>
+ 1         1 avg_greedy 0.269  0.430  1.60
+ 2         1 avg_random 0.322  0.514  1.60
+ 3         1 avg_scotch 0.103  0.119  1.15
+ 4         5 avg_greedy 0.180  0.355  1.97
+ 5         5 avg_random 0.653  0.901  1.38
+ 6         5 avg_scotch 0.256  0.368  1.43
+ 7        10 avg_greedy 0.0979 0.0132 0.135
+ 8        10 avg_random 0.724  0.809  1.12
+ 9        10 avg_scotch 0.245  0.300  1.23
+10        20 avg_greedy 0.345  0.403  1.17
+11        20 avg_random 0.752  0.808  1.07
+12        20 avg_scotch 0.484  0.505  1.04
+13        30 avg_greedy 0.450  0.563  1.25
+14        30 avg_random 1.16   1.49   1.29
+15        30 avg_scotch 0.611  0.614  1.01
+16        50 avg_greedy 0.562  0.605  1.08
+17        50 avg_random 1.22   0.883  0.722
+18        50 avg_scotch 0.818  0.513  0.626
+#+end_example
+
+#+begin_src R :results output graphics file :file (org-babel-temp-file "figure" ".png") :exports both :width 1000 :height 400 :session *R*
+df |> simple_plot() +
+  geom_errorbar(aes(ymin=mean - sd, ymax=mean + sd), width=.8, alpha=.7, position="dodge")
+#+end_src
+
+#+RESULTS:
+[[file:/tmp/babel-ZcpOwL/figureNJM2nI.png]]
+[13:32:34; 10.03.2026]: We can see that the variance looks very
+high. Scotch in general looks ok, but not as good as the normal
+partition level.
