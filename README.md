@@ -41,13 +41,13 @@ dask community was to use [Zarr](https://zarr.readthedocs.io/en/stable/) instead
 
 <a id="org3309fc2"></a>
 
-# Solution for HDF5: Virtual Datasets
+# Solution for HDF5: [Virtual Datasets](https://support.hdfgroup.org/documentation/hdf5-docs/advanced_topics/intro_VDS.html)
 
 While the use of Zarr was possible and a wrapper for saving
 DeisaArrays with dask was created, there still the need to save to
 HDF5. Therefore, to bypass the pickling limitations, a decentralized
-"file-per-chunk" strategy was designed using HDF5 Virtual Datasets
-(VDS). In this strategy, instead of sending open HDF5 file objects
+"file-per-chunk" strategy was designed using [HDF5 Virtual Datasets
+(VDS)](https://support.hdfgroup.org/documentation/hdf5-docs/advanced_topics/intro_VDS.html). In this strategy, instead of sending open HDF5 file objects
 across the network, independent tasks were dispatched to open, write,
 and close separate files for each array chunk. These isolated chunk
 files are subsequently merged into a single logical entity using the
